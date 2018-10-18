@@ -1,0 +1,28 @@
+.Container {
+    text-align: center;
+    
+}
+
+.AddTask {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 22rem;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+    text-align: left;
+
+}
+
+.PlusWrapper {
+    display: inline-block;
+    border-radius: 50%;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.PlusWrapper:hover {
+    background-color: red;
+    color: white;
+    transition-duration: 0.2s;
+}
+
