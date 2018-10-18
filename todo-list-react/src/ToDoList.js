@@ -9,10 +9,10 @@ class toDoList extends Component {
 
     state = {
         data: [
-            { id: 'm', title: "Task 1", done: false, priority: 1 },
-            { id: 'w', title: "Task 2", done: false, priority: 1 },
-            { id: 'q', title: "Task 3", done: false, priority: 1 },
-            { id: 'p', title: "Task 4", done: false, priority: 1 }
+            { id: Math.random().toString(), title: "Task 1", done: false, priority: 1 },
+            { id: Math.random().toString(), title: "Task 2", done: false, priority: 1 },
+            { id: Math.random().toString(), title: "Task 3", done: false, priority: 1 },
+            { id: Math.random().toString(), title: "Task 4", done: false, priority: 1 }
         ],
         isPlusClicked: false,
     }
@@ -23,8 +23,9 @@ class toDoList extends Component {
         } else if (e.target.matches('.Cancel')) {
             this.inputRef.current.value = '';
         } else if (e.target.matches('.AddTaskButton')) {
+            const data = [...this.state.data, { id: Math.random().toString(), title: this.state.title, done: false, priority: 2 }]
             this.setState({
-                data: [...this.state.data, {title: this.state.title, done: false, priority: 2 }],
+                data,
                 isPlusClicked: false
             })
             // this.renderTaskCard();
