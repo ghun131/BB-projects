@@ -20,14 +20,11 @@ class TaskCard extends Component {
                     <select name="priority" 
                             className="Priority"
                             onChange={e => this.props.onChange('priority', e.target.value)}>
-                        {/* {
+                        {
                             ['Low', 'Normal', 'High'].map((el, index) => {
                                 return <option key={index + el} value={index + 1}>{el}</option>
                             })
-                        } */}
-                        <option value="1">Low</option>
-                        <option value="2">Normal</option>
-                        <option value="3">High</option>
+                        }
                     </select>
                 </div>
                 <div className="XButton" onClick={this.props.removeItem}>
