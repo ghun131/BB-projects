@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+
+}
+
+#container {
+    text-align: center;
+    
+}
+
+#add-task {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 22rem;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+    text-align: left;
+
+}
+
+#plus-wrapper {
+    display: inline-block;
+    border-radius: 50%;
+    padding: 3px;
+    cursor: pointer;
+}
+
+#plus-wrapper:hover {
+    background-color: red;
+    color: white;
+    transition-duration: 0.2s;
+}
+
+.form {
+    display: none;
+    padding: 0.3rem;
+}
+
+.card-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.card-wrapper-disabled {
+    cursor: not-allowed;
+    color: gray;
+    background-color: #add8e6;
+}
+
+.task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+#priority {
+    display: block;
+    border-radius: 10px;
+}
+
+.x-button {
+    cursor: pointer;
+}
+
+.x-button:hover {
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    transition-duration: 0.5s;
+}

@@ -4,38 +4,41 @@ import './ToDoList.css';
 import Form from './Form';
 import TaskCard from './TaskCard';
 
+const DATA = window.localStorage.getItem('id');
+
 class toDoList extends Component {
     inputRef = React.createRef()
-
     state = {
         data: [
-            { id: Math.random().toString(), title: "Task 1", done: false, priority: 1 },
-            { id: Math.random().toString(), title: "Task 2", done: false, priority: 1 },
-            { id: Math.random().toString(), title: "Task 3", done: false, priority: 1 },
-            { id: Math.random().toString(), title: "Task 4", done: false, priority: 1 }
+            {id: "0.05701245524787524", title: "Task 1", done: false, priority: 1},
+            {id: "0.5863039561632211", title: "Task 2", done: false, priority: 1},
+            {id: "0.0739946906672837", title: "Task 3", done: false, priority: 1},
+            {id: "0.7159275683731299", title: "Task 4", done: false, priority: 1}
         ],
-        isPlusClicked: false,
+        isPlusClicked: false
     }
 
     handleClick = (e) => {
         if (e.target.matches('.Plus')) {
             this.setState({ isPlusClicked: !this.state.isPlusClicked });
         } else if (e.target.matches('.Cancel')) {
+            localStorage.clear();
             this.inputRef.current.value = '';
         } else if (e.target.matches('.AddTaskButton')) {
             const data = [...this.state.data, { id: Math.random().toString(), title: this.state.title, done: false, priority: 2 }]
+            let newItem = data[data.length - 1]
+            localStorage.setItem(JSON.stringify(newItem.id),JSON.stringify(newItem));
             this.setState({
                 data,
                 isPlusClicked: false
             })
-            // this.renderTaskCard();
-            // console.log(this.state.cards);
         }
     }
 
     removeItem = (index) => {
         const data = [...this.state.data];
         data.splice(index, 1);
+        localStorage.removeItem(JSON.stringify(data[index].id))
         this.setState({ data });
     }
 

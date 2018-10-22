@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Imprima" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container" id="calculator">
+        <div class="first-wrapper">
+            <div id="equal-sign" data-value="="><i class="fas fa-equals"></i></div>
+            <div id="screen"></div>
+            <div id="log"></div>
+        </div>
+
+        <div class="keys">
+            <ul class="grid-wrapper">
+                <li class="num grid-item" data-value="1">1</li>
+                <li class="num grid-item" data-value="2">2</li>
+                <li class="num grid-item" data-value="3">3</li>
+                <li id="addition" class="grid-item" data-value="+"><i class="fas fa-plus"></i></li>
+                <li class="num grid-item" data-value="4">4</li>
+                <li class="num grid-item" data-value="5">5</li>
+                <li class="num grid-item" data-value="6">6</li>
+                <li id="subtraction" class="grid-item" data-value="-"><i class="fas fa-minus"></i></li>
+                <li class="num grid-item" data-value="7">7</li>
+                <li class="num grid-item" data-value="8">8</li>
+                <li class="num grid-item" data-value="9">9</li>
+                <li id="multiply" class="grid-item" data-value="*"><i class="fas fa-times"></i></li>
+                <li class="num grid-item" data-value="0">0</li>
+                <li class="num dot grid-item" data-value=".">.</li>
+                <li class="cancel grid-item" data-value="C">C</li>
+                <li id="division" class="grid-item" data-value="/"><i class="fas fa-divide"></i></li>
+            </ul>
+
+        </div>
+    </div>
+    <script src="main2.js"></script>
+</body>
+
+</html>

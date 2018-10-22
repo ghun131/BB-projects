@@ -1,0 +1,88 @@
+* {
+    top: 50px;
+    left: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Imprima', sans-serif;
+}
+
+.container {
+    width: 600px;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Screen and log and equal sign */
+.first-wrapper {
+    display: flex;
+}
+#screen {
+    text-align: right;
+    font-size: 30px;
+    line-height: 50px;
+    background-color: #C0C0C0;
+    width: 350px;
+    height: 50px;
+    padding-right: 20px;
+    border-radius: 15px;
+}
+
+#log {
+    width: 200px;
+    height: 322px;
+    overflow: scroll;
+}
+
+#equal-sign {
+    width: 50px;
+    line-height: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#equal-sign:hover {
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+}
+
+/* Key buttons  */
+.keys {
+    position: absolute;
+    top: 50px;    
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    width: 400px;
+}
+
+.grid-item {
+    font-size: 25px;
+    font-weight: 800;
+    text-align: center;
+    padding: 20px 40px;   
+    cursor: pointer;
+}
+
+.grid-item:hover {
+    background-color: #e0eeee;
+    border-radius: 10px;    
+    overflow: hidden;
+}
+    
+
+    
