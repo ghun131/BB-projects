@@ -39,6 +39,7 @@
 .card-wrapper {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .card-wrapper-disabled {
@@ -72,4 +73,8 @@
     background-color: red;
     border-radius: 50%;
     transition-duration: 0.5s;
+}
+
+.done {
+    text-decoration: line-through;
 }

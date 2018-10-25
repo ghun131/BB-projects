@@ -1,4 +1,7 @@
 /todo-list-react/node_modules
 /todo-list-react/yarn.lock
+/drag-and-drop-list/yarn.lock
+/drag-and-drop-list/node_modules
+/drag-and-drop-list/.vscode
 /foo/node_modules
 /foo/yarn.lock

@@ -8,6 +8,7 @@
     calc.addEventListener('click', function (e) {
         if (e.target.matches('[data-value]')) {
             const value = e.target.dataset.value;
+            viewer.innerText = value;
             console.log('clicked!');
             let regEx = new RegExp("\d+[.]\d");
 

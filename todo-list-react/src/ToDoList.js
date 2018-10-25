@@ -4,8 +4,6 @@ import './ToDoList.css';
 import Form from './Form';
 import TaskCard from './TaskCard';
 
-const DATA = window.localStorage.getItem('id');
-
 class toDoList extends Component {
     inputRef = React.createRef()
     state = {

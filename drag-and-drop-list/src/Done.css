@@ -1,0 +1,13 @@
+.DropBox {
+    text-align: center;
+    width: 300px;
+    height: 400px;
+    border: 2px solid black;
+    border-radius: 10%;
+    margin-right: 20px;
+}
+
+.Over {
+    border: 2px dotted gray;
+    opacity: 0.5;
+}

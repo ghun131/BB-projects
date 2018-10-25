@@ -1,0 +1,13 @@
+.DoneItem {
+    width: 80%;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid black;
+    margin: 5px auto;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
+.DoneItem:hover {
+    background-color: cyan;
+}
