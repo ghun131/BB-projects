@@ -1,0 +1,33 @@
+.Container {
+    text-align: center;
+}
+
+.ToDoList {
+    display: flex;
+    justify-content: center;
+}
+
+.AddTask {
+    width: 24rem;
+    height: 400px;
+    margin-right: 20px;
+    padding: 1rem 1rem;
+    text-align: left;
+    overflow: scroll;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.PlusWrapper {
+    display: inline-block;
+    border-radius: 50%;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.PlusWrapper:hover {
+    background-color: red;
+    color: white;
+    transition-duration: 0.2s;
+}
+

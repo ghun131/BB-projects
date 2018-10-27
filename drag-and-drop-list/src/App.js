@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import "./App.css";
 
-import Working from './Working';
-import Done from './Done';
+import Heading from './Heading';
 
 const DATA = {
     working: [
@@ -22,7 +21,9 @@ export default class App extends React.Component {
     }
 
     handleDragStart = (e, id) => {
+        const list = e.target.closest('.DropBox').dataset.list
         e.dataTransfer.setData('text', id);
+        e.dataTransfer.setData('list', list);
     }
 
     handleDragOver = (e) => {
@@ -30,43 +31,49 @@ export default class App extends React.Component {
         e.stopPropagation();
     }
 
-    handleDropWorking = (e) => {
+    handleDrop = (e) => {
         e.preventDefault();
         let newItem = e.dataTransfer.getData('text');
-        let dragWorking = this.state.data.working.filter(el => el.id === newItem);
         const data = {...this.state.data};
-        data.done.push(dragWorking[0]);
-        let index = data.working.indexOf(dragWorking[0]);
-        data.working.splice(index, 1);
+        const from = e.dataTransfer.getData('list') // Make it more abstract, no more repeating myself
+        const to = e.currentTarget.dataset.list
+        let dragItem = this.state.data[from].filter(el => el.id === newItem);
+        data[to].push(dragItem[0]);
+        let index = data[from].indexOf(dragItem[0]);
+        data[from].splice(index, 1);
         this.setState({ data })
     }
 
-    handleDropDone = (e) => {
-        e.preventDefault();
-        let newItem = e.dataTransfer.getData('text');
-        let dragDone = this.state.data.done.filter(el => el.id === newItem);       
-        const data = {...this.state.data};
-        data.working.push(dragDone[0]);
-        let index = data.done.indexOf(dragDone[0]);
-        data.done.splice(index, 1);
-        this.setState({ data })
-    }
+    // handleDropDone = (e) => {
+    //     e.preventDefault();
+    //     let newItem = e.dataTransfer.getData('text');
+    //     let dragDone = this.state.data.done.filter(el => el.id === newItem);       
+    //     const data = {...this.state.data};
+    //     data.working.push(dragDone[0]);
+    //     let index = data.done.indexOf(dragDone[0]);
+    //     data.done.splice(index, 1);
+    //     this.setState({ data })
+    // }
 
     render() {
         return(
             <div className="App">
-                <Working 
-                    class={this.state.className}
-                    data={this.state.data}
+                <Heading 
+                    list="working"
+                    title="Working List"
+                    data={this.state.data.working}
                     dragStart={(e, id) => this.handleDragStart(e, id)}
-                    drop={(e) => this.handleDropDone(e)}
-                    dragOver={e => this.handleDragOver(e)}/>
-                <Done 
-                    class={this.state.className}
-                    data={this.state.data}
+                    drop={(e) => this.handleDrop(e)}
+                    dragOver={e => this.handleDragOver(e)}
+                    />
+                <Heading 
+                    list="done"
+                    title="Done List"
+                    data={this.state.data.done}
                     dragStart={(e, id) => this.handleDragStart(e, id)}
-                    drop={(e) => this.handleDropWorking(e)}
-                    dragOver={e => this.handleDragOver(e)}/>
+                    drop={(e) => this.handleDrop(e)}
+                    dragOver={e => this.handleDragOver(e)}
+                    />
             </div>
         )
     }

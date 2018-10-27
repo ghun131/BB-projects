@@ -1,4 +1,4 @@
-.WorkingItem {
+.Item {
     width: 80%;
     text-align: center;
     padding: 5px;
@@ -8,6 +8,6 @@
     cursor: pointer;
 }
 
-.WorkingItem:hover {
+.Item:hover {
     background-color: cyan;
 }

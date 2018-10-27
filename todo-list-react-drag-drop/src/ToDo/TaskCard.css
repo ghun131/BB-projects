@@ -1,0 +1,42 @@
+.CardWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.CardWrapperDisabled {
+    cursor: not-allowed;
+    color: gray;
+    background-color: #add8e6;
+}
+
+.TaskCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px;
+}
+
+.Priority {
+    display: block;
+    border-radius: 10px;
+}
+
+.XButton {
+    cursor: pointer;
+}
+
+.XButton:hover {
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    transition-duration: 0.5s;
+}
+
+.Done {
+    text-decoration: line-through;
+}
