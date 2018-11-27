@@ -1,0 +1,58 @@
+.NewPost {
+    text-align: center;
+}
+
+.NewPostWrapper {
+    width: 600px;
+    margin: 0px auto;
+}
+
+.NewPost input {
+    display: block;
+    margin: 10px auto;
+    width: 600px;
+    height: 40px;
+    padding: 5px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.NewPost textarea {
+    display: block;
+    margin: 10px auto;
+    width: 600px;
+    height: 300px;
+    padding: 10px;
+}
+
+.NewPost input::placeholder {
+    font-weight: 700;
+    font-size: 30px;
+    color: black;
+}
+
+.NewPost textarea::placeholder {
+    color: black;
+    font-size: 16px;
+}
+
+.NewPost input:focus::placeholder {
+    color: transparent;
+}
+
+.NewPost textarea:focus::placeholder {
+    color: transparent;
+}
+
+.Button {
+    background-color: cyan;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.Button:hover {
+    background-color: green;
+    color: white;
+}

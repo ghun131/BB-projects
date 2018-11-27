@@ -8,7 +8,8 @@ const DATA = {
     working: [
         {id: "9182", title: "buy stuff"},
         {id: "sdf28", title: "do stuff"},
-        {id: "oi12us", title: "dinner"}
+        {id: "oi12us", title: "dinner"},
+        {id: "wieus", title: "iqka"},
     ],
     done: [
         {id: "fu2ku", title: "put in data"}
