@@ -29,6 +29,7 @@ export default class App extends Component {
         isNewPost: false
     }
 
+    // A million handlers that kill your eyes
     handleRegister = (e) => {
         e.preventDefault();
 
@@ -36,7 +37,10 @@ export default class App extends Component {
         axios.post('http://localhost:3000/register', {user})
             .then( res => {
                 console.log(res.data);
-                this.setState({ isUser: res.data.success, message: res.data.message });
+                this.setState({ isUser: res.data.success, message: res.data.message })
+                setTimeout(() => {
+                    this.setState({ message: '' });
+                }, 3000);
             }).catch( error => console.log(error) );
     }
 
@@ -76,6 +80,9 @@ export default class App extends Component {
                 } else {
                     this.setState({ message: res.data.message })
                 }
+                setTimeout(() => {
+                    this.setState({ message: '' });
+                }, 3000);
             }).catch(error => console.log(error));
         console.log('log in');
     }

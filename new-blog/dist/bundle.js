@@ -135,7 +135,8 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       articles: [],
       isUser: false,
       isLogIn: false,
-      isNewPost: false
+      isNewPost: false // A million handlers that kill your eyes
+
     });
 
     _defineProperty(this, "handleRegister", e => {
@@ -151,6 +152,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           isUser: res.data.success,
           message: res.data.message
         });
+        setTimeout(() => {
+          this.setState({
+            message: ''
+          });
+        }, 3000);
       }).catch(error => console.log(error));
     });
 
@@ -203,6 +209,12 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             message: res.data.message
           });
         }
+
+        setTimeout(() => {
+          this.setState({
+            message: ''
+          });
+        }, 3000);
       }).catch(error => console.log(error));
       console.log('log in');
     });
