@@ -7,7 +7,9 @@ const NewPost = (props) => {
         <div className="NewPost">
             <form onSubmit={props.clickPost}>
                 <div className="NewPostWrapper">
-                    <h1 style={{textAlign: 'left', paddingLeft: '5px'}}>{props.postInfo.author}</h1>
+                    <h1 style={{textAlign: 'left', 
+                                paddingLeft: '5px',
+                                fontStyle: 'italic'}}>{props.postInfo.author}</h1>
                     
                     <input  type="text"
                             name="title"

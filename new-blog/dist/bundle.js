@@ -11694,6 +11694,7 @@ const Home = props => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "Home"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Brave New World!"), props.user ? articles : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "Photo",
     src: _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_3___default.a,
     alt: "cat photo"
   }));
@@ -11738,7 +11739,7 @@ exports = module.exports = __webpack_require__(59)(false);
 
 
 // module
-exports.push([module.i, ".Article {\r\n    width: 80%;\r\n    margin: 10px auto;\r\n    padding: 10px;\r\n    text-align: left;\r\n    border: 1px solid black;\r\n    border-radius: 5px;\r\n}", ""]);
+exports.push([module.i, ".Article {\r\n    width: 80%;\r\n    margin: 10px auto;\r\n    padding: 10px;\r\n    text-align: left;\r\n    border: 1px solid black;\r\n    border-radius: 5px;\r\n}\r\n\r\n.Photo {\r\n    max-width: 100%;\r\n    height: auto;\r\n}", ""]);
 
 // exports
 
@@ -12344,7 +12345,8 @@ const NewPost = props => {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     style: {
       textAlign: 'left',
-      paddingLeft: '5px'
+      paddingLeft: '5px',
+      fontStyle: 'italic'
     }
   }, props.postInfo.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "text",

@@ -17,8 +17,7 @@ const Home = (props) => {
         <div className="Home">
             <h1>Brave New World!</h1>
             { props.user? 
-                articles : <img src={homePic} alt="cat photo"/>}
-            {/* {articles} */}
+                articles : <img className="Photo" src={homePic} alt="cat photo"/>}
         </div>           
     )
 }
