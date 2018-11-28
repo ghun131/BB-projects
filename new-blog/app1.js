@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
-const port = 3000;
 const bodyParser = require('body-parser');
 const folderPath = __dirname + '/dist/';
 const User = require('./modal/User');
@@ -13,7 +12,6 @@ const Post = require('./modal/Post')
 const middleware = require('./middleware');
 
 mongoose.connect('mongodb://hung131:abc123@ds151383.mlab.com:51383/simple-blog-db');
-const db = mongoose.connection;
 
 app.use(bodyParser.json());
 
@@ -184,4 +182,4 @@ app.post('/posts', middleware.checkToken, (req, res) => {
   })
 })
 
-app.listen(port);
+app.listen(3000);
