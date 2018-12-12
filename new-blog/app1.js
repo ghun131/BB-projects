@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-const folderPath = __dirname + '/dist/';
 const User = require('./modal/User');
 const config = require('./config');
 const jwt = require('jsonwebtoken');
@@ -14,18 +13,21 @@ const middleware = require('./middleware');
 mongoose.connect('mongodb://hung131:abc123@ds151383.mlab.com:51383/simple-blog-db');
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // GET route for reading data
-app.get('/', function (req, res, next) {
-  console.log('fileName');
-  return res.sendFile(path.join(folderPath + '/index.html'));
+app.get('/api/posts', (req, res) => {
+   Post.find({}, (err, docs) => {
+     const data = docs;
+     data.sort((a, b) => {
+       return b.time - a.time
+     })
+     res.send(data)
+   }).limit(13)
 });
 
-app.use(express.static(path.join(folderPath)));
-
-
 //POST route for updating data
-app.post('/register', function (req, res, next) {
+app.post('/register', (req, res, next) => {
   const {email, username, password, passwordConf} = req.body.user
   // confirm that user typed same password twice
   if (password !== passwordConf) {
@@ -182,4 +184,4 @@ app.post('/posts', middleware.checkToken, (req, res) => {
   })
 })
 
-app.listen(3000);
+app.listen(3000 || process.env.PORT, () => console.log('Listening...'));

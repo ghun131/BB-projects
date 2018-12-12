@@ -1,0 +1,5 @@
+- Other users and see the posts from others
+- Users only see the posts in their profile
+- Refactor your server to async and await
+- Webpack is quite difficult to debug
+- 

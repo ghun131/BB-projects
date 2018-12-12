@@ -7,10 +7,16 @@ const NavBar = (props) => {
     return (
         <div>
             <ul style={{ color: "#3F3F3F", position: "relative"}}>
-                <li className="Logo">Blog Me li</li>
+                <li className="Logo">
+                    <Link to="/" style={{color: "#292929"}}>Blog Me li</Link>
+                </li>
                 <div style={{ display: "inline-block", right: "0", position: "absolute", top:"50%", transform: "translate(0, -50%)" }}>
-                    <li className="Search"><i className="fas fa-search"></i></li>
-                    <li className="Bell"><i className="far fa-bell"></i></li>
+                    <li className="Search">
+                        <i className="fas fa-search"></i>
+                    </li>
+                    <li className="Bell">
+                        <i className="far fa-bell"></i>
+                    </li>
                     <li className="Upgrade">Upgrade</li>
                     <li className="Profile"><i className="fas fa-user"></i>
                         <ul className="ProfileDropDown">
@@ -20,8 +26,11 @@ const NavBar = (props) => {
                             { props.isLogIn? 
                                 <li><Link to="/" onClick={props.logOut}>Log out</Link></li>
                             : <li><Link to="/log-in">Log in</Link></li> }
-                            { props.isUser && props.isLogIn? 
-                                <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
+                            { props.isUser && props.isLogIn?
+                                <div>
+                                    <li><Link to="/profile">Profile</Link></li>
+                                    <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
+                                </div>
                             : ''}
                         </ul>
                     </li>

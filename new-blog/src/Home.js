@@ -4,26 +4,31 @@ import PropTypes from 'prop-types';
 import homePic from './cat-theme.jpg';
 
 const Home = (props) => {
-    const articles = props.articlesUpdate.map(post => {
+    const posts = props.allPosts.map(p => {
         return (
-        <div className="Article" key={post._id}>
-            <h2>{post.title}</h2>
-            <h4>{post.author}</h4>
-            <p><em>{post.time}</em></p>
-            <p style={{textAlign: 'left'}}>{post.content}</p>
-        </div>)
-    });
+        <div style={{
+            width: '80%',
+            margin: '10px auto',
+            padding: '10px',
+            textAlign: 'left',
+            border: '1px solid black',
+            borderRadius: '5px'
+        }} 
+            key={p._id}>
+                <h2>{p.title}</h2>
+                <h4>{p.author}</h4>
+                <p><em>{p.time}</em></p>
+                <p style={{textAlign: 'left'}}>{p.content}</p>
+        </div>
+        )
+    })
     return (
         <div className="Home">
             <h1>Brave New World!</h1>
-            { props.user? 
-                articles : <img className="Photo" src={homePic} alt="cat photo"/>}
+                <img className="Photo" src={homePic} alt="cat photo"/>
+            {posts}
         </div>           
     )
 }
 
 export default Home;
-
-Home.propTypes = {
-    articlesUpdate: PropTypes.arrayOf(PropTypes.object)
-}

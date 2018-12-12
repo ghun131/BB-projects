@@ -10,6 +10,8 @@ import './App.css';
 export default class App extends Component {
     state={
         token: '',
+        data: [],
+        loading: false,
         user: {
             email: '',
             username: '',
@@ -29,15 +31,26 @@ export default class App extends Component {
         isNewPost: false
     }
 
+    componentDidMount = () => {
+        axios.get('/api/posts')
+            .then( res => {
+                console.log(res.data)
+                this.setState({ data: res.data })
+            })
+    }
+
     // A million handlers that kill your eyes
     handleRegister = (e) => {
         e.preventDefault();
 
-        const user = {... this.state.user}
-        axios.post('http://localhost:3000/register', {user})
+        const user = {... this.state.user};
+        this.setState({ loading: true });
+        axios.post('/api/register', {user})
             .then( res => {
                 console.log(res.data);
-                this.setState({ isUser: res.data.success, message: res.data.message })
+                this.setState({ isUser: res.data.success, 
+                                message: res.data.message,
+                                loading: false })
                 setTimeout(() => {
                     this.setState({ message: '' });
                 }, 3000);
@@ -63,8 +76,9 @@ export default class App extends Component {
 
         const user = {...this.state.user}
         const post = {...this.state.post}
+        this.setState({ loading: true });
         let articles = [...this.state.articles];
-        axios.post('/log-in', {user})
+        axios.post('/api/log-in', {user})
             .then(res => {
                 console.log(res.data);
                 if (res.data.username) {
@@ -76,7 +90,8 @@ export default class App extends Component {
                                     isLogIn: true, 
                                     isUser: true,
                                     message: res.data.message, 
-                                    post: post});
+                                    post: post,
+                                    loading: false });
                 } else {
                     this.setState({ message: res.data.message })
                 }
@@ -98,15 +113,17 @@ export default class App extends Component {
         e.preventDefault();
 
         const post = {...this.state.post}
+        this.setState({ loading: true });
         console.log('submit post');
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token
-        axios.post('/new-post', {post})
+        axios.post('/api/new-post', {post})
             .then(res => {
                 console.log(res.data);
                 let articles = [...this.state.articles];
                 articles = res.data.reverse();
                 this.setState({ isNewPost: true,
-                                articles: articles });
+                                articles: articles,
+                                loading: false });
             }).catch(error => console.log(error));
     }
 
@@ -133,8 +150,10 @@ export default class App extends Component {
                             user={this.state.user}
                             logIn={this.handleLogIn}
                             isUser={this.state.isUser}
+                            loading={this.state.loading}
                             isLogIn={this.state.isLogIn}
                             articlesList={this.state.articles}
+                            allPosts={this.state.data}
                             post={this.state.post}
                             isNewPost={this.state.isNewPost}
                             changePost={this.handlePost}

@@ -1,48 +1,33 @@
-const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
-const port = 3000;
+const path = require('path');
 const bodyParser = require('body-parser');
-// const Post = require('postsCollection');
-const User = require('./User');
-const KEY = 'aaaabbbb'
-const jwt = require('jsonwebtoken')
-
-// jwt.sign({ user: 'hung' }, KEY, {}, function() {
-//     console.log(arguments)
-// })
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaHVuZyIsImlhdCI6MTU0MTU1Njk1N30.QZDrEMl60P-o05YGNBhxHT3oN_pH5Q77zPWL1KDLh7w'
-jwt.verify(TOKEN, KEY, (err, decoded) => {
-    console.log(decoded.user)
-})
-// function mid(req,res,next){
-//     console.log('tao la middleware');
-//     next();
-// }
-// app.use(mid);
+const register = require('./routes/register');
+const logIn = require('./routes/logIn');
+const newPost = require('./routes/newPost');
+const profile = require('./routes/profile');
+const posts = require('./routes/posts');
+const express = require('express');
+const app = express();
 
 mongoose.connect('mongodb://hung131:abc123@ds151383.mlab.com:51383/simple-blog-db');
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'dist')));
 
-app.post('/register', (req, res) => {
-    
-});
+// GET route for reading data
+app.use('/api/posts', posts);
 
-app.post('/log-in', (req, res) => {
-    
-});
+//POST route for register new user
+app.use('/api/register', register);
 
-app.post('/new-post', (req, res) => {
-    let postData = new Post(req.body);
-     postData.save().then( result => {
-        res.redirect('/');
-    }).catch(err => {
-        res.status(400).send("Unable to save data");
-    });
-});
+// POST log in after registering
+app.use('/api/log-in', logIn);
 
-app.listen(port);
+//POST method for new post
+app.use('/api/new-post', newPost);
 
-// Read body parser
-// Read this stuff https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
+//POST method find all posts of one author
+app.use('/api/profile', profile);
+
+app.listen(3000 || process.env.PORT, () => console.log('Listening...'));
