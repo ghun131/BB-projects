@@ -4,6 +4,7 @@ const User = require('../modal/User');
 
 router.post('/', (req, res, next) => {
     const {email, username, password, passwordConf} = req.body.user
+    console.log( email, username, password, passwordConf )
 
     // confirm that user typed same password twice
     if (password !== passwordConf) {

@@ -7,16 +7,14 @@ router.post('/', middleware.checkToken, (req, res) => {
     const { author, title, content, email } = req.body.post;
   
     let today = new Date();
-    let options = { weekday:'long', year: 'numeric', month: 'long', day: 'numeric', 
-                    hour: 'numeric', minute: 'numeric', second: 'numeric' };
-    let time = today.toLocaleDateString("en-US", options)
+    let savedTime = Date.parse(today);
   
     let postData = {
       author: author,
       title: title,
       email: email,
       content: content,
-      time: time
+      time: savedTime
     }
   
     Post.create(postData, (error, post) => {

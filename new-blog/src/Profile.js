@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 const Profile = (props) => {
     const articles = props.articlesUpdate.map(post => {
+        let time = Date(post.time)
         return (
         <div className="Article" key={post._id}>
             <h2>{post.title}</h2>
             <h4>{post.author}</h4>
-            <p><em>{post.time}</em></p>
+            <p><em>{time}</em></p>
             <p style={{textAlign: 'left'}}>{post.content}</p>
         </div>)
     });

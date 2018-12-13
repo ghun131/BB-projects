@@ -5,6 +5,8 @@ import homePic from './cat-theme.jpg';
 
 const Home = (props) => {
     const posts = props.allPosts.map(p => {
+        const time = Date(p.time);
+
         return (
         <div style={{
             width: '80%',
@@ -17,7 +19,7 @@ const Home = (props) => {
             key={p._id}>
                 <h2>{p.title}</h2>
                 <h4>{p.author}</h4>
-                <p><em>{p.time}</em></p>
+                <p><em>{time}</em></p>
                 <p style={{textAlign: 'left'}}>{p.content}</p>
         </div>
         )

@@ -3,10 +3,15 @@ const router = express.Router();
 const Post = require('../modal/Post');
 
 router.get('/', (req, res) => {
-    Post.find({}, (err, docs) => {
-      const data = docs.reverse().slice(0, 13);
-      res.send(data)
-    })
- });
+  async function getPosts() {
+    const posts = await Post
+    .find()
+    .limit(13)
+    .sort({ time: -1});
+    res.send(posts)
+  }
+  
+  getPosts()
+});
 
 module.exports = router;

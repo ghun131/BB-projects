@@ -4,11 +4,17 @@ import "./NavBar.css";
 import { Link } from 'react-router-dom';
 
 const NavBar = (props) => {
+    const refreshPage = () => {
+        window.location.reload()
+    }
+
     return (
         <div>
             <ul style={{ color: "#3F3F3F", position: "relative"}}>
                 <li className="Logo">
-                    <Link to="/" style={{color: "#292929"}}>Blog Me li</Link>
+                    <Link to="/" 
+                        style={{color: "#292929"}}
+                        onClick={refreshPage}>Blog Me li</Link>
                 </li>
                 <div style={{ display: "inline-block", right: "0", position: "absolute", top:"50%", transform: "translate(0, -50%)" }}>
                     <li className="Search">
@@ -37,7 +43,7 @@ const NavBar = (props) => {
                 </div>
             </ul>
             <ul>
-                <li><Link to="/">HOME</Link> </li>
+                <li><Link to="/" onClick={refreshPage}>HOME</Link> </li>
                 <li>
                     <a>THE NEW NEW</a>
                 </li>

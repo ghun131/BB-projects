@@ -48,7 +48,9 @@ router.post('/', (req, res, next) => {
             package.token = token;
             package.email = adventure.email;
             package.username = adventure.username;
-            return res.json(package)
+            return res.json({
+              success: true,
+              package})
           }
         })
       }

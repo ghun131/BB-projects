@@ -141,11 +141,54 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     });
 
     _defineProperty(this, "componentDidMount", () => {
+      const user = _objectSpread({}, this.state.user); //get data from sessionStorage for not losing data after refreshing page
+
+
+      const email = sessionStorage.getItem('email');
+      const password = sessionStorage.getItem('password');
+      const token = sessionStorage.getItem('token');
+
+      if (email && password) {
+        user.email = email;
+        user.password = password;
+        axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/api/log-in', {
+          user
+        }).then(res => {
+          let post = _objectSpread({}, this.state.post);
+
+          let articles = [...this.state.articles];
+          console.log(res.data);
+
+          if (res.data.success) {
+            post.author = res.data.package.username;
+            post.email = res.data.package.email;
+            articles = res.data.package.collection.reverse();
+            this.setState({
+              token: token,
+              articles: articles,
+              isLogIn: true,
+              isUser: true,
+              message: res.data.message,
+              post: post,
+              loading: false
+            });
+          }
+        }).catch(error => console.log(error));
+      }
+
       axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/posts').then(res => {
         console.log(res.data);
         this.setState({
-          data: res.data
+          data: res.data,
+          user: user
         });
+
+        if (email && password) {
+          this.setState({
+            isLogIn: true,
+            isUser: true
+          });
+        }
       });
     });
 
@@ -157,31 +200,48 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       this.setState({
         loading: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/api/register', {
-        user
-      }).then(res => {
-        console.log(res.data);
+
+      if (user.email === '' || user.password === '') {
         this.setState({
-          isUser: res.data.success,
-          message: res.data.message,
+          message: 'Don\' leave anything empty!!!!',
           loading: false
         });
-        setTimeout(() => {
+        setTimeout(() => this.setState({
+          message: ''
+        }), 3000);
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/api/register', {
+          user
+        }).then(res => {
+          console.log(res.data);
           this.setState({
-            message: ''
+            isUser: res.data.success,
+            message: res.data.message,
+            loading: false
           });
-        }, 3000);
-      }).catch(error => console.log(error));
+          setTimeout(() => {
+            this.setState({
+              message: ''
+            });
+          }, 3000);
+        }).catch(error => console.log(error));
+      }
     });
 
     _defineProperty(this, "handleLogOut", () => {
+      const user = _objectSpread({}, this.state.user);
+
+      user.email = '';
+      user.password = '';
       this.setState({
         isUser: false,
         isLogIn: false,
         token: '',
         isNewPost: false,
+        user: user,
         articles: []
       });
+      window.sessionStorage.clear();
     });
 
     _defineProperty(this, "handleChange", () => {
@@ -198,23 +258,26 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
       const user = _objectSpread({}, this.state.user);
 
-      const post = _objectSpread({}, this.state.post);
-
       this.setState({
         loading: true
       });
-      let articles = [...this.state.articles];
       axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/api/log-in', {
         user
       }).then(res => {
+        const post = _objectSpread({}, this.state.post);
+
+        let articles = [...this.state.articles];
         console.log(res.data);
 
-        if (res.data.username) {
-          post.author = res.data.username;
-          post.email = res.data.email;
-          articles = res.data.collection.reverse();
+        if (res.data.success) {
+          post.author = res.data.package.username;
+          post.email = res.data.package.email;
+          articles = res.data.package.collection.reverse();
+          sessionStorage.setItem('email', this.state.user.email);
+          sessionStorage.setItem('password', this.state.user.password);
+          sessionStorage.setItem('token', res.data.package.token);
           this.setState({
-            token: res.data.token,
+            token: res.data.package.token,
             articles: articles,
             isLogIn: true,
             isUser: true,
@@ -224,7 +287,8 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           });
         } else {
           this.setState({
-            message: res.data.message
+            message: res.data.message,
+            loading: false
           });
         }
 
@@ -232,7 +296,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           this.setState({
             message: ''
           });
-        }, 3000);
+        }, 5000);
       }).catch(error => console.log(error));
       console.log('log in');
     });
@@ -252,6 +316,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
       const post = _objectSpread({}, this.state.post);
 
+      const data = [...this.state.data];
       this.setState({
         loading: true
       });
@@ -263,10 +328,12 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         console.log(res.data);
         let articles = [...this.state.articles];
         articles = res.data.reverse();
+        data.push(post);
         this.setState({
           isNewPost: true,
           articles: articles,
-          loading: false
+          loading: false,
+          data: data
         });
       }).catch(error => console.log(error));
     });
@@ -292,7 +359,8 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       isLogIn: this.state.isLogIn,
       isUser: this.state.isUser,
       logOut: this.handleLogOut,
-      newPost: this.handleClickNewPost
+      newPost: this.handleClickNewPost,
+      userInfo: this.state.user
     }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Route__WEBPACK_IMPORTED_MODULE_3__["default"], {
       submit: this.handleRegister,
       changed: this.handleChange,
@@ -11766,6 +11834,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const Home = props => {
   const posts = props.allPosts.map(p => {
+    const time = Date(p.time);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       style: {
         width: '80%',
@@ -11776,7 +11845,7 @@ const Home = props => {
         borderRadius: '5px'
       },
       key: p._id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, p.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       style: {
         textAlign: 'left'
       }
@@ -14522,10 +14591,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const Profile = props => {
   const articles = props.articlesUpdate.map(post => {
+    let time = Date(post.time);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "Article",
       key: post._id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, post.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, post.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, post.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, post.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, post.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       style: {
         textAlign: 'left'
       }
@@ -14556,6 +14626,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const NavBar = props => {
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     style: {
       color: "#3F3F3F",
@@ -14567,7 +14641,8 @@ const NavBar = props => {
     to: "/",
     style: {
       color: "#292929"
-    }
+    },
+    onClick: refreshPage
   }, "Blog Me li")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       display: "inline-block",
@@ -14605,7 +14680,8 @@ const NavBar = props => {
     to: "/new-post",
     onClick: props.newPost
   }, "New Post"))) : '')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-    to: "/"
+    to: "/",
+    onClick: refreshPage
   }, "HOME"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "THE NEW NEW")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "CULTURE")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "TECH")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "STARTUPS")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "SELF")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "POLITICS")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "DESIGN")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "HEALTH")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "POPULAR")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "COLLECTIONS")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "MORE"))));
 };
 
