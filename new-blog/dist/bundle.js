@@ -244,7 +244,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       window.sessionStorage.clear();
     });
 
-    _defineProperty(this, "handleChange", () => {
+    _defineProperty(this, "handleChange", e => {
       const user = _objectSpread({}, this.state.user);
 
       user[event.target.name] = event.target.value;
@@ -327,14 +327,27 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       }).then(res => {
         console.log(res.data);
         let articles = [...this.state.articles];
-        articles = res.data.reverse();
-        data.push(post);
-        this.setState({
-          isNewPost: true,
-          articles: articles,
-          loading: false,
-          data: data
-        });
+
+        if (res.data.message) {
+          this.setState({
+            message: res.data.message
+          });
+          setTimeout(() => {
+            this.setState({
+              message: ''
+            });
+          }, 4000);
+        } else {
+          console.log(articles[0]);
+          articles = res.data.reverse();
+          data.push(post);
+          this.setState({
+            isNewPost: true,
+            articles: articles,
+            loading: false,
+            data: data
+          });
+        }
       }).catch(error => console.log(error));
     });
 
@@ -11761,6 +11774,7 @@ const routePath = props => {
       to: "/profile"
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewPost__WEBPACK_IMPORTED_MODULE_4__["default"], {
       postInfo: props.post,
+      displayMessage: props.printMessage,
       postChanged: props.changePost,
       clickPost: props.submitPost
     })
@@ -11847,7 +11861,8 @@ const Home = props => {
       key: p._id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       style: {
-        textAlign: 'left'
+        textAlign: 'left',
+        whiteSpace: 'pre-line'
       }
     }, p.content));
   });
@@ -12525,7 +12540,9 @@ const NewPost = props => {
     value: props.postInfo.content,
     onChange: props.postChanged,
     placeholder: "What do you think...?"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "Message"
+  }, props.displayMessage), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     className: "Button",
     style: {
       width: '200px',
@@ -12577,7 +12594,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.NewPost input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.NewPost input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.NewPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
+exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.NewPost input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.NewPost input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.NewPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
 
 // exports
 
@@ -14478,7 +14495,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // class LI extends React.Component {
+//     userRef = React.createRef()
+//     passRef = React.createRef()
+//     state = {
+//         status: ''
+//     }
+//     handleSubmit = () => {
+//         const payload = {
+//             username: this.userRef.current.value,
+//             password: this.passRef.current.value,
+//         }
+//         await send(payload)
+//         this.props.onLogin()
+//     }
+//     render() {
+//         return <form onSubmit={this.handleSubmit}>
+//             <input type="text" ref={this.userRef} />
+//             <input type="password" ref={this.passRef} />
+//             <input type="submit" value="Login" />
+//         </form>
+//     }
+// }
 
 const LogIn = props => {
   let content;
@@ -14597,7 +14635,8 @@ const Profile = props => {
       key: post._id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, post.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, post.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       style: {
-        textAlign: 'left'
+        textAlign: 'left',
+        whiteSpace: 'pre-line'
       }
     }, post.content));
   });

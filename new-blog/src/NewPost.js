@@ -23,6 +23,7 @@ const NewPost = (props) => {
                                 value={props.postInfo.content}
                                 onChange={props.postChanged}
                                 placeholder="What do you think...?"></textarea>
+                    <div className="Message">{props.displayMessage}</div>
 
                     <input  className="Button" 
                             style={{width: '200px', margin: '10px auto'}}

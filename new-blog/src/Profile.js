@@ -9,7 +9,9 @@ const Profile = (props) => {
             <h2>{post.title}</h2>
             <h4>{post.author}</h4>
             <p><em>{time}</em></p>
-            <p style={{textAlign: 'left'}}>{post.content}</p>
+            <p style={{
+                textAlign: 'left',
+                whiteSpace: 'pre-line'}}>{post.content}</p>
         </div>)
     });
 

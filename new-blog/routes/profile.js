@@ -4,18 +4,16 @@ const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
 router.post('/', middleware.checkToken, (req, res) => {
-  Post.find({ author: req.body.user.username }, (err, docs) => {
-    if(err) {
-      res.send(403).json({
-        success: false,
-        message: 'Something is wrong!'
-      })
-    } else {
-      res.json({
-        docs
-      })
-    }
-  })
+  async function getProfile () {
+    const profile = await Post
+      .find({ author: req.body.user.username })
+      .sort('-time');
+
+      res.send(profile);
+  }
+
+  getProfile()
+  
 })
 
 module.exports = router

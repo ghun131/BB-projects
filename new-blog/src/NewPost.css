@@ -44,6 +44,12 @@
     color: transparent;
 }
 
+.Message {
+    color: red;
+    font-style: italic;
+    font-size: 20px;
+}
+
 .Button {
     background-color: cyan;
     border: none;

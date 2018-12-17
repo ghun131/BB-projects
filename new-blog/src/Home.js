@@ -20,7 +20,9 @@ const Home = (props) => {
                 <h2>{p.title}</h2>
                 <h4>{p.author}</h4>
                 <p><em>{time}</em></p>
-                <p style={{textAlign: 'left'}}>{p.content}</p>
+                <p style={{
+                    textAlign: 'left',
+                    whiteSpace: 'pre-line'}}>{p.content}</p>
         </div>
         )
     })

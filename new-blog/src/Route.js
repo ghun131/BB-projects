@@ -18,8 +18,9 @@ const routePath = (props) => {
                 render={() => props.isNewPost? 
                                 <Redirect to="/profile" />
                                 : <NewPost  postInfo={props.post}
-                                        postChanged={props.changePost} 
-                                        clickPost={props.submitPost}/>} />
+                                    displayMessage={props.printMessage}
+                                    postChanged={props.changePost} 
+                                    clickPost={props.submitPost}/>} />
             <Route path="/register" 
                 render={() => props.isUser?
                                 <Redirect to="/log-in" />

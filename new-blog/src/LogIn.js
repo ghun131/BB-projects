@@ -3,6 +3,29 @@ import PropTypes from 'prop-types';
 import './LogIn.css';
 import Spinner from './Spinner';
 
+// class LI extends React.Component {
+//     userRef = React.createRef()
+//     passRef = React.createRef()
+//     state = {
+//         status: ''
+//     }
+//     handleSubmit = () => {
+//         const payload = {
+//             username: this.userRef.current.value,
+//             password: this.passRef.current.value,
+//         }
+//         await send(payload)
+//         this.props.onLogin()
+//     }
+//     render() {
+//         return <form onSubmit={this.handleSubmit}>
+//             <input type="text" ref={this.userRef} />
+//             <input type="password" ref={this.passRef} />
+//             <input type="submit" value="Login" />
+//         </form>
+//     }
+// }
+
 const LogIn = (props) => {
     let content;
     if (props.isLoading) {

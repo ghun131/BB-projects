@@ -111,7 +111,7 @@ export default class App extends Component {
         window.sessionStorage.clear();
     }
 
-    handleChange = () => {
+    handleChange = (e) => {
         const user = {...this.state.user};
         user[event.target.name] = event.target.value;
         this.setState({user: user});
@@ -172,12 +172,20 @@ export default class App extends Component {
             .then(res => {
                 console.log(res.data);
                 let articles = [...this.state.articles];
-                articles = res.data.reverse();
-                data.push(post);
-                this.setState({ isNewPost: true,
-                                articles: articles,
-                                loading: false,
-                                data: data });
+                if (res.data.message) {
+                    this.setState({ message: res.data.message })
+                    setTimeout(() => {
+                        this.setState({ message: ''})
+                    }, 4000)
+                } else {
+                    console.log(articles[0])
+                    articles = res.data.reverse();
+                    data.push(post);
+                    this.setState({ isNewPost: true,
+                                    articles: articles,
+                                    loading: false,
+                                    data: data });
+                }
             }).catch(error => console.log(error));
     }
 
