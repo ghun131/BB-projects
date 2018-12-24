@@ -3,8 +3,7 @@ const router = express.Router();
 const User = require('../modal/User');
 
 router.post('/', (req, res, next) => {
-    const {email, username, password, passwordConf} = req.body.user
-    console.log( email, username, password, passwordConf )
+    const {email, username, password, passwordConf} = req.body.payload
 
     // confirm that user typed same password twice
     if (password !== passwordConf) {
@@ -18,7 +17,7 @@ router.post('/', (req, res, next) => {
   
     // Check whether email is used or not?
       User.findOne({ email: email }, (err, item) => {
-        console.log(item)
+        console.log(item);
         if (err) {
           return res.json(err);
         } else if (item) {

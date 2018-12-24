@@ -34,8 +34,8 @@ const NavBar = (props) => {
                             : <li><Link to="/log-in">Log in</Link></li> }
                             { props.isUser && props.isLogIn?
                                 <div>
-                                    <li><Link to="/profile">Profile</Link></li>
-                                    <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
+                                    <li><Link to="/api/profile">Profile</Link></li>
+                                    <li><Link to="/api/new-post" onClick={props.newPost}>New Post</Link></li>
                                 </div>
                             : ''}
                         </ul>

@@ -17,7 +17,7 @@ const Profile = (props) => {
 
     return (
         <div>
-            <h1><em>{props.postInfo.author}</em>'s profile</h1>
+            <h1><em>{sessionStorage.getItem('author')}</em>'s profile</h1>
             {articles}
         </div>
     )
@@ -26,6 +26,5 @@ const Profile = (props) => {
 export default Profile;
 
 Profile.propTypes = {
-    postInfo: PropTypes.objectOf(PropTypes.string),
     articlesUpdate: PropTypes.arrayOf(PropTypes.object)
 }

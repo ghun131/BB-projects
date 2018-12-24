@@ -3,8 +3,8 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Home from './Home'
 import NewPost from './NewPost';
-import Register from './Register';
-import LogIn from './LogIn';
+import Register from './Auth/Register';
+import LogIn from './Auth/LogIn';
 import Profile from './Profile';
 
 const routePath = (props) => {
@@ -14,16 +14,13 @@ const routePath = (props) => {
                 render={() => <Home user={props.isUser}
                                 allPosts={props.allPosts}
                                 articlesUpdate={props.articlesList}/>} />
-            <Route path="/new-post" 
+            <Route path="/api/new-post" 
                 render={() => props.isNewPost? 
-                                <Redirect to="/profile" />
-                                : <NewPost  postInfo={props.post}
-                                    displayMessage={props.printMessage}
-                                    postChanged={props.changePost} 
-                                    clickPost={props.submitPost}/>} />
+                                <Redirect to="/api/profile" />
+                                : <NewPost />} />
             <Route path="/register" 
                 render={() => props.isUser?
-                                <Redirect to="/log-in" />
+                                <Redirect to="/api/log-in" />
                                 : <Register clickSubmit={props.submit}
                                 changeInput={props.changed}
                                 userInfo={props.user} 
@@ -31,19 +28,14 @@ const routePath = (props) => {
                                 isLoading={props.loading}/>
             }/>
 
-            <Route path="/profile" 
+            <Route path="/api/profile" 
                 render={() => <Profile postInfo={props.post}
                                     articlesUpdate={props.articlesList}/>} />
 
             <Route path="/log-in" 
                 render={() => props.isLogIn? 
-                                <Redirect to="/profile" />
-                                : <LogIn  changeInput={props.changed}
-                                    userInfo={props.user}
-                                    isLoading={props.loading}
-                                    clickLogIn={props.logIn}
-                                    displayMessage={props.printMessage}
-                                    />
+                                <Redirect to="/api/profile" />
+                                : <LogIn />
             }/>
         </div>
     )
