@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './LogIn.css';
 import Spinner from '../Spinner';
 import { withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 class LogIn extends Component {
@@ -92,9 +93,13 @@ class LogIn extends Component {
                         <div className="Message">{this.state.message}</div>
                         
                         </div>
-                        <input  type="submit"
-                                style={{width: '100px', margin: '10px auto', color: 'black'}} 
-                                value="Log In"/>
+                        <Button 
+                            variant="contained"
+                            color="secondary"
+                            type="submit"
+                            value="LOG IN">
+                            <strong>LOG IN</strong>
+                        </Button>
                     </form>
                 </div>
         }

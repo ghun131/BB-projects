@@ -6,6 +6,7 @@
     display: block;
     width: 100%;
     appearance: none;
+    margin-top: 10px;
     margin-bottom: 15px;
     line-height: 26px;
     font-size: 16px;
@@ -19,9 +20,7 @@
     text-align: left;
     width: 300px;
     margin: 0 auto;
-    padding: 30px;
-    border: 1px solid black;
-    border-radius: 5px;
+    padding: 30px;  
 }
 
 .Message {

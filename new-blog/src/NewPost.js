@@ -4,6 +4,7 @@ import './NewPost.css';
 import Spinner from './Spinner';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button'
 
 class NewPost extends React.Component {
     titleRef = React.createRef();
@@ -68,10 +69,11 @@ class NewPost extends React.Component {
                                     placeholder="What do you think...?"></textarea>
                         <div className="Message">{this.state.message}</div>
 
-                        <input  className="Button" 
-                                style={{width: '200px', margin: '10px auto'}}
-                                type="submit" 
-                                value="POST"/>
+                        <Button 
+                            variant="contained"
+                            color="secondary"
+                            type="submit"
+                            value="POST"> <strong>NEW POST</strong> </Button>
                     </div>
                 </form>
             </div>

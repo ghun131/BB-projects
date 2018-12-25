@@ -21,11 +21,7 @@ const routePath = (props) => {
             <Route path="/register" 
                 render={() => props.isUser?
                                 <Redirect to="/api/log-in" />
-                                : <Register clickSubmit={props.submit}
-                                changeInput={props.changed}
-                                userInfo={props.user} 
-                                displayMessage={props.printMessage}
-                                isLoading={props.loading}/>
+                                : <Register />
             }/>
 
             <Route path="/api/profile" 
@@ -49,13 +45,8 @@ Route.propTypes = {
     post: PropTypes.objectOf(PropTypes.string),
     allPosts: PropTypes.arrayOf(PropTypes.object),
     articlesList: PropTypes.arrayOf(PropTypes.string),
-    changePost: PropTypes.func,
-    submitPost: PropTypes.func,
     isUser: PropTypes.bool,
-    submit: PropTypes.func,
-    changed: PropTypes.func,
     user: PropTypes.objectOf(PropTypes.string),
     isLogIn: PropTypes.bool,    
-    logIn: PropTypes.func,
     printMessage: PropTypes.string
 }

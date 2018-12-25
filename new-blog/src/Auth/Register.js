@@ -1,6 +1,7 @@
 import React from 'react';
 import './Register.css';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import Congratulation from './Congratulation';
 import Spinner from '../Spinner';
 import axios from 'axios';
@@ -33,7 +34,7 @@ class Register extends React.Component {
                                         loading: false })
                     setTimeout(() => this.setState({ message: '' }), 3000);
                 } else  {
-                    axios.post('/api/register', {payload})
+                    axios.post('/register', {payload})
                         .then( res => {
                                 this.setState({ 
                                         message: res.data.message,
@@ -56,14 +57,14 @@ class Register extends React.Component {
                 let content;
                 if (this.state.loading) {
                         content = <Spinner />
-                }else if (this.state.isSignedUp) {
+                } else if (this.state.isSignedUp) {
                         // content = 
                         //         <Route path='/api/register/congratulation' 
                         //                 component={Congratulation} />
                         content = 
                         <Switch>
-                                <Route path='/api/register/congratulation' component={Congratulation} />
-                                <Redirect from='/api/register' to='/api/register/congratulation' />
+                                <Route path='/register/congratulation' component={Congratulation} />
+                                <Redirect from='/register' to='/register/congratulation' />
                         </Switch>
                 } else {
                         content = 
@@ -94,9 +95,12 @@ class Register extends React.Component {
                                         <div className="Message">{this.state.message}</div>
                                         </div>
 
-                                        <input  style={{width: '100px', margin: '10px auto'}} 
-                                                type="submit" 
-                                                value="Sign Up!"/>
+                                        <Button variant="contained"
+                                                color="secondary"
+                                                type="submit"
+                                                value="Sign Up!">
+                                        <strong>Sign Up!</strong>
+                                        </Button>
                                 </form>
                         </div>
                 }

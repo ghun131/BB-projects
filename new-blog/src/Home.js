@@ -15,7 +15,7 @@ const Home = (props) => {
             textAlign: 'left'
         }} 
             key={p._id}>
-                <h2>{p.title}</h2>
+                <h1>{p.title}</h1>
                 <h4>{p.author}</h4>
                 <p><em>{time}</em></p>
                 <p style={{

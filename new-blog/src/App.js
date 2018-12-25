@@ -11,7 +11,6 @@ export default class App extends Component {
     state={
         data: [],
         loading: false,
-        message: '',
         articles: [],
         isUser: false,
         isLogIn: false,
@@ -93,18 +92,11 @@ export default class App extends Component {
                             newPost={this.handleClickNewPost}/>
                 </nav>
             </header>
-                <RoutePath  submit={this.handleRegister}
-                            changed={this.handleChange}
-                            onLogInClicked={this.handleLogIn}
-                            isUser={this.state.isUser}
-                            loading={this.state.loading}
+                <RoutePath  isUser={this.state.isUser}
                             isLogIn={this.state.isLogIn}
                             articlesList={this.state.articles}
                             allPosts={this.state.data}
-                            isNewPost={this.state.isNewPost}
-                            changePost={this.handlePost}
-                            submitPost={this.handleSubmitPost}
-                            printMessage={this.state.message}/>
+                            isNewPost={this.state.isNewPost}/>
             </div>
         )
     }

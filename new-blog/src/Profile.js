@@ -6,7 +6,7 @@ const Profile = (props) => {
         let time = Date(post.time)
         return (
         <div className="Article" key={post._id}>
-            <h2>{post.title}</h2>
+            <h1>{post.title}</h1>
             <h4>{post.author}</h4>
             <p><em>{time}</em></p>
             <p style={{
