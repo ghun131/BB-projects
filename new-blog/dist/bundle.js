@@ -11578,11 +11578,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57);
-/* harmony import */ var _NewPost__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(64);
+/* harmony import */ var _Home_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57);
+/* harmony import */ var _User_NewPost__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(64);
 /* harmony import */ var _Auth_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(120);
 /* harmony import */ var _Auth_LogIn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(246);
-/* harmony import */ var _Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(249);
+/* harmony import */ var _User_Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(65);
 
 
 
@@ -11596,7 +11596,7 @@ const routePath = props => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/",
-    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_Home__WEBPACK_IMPORTED_MODULE_3__["default"], {
       user: props.isUser,
       allPosts: props.allPosts,
       articlesUpdate: props.articlesList
@@ -11605,7 +11605,7 @@ const routePath = props => {
     path: "/api/new-post",
     render: () => props.isNewPost ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
       to: "/api/profile"
-    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewPost__WEBPACK_IMPORTED_MODULE_4__["default"], null)
+    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_NewPost__WEBPACK_IMPORTED_MODULE_4__["default"], null)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/register",
     render: () => props.isUser ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
@@ -11613,7 +11613,7 @@ const routePath = props => {
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_Register__WEBPACK_IMPORTED_MODULE_5__["default"], null)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/api/profile",
-    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Profile__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile__WEBPACK_IMPORTED_MODULE_7__["default"], {
       postInfo: props.post,
       articlesUpdate: props.articlesList
     })
@@ -11648,10 +11648,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Home_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(58);
 /* harmony import */ var _Home_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Home_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63);
-/* harmony import */ var _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_cat_theme_jpg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63);
+/* harmony import */ var _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Article__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(255);
 
 
 
@@ -11660,26 +11659,19 @@ __webpack_require__.r(__webpack_exports__);
 const Home = props => {
   const posts = props.allPosts.map(p => {
     const time = Date(p.time);
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      style: {
-        width: '80%',
-        margin: '10px auto',
-        padding: '10px',
-        textAlign: 'left'
-      },
-      key: p._id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      style: {
-        textAlign: 'left',
-        whiteSpace: 'pre-line'
-      }
-    }, p.content));
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      key: p._id,
+      title: p.title,
+      author: p.author,
+      time: time,
+      content: p.content
+    });
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "Home"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Brave New World!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     className: "Photo",
-    src: _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_3___default.a,
+    src: _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2___default.a,
     alt: "cat photo"
   }), posts);
 };
@@ -12316,7 +12308,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _NewPost_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65);
+/* harmony import */ var _NewPost_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(249);
 /* harmony import */ var _NewPost_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_NewPost_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(67);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(93);
@@ -12438,42 +12430,65 @@ NewPost.propTypes = {
 
 /***/ }),
 /* 65 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Article__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(66);
 
 
-var content = __webpack_require__(66);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
 
 
+const Profile = props => {
+  const articles = props.articlesUpdate.map(p => {
+    let time = Date(p.time);
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: p._id,
+      title: p.title,
+      author: p.author,
+      time: time,
+      content: p.content
+    });
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, sessionStorage.getItem('author')), "'s profile"), articles);
+};
 
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(61)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
+/* harmony default export */ __webpack_exports__["default"] = (Profile);
+Profile.propTypes = {
+  articlesUpdate: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object)
+};
 
 /***/ }),
 /* 66 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(60)(false);
-// imports
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-// module
-exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.NewPost input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.NewPost input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.NewPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
+const Article = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      width: '80%',
+      margin: '10px auto',
+      padding: '10px',
+      textAlign: 'left'
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    style: {
+      textAlign: 'left',
+      whiteSpace: 'pre-line'
+    }
+  }, props.content));
+};
 
-// exports
-
+/* harmony default export */ __webpack_exports__["default"] = (Article);
 
 /***/ }),
 /* 67 */
@@ -27458,37 +27473,28 @@ exports.push([module.i, ".LogIn {\r\n    text-align: center;\r\n}\r\n\r\n.LogIn 
 
 /***/ }),
 /* 249 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/***/ (function(module, exports, __webpack_require__) {
 
 
+var content = __webpack_require__(256);
 
-const Profile = props => {
-  const articles = props.articlesUpdate.map(post => {
-    let time = Date(post.time);
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "Article",
-      key: post._id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, post.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, post.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      style: {
-        textAlign: 'left',
-        whiteSpace: 'pre-line'
-      }
-    }, post.content));
-  });
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, sessionStorage.getItem('author')), "'s profile"), articles);
-};
+if(typeof content === 'string') content = [[module.i, content, '']];
 
-/* harmony default export */ __webpack_exports__["default"] = (Profile);
-Profile.propTypes = {
-  articlesUpdate: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object)
-};
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(61)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 /* 250 */
@@ -27641,6 +27647,48 @@ exports = module.exports = __webpack_require__(60)(false);
 
 // module
 exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: 'Lora', serif;\r\n}\r\n\r\n.App ul {\r\n    list-style: none;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.App li {\r\n    display: inline-block;\r\n}\r\n\r\n.App a {\r\n    text-decoration: none;\r\n    cursor: pointer;\r\n    padding: 10px 7px;\r\n    color: rgba(0, 0, 0, 0.76);\r\n}\r\n\r\n.App a:hover,\r\n.App a:active {\r\n    color: black;\r\n}\r\n\r\n.Nav {\r\n    text-align: left;\r\n}\r\n\r\n@media only screen and (min-width: 1100px) {\r\n    .App {\r\n        width: 1032px;\r\n        margin: 0 auto;\r\n    }\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 255 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const Article = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      width: '80%',
+      margin: '10px auto',
+      padding: '10px',
+      textAlign: 'left'
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    style: {
+      textAlign: 'left',
+      whiteSpace: 'pre-line'
+    }
+  }, props.content));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Article);
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.NewPost input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.NewPost input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.NewPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
 
 // exports
 

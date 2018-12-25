@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Home from './Home'
-import NewPost from './NewPost';
+import Home from './Home/Home';
+import NewPost from './User/NewPost';
 import Register from './Auth/Register';
 import LogIn from './Auth/LogIn';
-import Profile from './Profile';
+import Profile from './User/Profile';
 
 const routePath = (props) => {
     return (
