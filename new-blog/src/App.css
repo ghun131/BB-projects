@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    font-family: 'Lora', serif;
 }
 
 .App ul {
@@ -16,7 +17,7 @@
     text-decoration: none;
     cursor: pointer;
     padding: 10px 7px;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.76);
 }
 
 .App a:hover,

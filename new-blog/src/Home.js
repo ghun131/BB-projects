@@ -12,9 +12,7 @@ const Home = (props) => {
             width: '80%',
             margin: '10px auto',
             padding: '10px',
-            textAlign: 'left',
-            border: '1px solid black',
-            borderRadius: '5px'
+            textAlign: 'left'
         }} 
             key={p._id}>
                 <h2>{p.title}</h2>

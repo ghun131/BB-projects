@@ -11684,9 +11684,7 @@ const Home = props => {
         width: '80%',
         margin: '10px auto',
         padding: '10px',
-        textAlign: 'left',
-        border: '1px solid black',
-        borderRadius: '5px'
+        textAlign: 'left'
       },
       key: p._id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -11741,7 +11739,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".Article {\r\n    width: 80%;\r\n    margin: 10px auto;\r\n    padding: 10px;\r\n    text-align: left;\r\n    border: 1px solid black;\r\n    border-radius: 5px;\r\n}\r\n\r\n.Photo {\r\n    max-width: 100%;\r\n    height: auto;\r\n    padding-bottom: 20px;\r\n}", ""]);
+exports.push([module.i, ".Article {\r\n    width: 80%;\r\n    margin: 10px auto;\r\n    padding: 10px;\r\n    text-align: left;\r\n}\r\n\r\n.Photo {\r\n    max-width: 100%;\r\n    height: auto;\r\n    padding-bottom: 20px;\r\n}", ""]);
 
 // exports
 
@@ -16563,7 +16561,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".App {\r\n    text-align: center;\r\n}\r\n\r\n.App ul {\r\n    list-style: none;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.App li {\r\n    display: inline-block;\r\n}\r\n\r\n.App a {\r\n    text-decoration: none;\r\n    cursor: pointer;\r\n    padding: 10px 7px;\r\n    color: rgba(0, 0, 0, 0.54);\r\n}\r\n\r\n.App a:hover,\r\n.App a:active {\r\n    color: black;\r\n}\r\n\r\n.Nav {\r\n    text-align: left;\r\n}\r\n\r\n@media only screen and (min-width: 1100px) {\r\n    .App {\r\n        width: 1032px;\r\n        margin: 0 auto;\r\n    }\r\n}", ""]);
+exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: 'Lora', serif;\r\n}\r\n\r\n.App ul {\r\n    list-style: none;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n\r\n.App li {\r\n    display: inline-block;\r\n}\r\n\r\n.App a {\r\n    text-decoration: none;\r\n    cursor: pointer;\r\n    padding: 10px 7px;\r\n    color: rgba(0, 0, 0, 0.76);\r\n}\r\n\r\n.App a:hover,\r\n.App a:active {\r\n    color: black;\r\n}\r\n\r\n.Nav {\r\n    text-align: left;\r\n}\r\n\r\n@media only screen and (min-width: 1100px) {\r\n    .App {\r\n        width: 1032px;\r\n        margin: 0 auto;\r\n    }\r\n}", ""]);
 
 // exports
 
