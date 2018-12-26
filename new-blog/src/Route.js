@@ -14,10 +14,12 @@ const routePath = (props) => {
                 render={() => <Home user={props.isUser}
                                 allPosts={props.allPosts}
                                 articlesUpdate={props.articlesList}/>} />
+                                
             <Route path="/api/new-post" 
                 render={() => props.isNewPost? 
                                 <Redirect to="/api/profile" />
                                 : <NewPost />} />
+
             <Route path="/register" 
                 render={() => props.isUser?
                                 <Redirect to="/api/log-in" />
@@ -25,8 +27,7 @@ const routePath = (props) => {
             }/>
 
             <Route path="/api/profile" 
-                render={() => <Profile postInfo={props.post}
-                                    articlesUpdate={props.articlesList}/>} />
+                render={() => <Profile articlesUpdate={props.articlesList}/>} />
 
             <Route path="/log-in" 
                 render={() => props.isLogIn? 
@@ -41,12 +42,8 @@ export default routePath;
 
 Route.propTypes = {
     isNewPost: PropTypes.bool,
-    loading: PropTypes.bool,
-    post: PropTypes.objectOf(PropTypes.string),
     allPosts: PropTypes.arrayOf(PropTypes.object),
     articlesList: PropTypes.arrayOf(PropTypes.string),
     isUser: PropTypes.bool,
-    user: PropTypes.objectOf(PropTypes.string),
     isLogIn: PropTypes.bool,    
-    printMessage: PropTypes.string
 }

@@ -36,15 +36,19 @@ app.use('/api/log-out', logOut);
 //POST method for new post
 app.use('/api/new-post', newPost);
 
-//POST method find all posts of one author
+//POST method finds all posts of one author
 app.use('/api/profile', profile);
 
-app.use('*', async function (req, res) {
-    const indexFile = fs.readFileSync(path.join(__dirname, 'dist/index.html')).toString()
-    res.writeHead(200, {
-        'Content-Type': 'text/html; charset=utf-8'
-    })
-    res.end(indexFile)
-});
+app.use('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'))
+})
+
+// app.use('*', async function (req, res) {
+//     const indexFile = fs.readFileSync(path.join(__dirname, 'dist/index.html')).toString()
+//     res.writeHead(200, {
+//         'Content-Type': 'text/html; charset=utf-8'
+//     })
+//     res.end(indexFile)
+// });
 
 app.listen(3000 || process.env.PORT, () => console.log('Listening...'));

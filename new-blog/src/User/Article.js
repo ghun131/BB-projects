@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid'
 
 const Article = (props) => {
     return (
@@ -8,7 +9,17 @@ const Article = (props) => {
             padding: '10px',
             textAlign: 'left'
         }}>
-        <h1>{props.title}</h1>
+        <div>
+            <Grid container spacing={24}>
+                <Grid item xs={3}>
+                    <h1>{props.title}</h1>
+                </Grid>
+                <Grid item xs={6}></Grid>
+                <Grid item xs={3} style={{margin: "25px 0", cursor: "pointer"}}>                    
+                    <i className="fas fa-edit" ></i>
+                </Grid>
+            </Grid>
+        </div>
         <h4>{props.author}</h4>
         <p><em>{props.time}</em></p>
         <p style={{
