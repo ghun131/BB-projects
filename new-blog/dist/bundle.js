@@ -27533,7 +27533,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       this.setState({
         articles: articles
       });
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.delelte(`/profile/delete/${id}`, post[0]).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_4___default.a.delete(`/profile/delete/${id}`, post[0]).then(res => {
         console.log(res.data);
       }).catch(err => console.log(err.message));
     });

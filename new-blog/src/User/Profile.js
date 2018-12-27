@@ -28,7 +28,7 @@ class Profile extends React.Component {
         let index = articles.indexOf(post[0]);
         articles.splice(index, 1);
         this.setState({ articles: articles });
-        axios.delelte(`/profile/delete/${id}`, post[0])
+        axios.delete(`/profile/delete/${id}`, post[0])
             .then(res => {
                 console.log(res.data);
             })

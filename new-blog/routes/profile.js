@@ -6,11 +6,16 @@ const middleware = require('../middleware');
 router.get('/', middleware.checkToken, (req, res) => {
   const username = req.session.username;
   async function getUserPosts() {
-    const profile = await Post
+    try {
+      const profile = await Post
       .find({ author: username })
       .sort('-time');
 
       res.send(profile);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
   }
 
   getUserPosts()
@@ -18,15 +23,20 @@ router.get('/', middleware.checkToken, (req, res) => {
 
 router.put('/edit/:id', (req, res) => {
   async function updateUser() {
-    const post = await Post.findById(req.params.id);
+    try {
+      const post = await Post.findById(req.params.id);
 
-    if (req.body.data.title) {
-      post.content = req.body.data.content;
-      post.title = req.body.data.title;
-      const result = await post.save();
-      res.send(post);
-    } else {
-      res.send('Please enter your text!');
+      if (req.body.data.title) {
+        post.content = req.body.data.content;
+        post.title = req.body.data.title;
+        const result = await post.save();
+        res.send(post);
+      } else {
+        res.send('Please enter your text!');
+      }
+    }
+    catch(err) {
+      console.log(err.message)
     }
   }
 
@@ -34,7 +44,17 @@ router.put('/edit/:id', (req, res) => {
 })
 
 router.delete('/delete/:id', (req, res) => {
+  async function deletePost() {
+    try {
+      const post = await Post.findByIdAndDelete(req.params.id)
+      res.send(post);
+    }
+    catch(err) {
+      console.log(err.message);
+    }
+  }
 
+  deletePost()
 })
 
 module.exports = router
