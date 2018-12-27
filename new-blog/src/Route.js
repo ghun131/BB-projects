@@ -6,6 +6,7 @@ import NewPost from './User/NewPost';
 import Register from './Auth/Register';
 import LogIn from './Auth/LogIn';
 import Profile from './User/Profile';
+import EditPost from './User/EditPost';
 
 const routePath = (props) => {
     return (
@@ -15,7 +16,7 @@ const routePath = (props) => {
                                 allPosts={props.allPosts}
                                 articlesUpdate={props.articlesList}/>} />
                                 
-            <Route path="/api/new-post" 
+            <Route path="/new-post" 
                 render={() => props.isNewPost? 
                                 <Redirect to="/api/profile" />
                                 : <NewPost />} />
@@ -26,8 +27,16 @@ const routePath = (props) => {
                                 : <Register />
             }/>
 
-            <Route path="/api/profile" 
-                render={() => <Profile articlesUpdate={props.articlesList}/>} />
+            <Route exact path="/profile"
+                render={() => <Profile articlesUpdate={props.articlesList}
+                                        {...props}/>} />
+
+            <Route exact path="/profile/edit/:id" 
+                render={(history) => 
+                    <EditPost 
+                        history={history}
+                        articlesUpdate={props.articlesList}/>
+            } />
 
             <Route path="/log-in" 
                 render={() => props.isLogIn? 

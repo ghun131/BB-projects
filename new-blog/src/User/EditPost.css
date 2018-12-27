@@ -1,0 +1,65 @@
+.EditPost {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.EditPostWrapper {
+    width: 600px;
+    margin: 0px auto;
+}
+
+.EditPost input {
+    display: block;
+    margin: 10px auto;
+    width: 600px;
+    height: 40px;
+    padding: 5px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.EditPost textarea {
+    display: block;
+    margin: 10px auto;
+    width: 600px;
+    height: 300px;
+    padding: 10px;
+}
+
+.EditPost input::placeholder {
+    font-weight: 700;
+    font-size: 30px;
+    color: black;
+}
+
+.EditPost textarea::placeholder {
+    color: black;
+    font-size: 16px;
+}
+
+.EditPost input:focus::placeholder {
+    color: transparent;
+}
+
+.EditPost textarea:focus::placeholder {
+    color: transparent;
+}
+
+.Message {
+    color: red;
+    font-style: italic;
+    font-size: 20px;
+}
+
+.Button {
+    background-color: cyan;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.Button:hover {
+    background-color: green;
+    color: white;
+}

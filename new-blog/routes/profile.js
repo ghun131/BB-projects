@@ -16,12 +16,14 @@ router.get('/', middleware.checkToken, (req, res) => {
   getUserPosts()
 });
 
-router.put('/:id', (req, res) => {
+router.put('/edit/:id', (req, res) => {
   async function updateUser() {
     const post = await Post.findById(req.params.id);
 
-    if (req.body.content) {
-      post.content = req.body.content;
+    if (req.body.data.title) {
+      post.content = req.body.data.content;
+      post.title = req.body.data.title;
+      const result = await post.save();
       res.send(post);
     } else {
       res.send('Please enter your text!');

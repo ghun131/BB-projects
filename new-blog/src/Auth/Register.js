@@ -58,9 +58,6 @@ class Register extends React.Component {
                 if (this.state.loading) {
                         content = <Spinner />
                 } else if (this.state.isSignedUp) {
-                        // content = 
-                        //         <Route path='/api/register/congratulation' 
-                        //                 component={Congratulation} />
                         content = 
                         <Switch>
                                 <Route path='/register/congratulation' component={Congratulation} />

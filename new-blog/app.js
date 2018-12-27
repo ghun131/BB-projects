@@ -37,7 +37,7 @@ app.use('/api/log-out', logOut);
 app.use('/api/new-post', newPost);
 
 //POST method finds all posts of one author
-app.use('/api/profile', profile);
+app.use('/profile', profile);
 
 app.use('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'))
