@@ -97,10 +97,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 /* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
-/* harmony import */ var _NavBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(258);
+/* harmony import */ var _NavBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(261);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(94);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(261);
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(264);
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_6__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -11583,7 +11583,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Auth_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(243);
 /* harmony import */ var _Auth_LogIn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(247);
 /* harmony import */ var _User_Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(250);
-/* harmony import */ var _User_EditPost__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(255);
+/* harmony import */ var _User_EditPost__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(258);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 
@@ -27492,6 +27492,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Article__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(251);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(255);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(256);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_6__);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -27501,30 +27507,67 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+ // Import
+
+ // Import css
+
 class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
     super(...args);
 
     _defineProperty(this, "state", {
       title: '',
-      content: ''
+      content: '',
+      articles: []
     });
 
     _defineProperty(this, "handleEdit", id => {
       this.props.history.push(`/profile/edit/${id} `);
     });
 
-    _defineProperty(this, "handleDelete", id => {});
+    _defineProperty(this, "handleDelete", id => {
+      let articles = [...this.state.articles];
+      let post = articles.filter(p => p._id === id);
+      let index = articles.indexOf(post[0]);
+      articles.splice(index, 1);
+      this.setState({
+        articles: articles
+      });
+      axios__WEBPACK_IMPORTED_MODULE_4___default.a.delelte(`/profile/delete/${id}`, post[0]).then(res => {
+        console.log(res.data);
+      }).catch(err => console.log(err.message));
+    });
+
+    _defineProperty(this, "deleteAlert", id => {
+      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_5__["confirmAlert"])({
+        title: 'Confirm to delete',
+        message: 'Are you sure to delele this post.',
+        buttons: [{
+          label: 'Yes',
+          onClick: () => this.handleDelete(id)
+        }, {
+          label: 'No',
+          onClick: () => console.log('No')
+        }]
+      });
+    });
+  }
+
+  componentDidMount() {
+    let articles = this.props.articlesUpdate;
+    this.setState({
+      articles: articles
+    });
   }
 
   render() {
-    const content = this.props.articlesUpdate.map(p => {
+    const content = this.state.articles.map(p => {
       let time = Date(p.time);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
         key: p._id,
         date: time,
         edit: this.handleEdit,
-        alert: this.handleDelete
+        alert: this.deleteAlert
       }, p));
     });
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, sessionStorage.getItem('author')), "'s profile"), content);
@@ -27588,6 +27631,7 @@ const Article = props => {
     item: true,
     xs: 3,
     style: {
+      margin: '25px 0px',
       cursor: "pointer"
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_3___default.a, {
@@ -28089,6 +28133,289 @@ exports.default = _default;
 
 /***/ }),
 /* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+var _class, _temp2;
+
+exports.confirmAlert = confirmAlert;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(16);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactDom = __webpack_require__(6);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var ReactConfirmAlert = (_temp2 = _class = function (_Component) {
+  _inherits(ReactConfirmAlert, _Component);
+
+  function ReactConfirmAlert() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, ReactConfirmAlert);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ReactConfirmAlert.__proto__ || Object.getPrototypeOf(ReactConfirmAlert)).call.apply(_ref, [this].concat(args))), _this), _this.handleClickButton = function (button) {
+      if (button.onClick) button.onClick();
+
+      _this.close();
+    }, _this.close = function () {
+      removeBodyClass();
+      removeElementReconfirm();
+      removeSVGBlurReconfirm();
+    }, _this.keyboardClose = function (event) {
+      if (event.keyCode === 27) {
+        _this.close();
+      }
+    }, _this.componentDidMount = function () {
+      document.addEventListener('keydown', _this.keyboardClose, false);
+    }, _this.componentWillUnmount = function () {
+      document.removeEventListener('keydown', _this.keyboardClose, false);
+
+      _this.props.willUnmount();
+    }, _this.renderCustomUI = function () {
+      var _this$props = _this.props,
+          title = _this$props.title,
+          message = _this$props.message,
+          customUI = _this$props.customUI;
+      var dataCustomUI = {
+        title: title,
+        message: message,
+        onClose: _this.close
+      };
+      return customUI(dataCustomUI);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(ReactConfirmAlert, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props = this.props,
+          title = _props.title,
+          message = _props.message,
+          buttons = _props.buttons,
+          childrenElement = _props.childrenElement,
+          customUI = _props.customUI;
+      return _react2.default.createElement('div', {
+        className: 'react-confirm-alert-overlay'
+      }, _react2.default.createElement('div', {
+        className: 'react-confirm-alert'
+      }, customUI ? this.renderCustomUI() : _react2.default.createElement('div', {
+        className: 'react-confirm-alert-body'
+      }, title && _react2.default.createElement('h1', null, title), message, childrenElement(), _react2.default.createElement('div', {
+        className: 'react-confirm-alert-button-group'
+      }, buttons.map(function (button, i) {
+        return _react2.default.createElement('button', {
+          key: i,
+          onClick: function onClick() {
+            return _this2.handleClickButton(button);
+          }
+        }, button.label);
+      })))));
+    }
+  }]);
+
+  return ReactConfirmAlert;
+}(_react.Component), _class.propTypes = {
+  title: _propTypes2.default.string,
+  message: _propTypes2.default.string,
+  buttons: _propTypes2.default.array.isRequired,
+  childrenElement: _propTypes2.default.func,
+  customUI: _propTypes2.default.func,
+  willUnmount: _propTypes2.default.func
+}, _class.defaultProps = {
+  buttons: [{
+    label: 'Cancel',
+    onClick: function onClick() {
+      return null;
+    }
+  }, {
+    label: 'Confirm',
+    onClick: function onClick() {
+      return null;
+    }
+  }],
+  childrenElement: function childrenElement() {
+    return null;
+  },
+  willUnmount: function willUnmount() {
+    return null;
+  }
+}, _temp2);
+exports.default = ReactConfirmAlert;
+
+function createSVGBlurReconfirm() {
+  // If has svg ignore to create the svg
+  var svg = document.getElementById('react-confirm-alert-firm-svg');
+  if (svg) return;
+  var svgNS = 'http://www.w3.org/2000/svg';
+  var feGaussianBlur = document.createElementNS(svgNS, 'feGaussianBlur');
+  feGaussianBlur.setAttribute('stdDeviation', '0.7');
+  var filter = document.createElementNS(svgNS, 'filter');
+  filter.setAttribute('id', 'gaussian-blur');
+  filter.appendChild(feGaussianBlur);
+  var svgElem = document.createElementNS(svgNS, 'svg');
+  svgElem.setAttribute('id', 'react-confirm-alert-firm-svg');
+  svgElem.setAttribute('class', 'react-confirm-alert-svg');
+  svgElem.appendChild(filter);
+  document.body.appendChild(svgElem);
+}
+
+function removeSVGBlurReconfirm() {
+  var svg = document.getElementById('react-confirm-alert-firm-svg');
+  svg.parentNode.removeChild(svg);
+  document.body.children[0].classList.remove('react-confirm-alert-blur');
+}
+
+function createElementReconfirm(properties) {
+  var divTarget = document.getElementById('react-confirm-alert');
+
+  if (divTarget) {
+    // Rerender - the mounted ReactConfirmAlert
+    (0, _reactDom.render)(_react2.default.createElement(ReactConfirmAlert, properties), divTarget);
+  } else {
+    // Mount the ReactConfirmAlert component
+    document.body.children[0].classList.add('react-confirm-alert-blur');
+    divTarget = document.createElement('div');
+    divTarget.id = 'react-confirm-alert';
+    document.body.appendChild(divTarget);
+    (0, _reactDom.render)(_react2.default.createElement(ReactConfirmAlert, properties), divTarget);
+  }
+}
+
+function removeElementReconfirm() {
+  var target = document.getElementById('react-confirm-alert');
+  (0, _reactDom.unmountComponentAtNode)(target);
+  target.parentNode.removeChild(target);
+}
+
+function addBodyClass() {
+  document.body.classList.add('react-confirm-alert-body-element');
+}
+
+function removeBodyClass() {
+  document.body.classList.remove('react-confirm-alert-body-element');
+}
+
+function confirmAlert(properties) {
+  addBodyClass();
+  createSVGBlurReconfirm();
+  createElementReconfirm(properties);
+}
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(257);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(61)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "body.react-confirm-alert-body-element {\n  overflow: hidden;\n}\n\n.react-confirm-alert-blur {\n  filter: url(#gaussian-blur);\n  filter: blur(2px);\n  -webkit-filter: blur(2px);\n}\n\n.react-confirm-alert-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 99;\n  background: rgba(255, 255, 255, 0.9);\n  display: -webkit-flex;\n  display: -moz-flex;\n  display: -ms-flex;\n  display: -o-flex;\n  display: flex;\n  justify-content: center;\n  -ms-align-items: center;\n  align-items: center;\n  opacity: 0;\n  -webkit-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;\n  -moz-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;\n  -o-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;\n  animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;\n}\n\n.react-confirm-alert-body {\n  font-family: Arial, Helvetica, sans-serif;\n  width: 400px;\n  padding: 30px;\n  text-align: left;\n  background: #fff;\n  border-radius: 10px;\n  box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);\n  color: #666;\n}\n\n.react-confirm-alert-svg {\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n\n.react-confirm-alert-body > h1 {\n  margin-top: 0;\n}\n\n.react-confirm-alert-body > h3 {\n  margin: 0;\n  font-size: 16px;\n}\n\n.react-confirm-alert-button-group {\n  display: -webkit-flex;\n  display: -moz-flex;\n  display: -ms-flex;\n  display: -o-flex;\n  display: flex;\n  justify-content: flex-start;\n  margin-top: 20px;\n}\n\n.react-confirm-alert-button-group > button {\n  outline: none;\n  background: #333;\n  border: none;\n  display: inline-block;\n  padding: 6px 18px;\n  color: #eee;\n  margin-right: 10px;\n  border-radius: 5px;\n  font-size: 12px;\n  cursor: pointer;\n}\n\n@-webkit-keyframes react-confirm-alert-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@-moz-keyframes react-confirm-alert-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@-o-keyframes react-confirm-alert-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes react-confirm-alert-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 258 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28097,7 +28424,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _EditPost_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(256);
+/* harmony import */ var _EditPost_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(259);
 /* harmony import */ var _EditPost_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_EditPost_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(68);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94);
@@ -28223,11 +28550,11 @@ EditPost.propTypes = {
 };
 
 /***/ }),
-/* 256 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(257);
+var content = __webpack_require__(260);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -28248,7 +28575,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 257 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(60)(false);
@@ -28262,14 +28589,14 @@ exports.push([module.i, ".EditPost {\r\n    text-align: center;\r\n    padding-t
 
 
 /***/ }),
-/* 258 */
+/* 261 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _NavBar_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(259);
+/* harmony import */ var _NavBar_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(262);
 /* harmony import */ var _NavBar_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_NavBar_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 
@@ -28339,11 +28666,11 @@ const NavBar = props => {
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
 
 /***/ }),
-/* 259 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(260);
+var content = __webpack_require__(263);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -28364,7 +28691,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 260 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(60)(false);
@@ -28378,11 +28705,11 @@ exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\
 
 
 /***/ }),
-/* 261 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(262);
+var content = __webpack_require__(265);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -28403,7 +28730,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 262 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(60)(false);

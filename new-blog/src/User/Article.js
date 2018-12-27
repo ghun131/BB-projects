@@ -20,7 +20,7 @@ const Article = (props) => {
                 <Grid item xs={6}></Grid>
                 <Grid 
                     item xs={3} 
-                    style={{ cursor: "pointer" }}>
+                    style={{ margin: '25px 0px', cursor: "pointer" }}>
                     <Button size="small" onClick={() => props.edit(_id)}>
                         <i className="fas fa-edit fa-lg" ></i>
                     </Button>

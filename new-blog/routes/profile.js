@@ -33,4 +33,8 @@ router.put('/edit/:id', (req, res) => {
   updateUser()
 })
 
+router.delete('/delete/:id', (req, res) => {
+
+})
+
 module.exports = router
