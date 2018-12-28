@@ -7,6 +7,7 @@ let Post = new Schema({
     author: {type: String, required: true, max: 100},
     email: {type: String, required: true},
     content: {type: String, required: true, max: 3000},
+    tags: {type: Array, require: true},
     time: {type: String}
 })
 

@@ -3,9 +3,8 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.post('/', middleware.checkToken, (req, res) => {
-  const { author, title, content, email } = req.body.post;
-  console.log(req.body.post)
+router.post('/',  (req, res) => {
+  const { author, title, content, email, tags } = req.body.post;
 
   async function createPost() {
     let today = new Date();
@@ -14,14 +13,16 @@ router.post('/', middleware.checkToken, (req, res) => {
       title: title,
       email: email,
       content: content,
+      tags: tags,
       time: Date.parse(today)
     })
 
     try {
       await newPost.save();
+      res.send(newPost);
   }
     catch (err) {
-      console.log(err)
+      console.log(err.message)
     }
   }
 

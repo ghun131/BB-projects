@@ -5,8 +5,8 @@ import Home from './Home/Home';
 import NewPost from './User/NewPost';
 import Register from './Auth/Register';
 import LogIn from './Auth/LogIn';
-import Profile from './User/Profile';
-import EditPost from './User/EditPost';
+import Profile from './User/Profile/Profile';
+import EditPost from './User/Profile/EditPost';
 
 const routePath = (props) => {
     return (

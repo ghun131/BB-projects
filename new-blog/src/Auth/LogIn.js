@@ -15,11 +15,11 @@ class LogIn extends Component {
     }
 
     componentDidMount() {
-        const email = sessionStorage.getItem('email')
+        const email = localStorage.getItem('email')
         if (email) {
             const user = {
                 email: email,
-                password: sessionStorage.getItem('password')
+                password: localStorage.getItem('password')
             }
             this.postUserData(user);            
         }
@@ -29,10 +29,10 @@ class LogIn extends Component {
         axios.post('/api/log-in', {user})
             .then(res => {
                 if (res.data.success) {
-                    sessionStorage.setItem('email', user.email);
-                    sessionStorage.setItem('password', user.password);
-                    sessionStorage.setItem('author', res.data.package.username);
-                    sessionStorage.setItem('token', res.data.package.token);
+                    localStorage.setItem('email', user.email);
+                    localStorage.setItem('password', user.password);
+                    localStorage.setItem('author', res.data.package.username);
+                    localStorage.setItem('token', res.data.package.token);
                     console.log(res.data.package)
                     this.setState({ 
                         message: res.data.message, 
@@ -80,13 +80,13 @@ class LogIn extends Component {
                         <label htmlFor="id">Email: </label>
                         <input  type="text" 
                                 name="email"
-                                defaultValue={sessionStorage.getItem('email')}
+                                defaultValue={localStorage.getItem('email')}
                                 ref={this.emailRef}/>
 
                         <label htmlFor="pass">Password: </label>
                         <input  type="password" 
                                 name="password"
-                                defaultValue={sessionStorage.getItem('password')}
+                                defaultValue={localStorage.getItem('password')}
                                 ref={this.passRef}/>
                         
                         <input style={{display: "inline", width: "10%"}} type="checkbox"/> Forget your password?

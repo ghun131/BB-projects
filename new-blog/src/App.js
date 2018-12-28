@@ -20,10 +20,10 @@ export default class App extends Component {
     componentDidMount = () => {
         let user = {};
 
-        //get data from sessionStorage for not losing data after refreshing page
-        const email = sessionStorage.getItem('email');
-        const password = sessionStorage.getItem('password');
-        const token = sessionStorage.getItem('token');
+        //get data from localStorage for not losing data after refreshing page
+        const email = localStorage.getItem('email');
+        const password = localStorage.getItem('password');
+        const token = localStorage.getItem('token');
         if( email && password) {
             user.email = email;
             user.password = password;
@@ -70,7 +70,7 @@ export default class App extends Component {
                         token: '',
                         isNewPost: false,
                         articles: [] });
-        window.sessionStorage.clear();
+        window.localStorage.clear();
         axios.post('/api/log-out', payload)
     }
 

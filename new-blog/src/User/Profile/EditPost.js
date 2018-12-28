@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './EditPost.css';
-import Spinner from '../Spinner';
+import Spinner from '../../Spinner';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button'

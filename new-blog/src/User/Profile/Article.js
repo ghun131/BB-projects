@@ -6,13 +6,7 @@ import Button from '@material-ui/core/Button'
 const Article = (props) => {
     const {_id, author, content, title} = {...props}
     return (
-        <div style={{
-            width: '80%',
-            margin: '10px auto',
-            padding: '10px',
-            textAlign: 'left'
-        }}>
-        <div>
+        <div style={{ textAlign: 'left'}}>
             <Grid container spacing={24}>
                 <Grid item xs={3}>
                     <h1>{title}</h1>
@@ -29,12 +23,11 @@ const Article = (props) => {
                     </Button>
                 </Grid>
             </Grid>
-        </div>
-        <h4>{author}</h4>
-        <p><em>{props.date}</em></p>
-        <p style={{
-            textAlign: 'left',
-            whiteSpace: 'pre-line'}}>{content}</p>
+            <h4>{author}</h4>
+            <p><em>{props.date}</em></p>
+            <p style={{
+                textAlign: 'left',
+                whiteSpace: 'pre-line'}}>{content}</p>
         </div>
     )
 }

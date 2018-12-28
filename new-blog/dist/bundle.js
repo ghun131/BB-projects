@@ -97,10 +97,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 /* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
-/* harmony import */ var _NavBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(261);
+/* harmony import */ var _NavBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(263);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(94);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(264);
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(266);
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_6__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -127,11 +127,11 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     });
 
     _defineProperty(this, "componentDidMount", () => {
-      let user = {}; //get data from sessionStorage for not losing data after refreshing page
+      let user = {}; //get data from localStorage for not losing data after refreshing page
 
-      const email = sessionStorage.getItem('email');
-      const password = sessionStorage.getItem('password');
-      const token = sessionStorage.getItem('token');
+      const email = localStorage.getItem('email');
+      const password = localStorage.getItem('password');
+      const token = localStorage.getItem('token');
 
       if (email && password) {
         user.email = email;
@@ -190,7 +190,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         isNewPost: false,
         articles: []
       });
-      window.sessionStorage.clear();
+      window.localStorage.clear();
       axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/api/log-out', payload);
     });
 
@@ -11582,8 +11582,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _User_NewPost__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(65);
 /* harmony import */ var _Auth_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(243);
 /* harmony import */ var _Auth_LogIn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(247);
-/* harmony import */ var _User_Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(250);
-/* harmony import */ var _User_EditPost__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(258);
+/* harmony import */ var _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(250);
+/* harmony import */ var _User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(260);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 
@@ -11618,13 +11618,13 @@ const routePath = props => {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/profile",
-    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile__WEBPACK_IMPORTED_MODULE_7__["default"], _extends({
+    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_7__["default"], _extends({
       articlesUpdate: props.articlesList
     }, props))
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/profile/edit/:id",
-    render: history => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_EditPost__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    render: history => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_8__["default"], {
       history: history,
       articlesUpdate: props.articlesList
     })
@@ -27340,10 +27340,10 @@ class LogIn extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         user
       }).then(res => {
         if (res.data.success) {
-          sessionStorage.setItem('email', user.email);
-          sessionStorage.setItem('password', user.password);
-          sessionStorage.setItem('author', res.data.package.username);
-          sessionStorage.setItem('token', res.data.package.token);
+          localStorage.setItem('email', user.email);
+          localStorage.setItem('password', user.password);
+          localStorage.setItem('author', res.data.package.username);
+          localStorage.setItem('token', res.data.package.token);
           console.log(res.data.package);
           this.setState({
             message: res.data.message,
@@ -27381,12 +27381,12 @@ class LogIn extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   componentDidMount() {
-    const email = sessionStorage.getItem('email');
+    const email = localStorage.getItem('email');
 
     if (email) {
       const user = {
         email: email,
-        password: sessionStorage.getItem('password')
+        password: localStorage.getItem('password')
       };
       this.postUserData(user);
     }
@@ -27409,14 +27409,14 @@ class LogIn extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       }, "Email: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "email",
-        defaultValue: sessionStorage.getItem('email'),
+        defaultValue: localStorage.getItem('email'),
         ref: this.emailRef
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "pass"
       }, "Password: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         name: "password",
-        defaultValue: sessionStorage.getItem('password'),
+        defaultValue: localStorage.getItem('password'),
         ref: this.passRef
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         style: {
@@ -27491,16 +27491,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Article__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(251);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(255);
-/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(256);
-/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _Heading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(255);
+/* harmony import */ var _ProfileNavBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(256);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(13);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(94);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(257);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(258);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_8__);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -27533,13 +27537,13 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       this.setState({
         articles: articles
       });
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.delete(`/profile/delete/${id}`, post[0]).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.delete(`/profile/delete/${id}`, post[0]).then(res => {
         console.log(res.data);
       }).catch(err => console.log(err.message));
     });
 
     _defineProperty(this, "deleteAlert", id => {
-      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_5__["confirmAlert"])({
+      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_7__["confirmAlert"])({
         title: 'Confirm to delete',
         message: 'Are you sure to delele this post.',
         buttons: [{
@@ -27570,12 +27574,19 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         alert: this.deleteAlert
       }, p));
     });
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, sessionStorage.getItem('author')), "'s profile"), content);
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        width: '80%',
+        margin: '10px auto',
+        padding: '10px',
+        textAlign: 'left'
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Heading__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProfileNavBar__WEBPACK_IMPORTED_MODULE_4__["default"], null), content);
   }
 
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Profile));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["withRouter"])(Profile));
 Profile.propTypes = {
   articlesUpdate: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object)
 };
@@ -27613,12 +27624,9 @@ const Article = props => {
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
-      width: '80%',
-      margin: '10px auto',
-      padding: '10px',
       textAlign: 'left'
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default.a, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default.a, {
     container: true,
     spacing: 24
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default.a, {
@@ -27644,7 +27652,7 @@ const Article = props => {
     onClick: () => props.alert(_id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-trash-alt fa-lg"
-  }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     style: {
       textAlign: 'left',
       whiteSpace: 'pre-line'
@@ -28133,6 +28141,61 @@ exports.default = _default;
 
 /***/ }),
 /* 255 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(252);
+/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(121);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+class Heading extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  render() {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      container: true,
+      spacing: 24
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      item: true,
+      xs: 3
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, localStorage.getItem('author')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      variant: "outlined"
+    }, "Edit profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      item: true,
+      xs: 6
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      item: true,
+      xs: 3
+    }, "Avatar")));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Heading);
+
+/***/ }),
+/* 256 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const ProfileNavBar = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Your feed and your posts");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ProfileNavBar);
+
+/***/ }),
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28376,11 +28439,11 @@ function confirmAlert(properties) {
 }
 
 /***/ }),
-/* 256 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(257);
+var content = __webpack_require__(259);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -28401,7 +28464,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 257 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(60)(false);
@@ -28415,7 +28478,7 @@ exports.push([module.i, "body.react-confirm-alert-body-element {\n  overflow: hi
 
 
 /***/ }),
-/* 258 */
+/* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28424,7 +28487,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _EditPost_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(259);
+/* harmony import */ var _EditPost_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(261);
 /* harmony import */ var _EditPost_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_EditPost_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(68);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94);
@@ -28550,11 +28613,11 @@ EditPost.propTypes = {
 };
 
 /***/ }),
-/* 259 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(260);
+var content = __webpack_require__(262);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -28575,7 +28638,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 260 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(60)(false);
@@ -28589,14 +28652,14 @@ exports.push([module.i, ".EditPost {\r\n    text-align: center;\r\n    padding-t
 
 
 /***/ }),
-/* 261 */
+/* 263 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _NavBar_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(262);
+/* harmony import */ var _NavBar_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(264);
 /* harmony import */ var _NavBar_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_NavBar_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 
@@ -28666,45 +28729,6 @@ const NavBar = props => {
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
 
 /***/ }),
-/* 262 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(263);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(61)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-/* 263 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(60)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.Search {\r\n    display: block;\r\n    margin: auto 15px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Bell {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Upgrade {\r\n    display: block;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    border: 1px solid #3F3F3F;\r\n    cursor: pointer;\r\n}\r\n\r\n.Upgrade:hover {\r\n    border-color: black;\r\n}", ""]);
-
-// exports
-
-
-/***/ }),
 /* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28731,6 +28755,45 @@ if(false) {}
 
 /***/ }),
 /* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.Search {\r\n    display: block;\r\n    margin: auto 15px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Bell {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Upgrade {\r\n    display: block;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    border: 1px solid #3F3F3F;\r\n    cursor: pointer;\r\n}\r\n\r\n.Upgrade:hover {\r\n    border-color: black;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 266 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(267);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(61)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(60)(false);

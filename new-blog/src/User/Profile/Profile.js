@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Article from './Article';
+import Heading from './Heading';
+import ProfileNavBar from './ProfileNavBar';
 import { withRouter} from 'react-router-dom';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -66,8 +68,14 @@ class Profile extends React.Component {
         });
         
         return (
-            <div>
-                <h1><em>{sessionStorage.getItem('author')}</em>'s profile</h1>
+            <div style={{
+                width: '80%',
+                margin: '10px auto',
+                padding: '10px',
+                textAlign: 'left'
+            }}>
+                <Heading />
+                <ProfileNavBar />
                 {content}
             </div>
         )
