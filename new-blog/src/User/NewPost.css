@@ -55,6 +55,7 @@
 }
 
 .Message {
+    padding: 5px;
     color: red;
     font-style: italic;
     font-size: 20px;

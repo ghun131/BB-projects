@@ -12376,42 +12376,59 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       loading: false
     });
 
+    _defineProperty(this, "clearMessage", () => {
+      setTimeout(() => {
+        this.setState({
+          message: ''
+        });
+      }, 4000);
+    });
+
     _defineProperty(this, "handleSubmitPost", e => {
       e.preventDefault();
+      const title = this.titleRef.current.value;
+      const content = this.contentRef.current.value;
+      const tagsString = this.tagsRef.current.value;
+      const tags = tagsString.split(",");
       const token = localStorage.getItem('token');
       const post = {
         author: localStorage.getItem('author'),
         email: localStorage.getItem('email'),
-        title: this.titleRef.current.value,
-        content: this.contentRef.current.value
+        title: title,
+        content: content,
+        tags: tags
       };
       this.setState({
         loading: true
       });
-      console.log('submit post');
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/new-post', {
-        post
-      }).then(res => {
-        console.log(res.data);
 
-        if (res.data.message) {
-          this.setState({
-            message: res.data.message
-          });
-          setTimeout(() => {
+      if (!title || !content || !tagsString) {
+        this.setState({
+          message: 'Please don\'t leave anything empty!',
+          loading: false
+        });
+        this.clearMessage();
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/new-post', {
+          post
+        }).then(res => {
+          console.log(res.data);
+
+          if (res.data.message) {
             this.setState({
-              message: ''
+              message: res.data.message
             });
-          }, 4000);
-        } else {
-          this.setState({
-            loading: false
-          });
-        }
-      }).catch(error => console.log(error));
-      this.props.history.push('/');
-      window.location.reload();
+            this.clearMessage();
+          } else {
+            this.setState({
+              loading: false
+            });
+          }
+        }).catch(error => console.log(error));
+        this.props.history.push('/');
+        window.location.reload();
+      }
     });
   }
 
@@ -12446,9 +12463,7 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         rows: "10",
         ref: this.contentRef,
         placeholder: "What do you think...?"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "Message"
-      }, this.state.message), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "tags",
         className: "Tags",
@@ -12457,7 +12472,9 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         },
         ref: this.tagsRef,
         placeholder: "Separate different tags with semi-colon."
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "Message"
+      }, this.state.message), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
         variant: "contained",
         color: "secondary",
         type: "submit",
@@ -12509,7 +12526,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.Title {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.Tags {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 30px;\r\n    padding: 5px;\r\n    font-size: 15px;\r\n    font-weight: 300;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.Title input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.Title input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
+exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.Title {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.Tags {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 30px;\r\n    padding: 5px;\r\n    font-size: 15px;\r\n    font-weight: 300;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.Title input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.Title input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    padding: 5px;\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
 
 // exports
 

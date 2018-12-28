@@ -16,33 +16,51 @@ class NewPost extends React.Component {
         loading: false
     }
 
+    clearMessage = () => {
+        setTimeout(() => {
+            this.setState({ message: ''})
+        }, 4000)
+    }
+
     handleSubmitPost = (e) => {
         e.preventDefault();
+        const title = this.titleRef.current.value;
+        const content = this.contentRef.current.value;
+        const tagsString = this.tagsRef.current.value;
+        const tags = tagsString.split(",");
 
         const token = localStorage.getItem('token');
         const post = {
             author: localStorage.getItem('author'),
             email: localStorage.getItem('email'),
-            title: this.titleRef.current.value,
-            content: this.contentRef.current.value
+            title: title,
+            content: content,
+            tags: tags
         }
+
         this.setState({ loading: true });
-        console.log('submit post');
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        axios.post('/api/new-post', {post})
-            .then(res => {
-                console.log(res.data);
-                if (res.data.message) {
-                    this.setState({ message: res.data.message })
-                    setTimeout(() => {
-                        this.setState({ message: ''})
-                    }, 4000)
-                } else {
-                    this.setState({ loading: false });
-                }
-            }).catch(error => console.log(error));
-        this.props.history.push('/');
-        window.location.reload();
+        if ( !title || !content || !tagsString) {
+            this.setState({ 
+                message: 'Please don\'t leave anything empty!',
+                loading: false
+            })
+            this.clearMessage();
+        }
+        else {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            axios.post('/api/new-post', {post})
+                .then(res => {
+                    console.log(res.data);
+                    if (res.data.message) {
+                        this.setState({ message: res.data.message })
+                        this.clearMessage()
+                    } else {
+                        this.setState({ loading: false });
+                    }
+                }).catch(error => console.log(error));
+            this.props.history.push('/');
+            window.location.reload();
+        }
     }
 
     render() {
@@ -69,7 +87,6 @@ class NewPost extends React.Component {
                                     cols="30" rows="10" 
                                     ref={this.contentRef}
                                     placeholder="What do you think...?"></textarea>
-                        <div className="Message">{this.state.message}</div>
 
                         <input  type="text"
                                 name="tags"
@@ -77,6 +94,8 @@ class NewPost extends React.Component {
                                 style={{fontWeight: "300"}}
                                 ref={this.tagsRef}
                                 placeholder="Separate different tags with semi-colon."/>
+
+                        <div className="Message">{this.state.message}</div>
 
                         <Button 
                             variant="contained"
