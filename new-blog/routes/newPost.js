@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.post('/',  (req, res) => {
+router.post('/', middleware.checkToken, (req, res) => {
   const { author, title, content, email, tags } = req.body.post;
 
   async function createPost() {

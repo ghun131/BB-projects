@@ -12369,6 +12369,8 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "contentRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
+    _defineProperty(this, "tagsRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
     _defineProperty(this, "state", {
       message: '',
       loading: false
@@ -12434,6 +12436,7 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       }, sessionStorage.getItem('author')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "title",
+        className: "Title",
         ref: this.titleRef,
         placeholder: "Title..."
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
@@ -12445,7 +12448,16 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         placeholder: "What do you think...?"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Message"
-      }, this.state.message), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
+      }, this.state.message), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "tags",
+        className: "Tags",
+        style: {
+          fontWeight: "300"
+        },
+        ref: this.tagsRef,
+        placeholder: "Separate different tags with semi-colon."
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
         variant: "contained",
         color: "secondary",
         type: "submit",
@@ -12497,7 +12509,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.NewPost input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.NewPost input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.NewPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
+exports.push([module.i, ".NewPost {\r\n    text-align: center;\r\n}\r\n\r\n.NewPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.Title {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.Tags {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 30px;\r\n    padding: 5px;\r\n    font-size: 15px;\r\n    font-weight: 300;\r\n}\r\n\r\n.NewPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.Title input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.NewPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.Title input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.NewPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
 
 // exports
 

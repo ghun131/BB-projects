@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 class NewPost extends React.Component {
     titleRef = React.createRef();
     contentRef = React.createRef();
+    tagsRef = React.createRef();
 
     state = {
         message: '',
@@ -59,6 +60,7 @@ class NewPost extends React.Component {
                         
                         <input  type="text"
                                 name="title"
+                                className="Title"
                                 ref={this.titleRef}
                                 placeholder="Title..."/>
 
@@ -68,6 +70,13 @@ class NewPost extends React.Component {
                                     ref={this.contentRef}
                                     placeholder="What do you think...?"></textarea>
                         <div className="Message">{this.state.message}</div>
+
+                        <input  type="text"
+                                name="tags"
+                                className="Tags"
+                                style={{fontWeight: "300"}}
+                                ref={this.tagsRef}
+                                placeholder="Separate different tags with semi-colon."/>
 
                         <Button 
                             variant="contained"
