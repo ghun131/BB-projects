@@ -11670,9 +11670,7 @@ const Home = props => {
     const time = Date(p.time);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
       key: p._id
-    }, p, {
-      time: time
-    }));
+    }, p));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "Home"
@@ -12326,9 +12324,11 @@ const Article = props => {
   const {
     title,
     author,
-    content
+    content,
+    time
   } = _objectSpread({}, props);
 
+  let displayTime = new Date(parseInt(time)).toString();
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       width: '80%',
@@ -12336,7 +12336,7 @@ const Article = props => {
       padding: '10px',
       textAlign: 'left'
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, displayTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     style: {
       textAlign: 'left',
       whiteSpace: 'pre-line'
@@ -27584,7 +27584,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       let index = articles.indexOf(post[0]);
       articles.splice(index, 1);
       this.setState({
-        articles: articles
+        articles
       });
       axios__WEBPACK_IMPORTED_MODULE_6___default.a.delete(`/profile/delete/${id}`, post[0]).then(res => {
         console.log(res.data);
@@ -27609,16 +27609,14 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   componentDidMount() {
     let articles = this.props.articlesUpdate;
     this.setState({
-      articles: articles
+      articles
     });
   }
 
   render() {
     const content = this.state.articles.map(p => {
-      let time = Date(p.time);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
         key: p._id,
-        date: time,
         edit: this.handleEdit,
         alert: this.deleteAlert
       }, p));
@@ -27671,9 +27669,11 @@ const Article = props => {
     _id,
     author,
     content,
-    title
+    title,
+    time
   } = _objectSpread({}, props);
 
+  let displayTime = new Date(parseInt(time)).toString();
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       textAlign: 'left'
@@ -27701,7 +27701,7 @@ const Article = props => {
     onClick: () => props.alert(_id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-trash-alt fa-lg"
-  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, displayTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     style: {
       textAlign: 'left',
       whiteSpace: 'pre-line'
@@ -28221,13 +28221,25 @@ class Heading extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       spacing: 24
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
       item: true,
-      xs: 3
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, localStorage.getItem('author')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2___default.a, {
-      variant: "outlined"
+      xs: 9,
+      style: {
+        display: "flex",
+        alignItems: "center"
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      style: {
+        marginRight: "20px"
+      }
+    }, localStorage.getItem('author')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      variant: "outlined",
+      disableRipple: true,
+      style: {
+        width: "100px",
+        height: "30px",
+        padding: "0 8px",
+        textTransform: "none"
+      }
     }, "Edit profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      item: true,
-      xs: 6
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
       item: true,
       xs: 3
     }, "Avatar")));
@@ -28245,10 +28257,16 @@ class Heading extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var _Profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(250);
+
+
 
 
 const ProfileNavBar = props => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Your feed and your posts");
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/profile"
+  }, "Your posts"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ProfileNavBar);

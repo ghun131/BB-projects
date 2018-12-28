@@ -33,8 +33,7 @@ const routePath = (props) => {
 
             <Route exact path="/profile/edit/:id" 
                 render={(history) => 
-                    <EditPost 
-                        history={history}
+                    <EditPost history={history}
                         articlesUpdate={props.articlesList}/>
             } />
 

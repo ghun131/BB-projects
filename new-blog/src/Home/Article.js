@@ -2,7 +2,9 @@ import React from 'react';
 import Chip from '@material-ui/core/Chip';
 
 const Article = (props) => {
-    const {title, author, content} = {...props}
+    const {title, author, content, time} = {...props}
+    let displayTime = new Date(parseInt(time)).toString();
+
     return (
         <div style={{
             width: '80%',
@@ -12,7 +14,7 @@ const Article = (props) => {
         }}>
             <h1>{title}</h1>
             <h4>{author}</h4>
-            <p><em>{props.time}</em></p>
+            <p><em>{displayTime}</em></p>
             <p style={{
                 textAlign: 'left',
                 whiteSpace: 'pre-line'}}>{content}</p>

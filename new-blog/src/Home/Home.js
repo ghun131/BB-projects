@@ -7,12 +7,7 @@ const Home = (props) => {
     const posts = props.allPosts.map(p => {
         const time = Date(p.time);
 
-        return (
-        <Article 
-            key={p._id} 
-            {...p}
-            time={time}/>
-        )
+        return <Article key={p._id} {...p}/>
     })
 
     return (

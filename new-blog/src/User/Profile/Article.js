@@ -5,7 +5,8 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
 const Article = (props) => {
-    const {_id, author, content, title} = {...props}
+    const {_id, author, content, title, time} = {...props}
+    let displayTime = new Date(parseInt(time)).toString();
     return (
         <div style={{ textAlign: 'left'}}>
             <Grid container spacing={24}>
@@ -24,7 +25,7 @@ const Article = (props) => {
                 </Grid>
             </Grid>
             <h4>{author}</h4>
-            <p><em>{props.date}</em></p>
+            <p><em>{displayTime}</em></p>
             <p style={{
                 textAlign: 'left',
                 whiteSpace: 'pre-line'}}>{content}</p>

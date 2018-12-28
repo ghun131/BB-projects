@@ -17,7 +17,7 @@ class Profile extends React.Component {
 
     componentDidMount() {
         let articles = this.props.articlesUpdate;
-        this.setState({ articles: articles})
+        this.setState({ articles })
     }
 
     handleEdit = (id) => {
@@ -29,7 +29,7 @@ class Profile extends React.Component {
         let post = articles.filter(p => p._id === id);
         let index = articles.indexOf(post[0]);
         articles.splice(index, 1);
-        this.setState({ articles: articles });
+        this.setState({ articles });
         axios.delete(`/profile/delete/${id}`, post[0])
             .then(res => {
                 console.log(res.data);
@@ -56,11 +56,9 @@ class Profile extends React.Component {
 
     render() {
         const content = this.state.articles.map(p => {  
-            let time = Date(p.time)
             return (
                 <Article 
                     key={p._id} 
-                    date={time}
                     edit={this.handleEdit}
                     alert={this.deleteAlert}
                     {...p}/>
