@@ -8,10 +8,9 @@ const Article = (props) => {
     return (
         <div style={{ textAlign: 'left'}}>
             <Grid container spacing={24}>
-                <Grid item xs={3}>
+                <Grid item xs={9}>
                     <h1>{title}</h1>
                 </Grid>
-                <Grid item xs={6}></Grid>
                 <Grid 
                     item xs={3} 
                     style={{ margin: '25px 0px', cursor: "pointer" }}>

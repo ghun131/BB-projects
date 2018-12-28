@@ -19,10 +19,10 @@ class NewPost extends React.Component {
     handleSubmitPost = (e) => {
         e.preventDefault();
 
-        const token = sessionStorage.getItem('token');
+        const token = localStorage.getItem('token');
         const post = {
-            author: sessionStorage.getItem('author'),
-            email: sessionStorage.getItem('email'),
+            author: localStorage.getItem('author'),
+            email: localStorage.getItem('email'),
             title: this.titleRef.current.value,
             content: this.contentRef.current.value
         }

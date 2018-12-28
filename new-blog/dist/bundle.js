@@ -12378,10 +12378,10 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "handleSubmitPost", e => {
       e.preventDefault();
-      const token = sessionStorage.getItem('token');
+      const token = localStorage.getItem('token');
       const post = {
-        author: sessionStorage.getItem('author'),
-        email: sessionStorage.getItem('email'),
+        author: localStorage.getItem('author'),
+        email: localStorage.getItem('email'),
         title: this.titleRef.current.value,
         content: this.contentRef.current.value
       };
@@ -27643,11 +27643,8 @@ const Article = props => {
     spacing: 24
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default.a, {
     item: true,
-    xs: 3
+    xs: 9
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default.a, {
-    item: true,
-    xs: 6
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default.a, {
     item: true,
     xs: 3,
     style: {
