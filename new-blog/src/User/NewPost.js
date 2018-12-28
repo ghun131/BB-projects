@@ -65,9 +65,8 @@ class NewPost extends React.Component {
 
     render() {
         let content;
-        if (this.state.loading) {
-            content = <Spinner />;
-        } else {
+        if (this.state.loading) { content = <Spinner /> } 
+        else {
             content = 
             <div className="NewPost">
                 <form onSubmit={this.handleSubmitPost}>
@@ -77,19 +76,16 @@ class NewPost extends React.Component {
                                     fontStyle: 'italic'}}>{sessionStorage.getItem('author')}</h1>
                         
                         <input  type="text"
-                                name="title"
                                 className="Title"
                                 ref={this.titleRef}
                                 placeholder="Title..."/>
 
                         <textarea   name="content"
-                                    id="Content" 
                                     cols="30" rows="10" 
                                     ref={this.contentRef}
                                     placeholder="What do you think...?"></textarea>
 
                         <input  type="text"
-                                name="tags"
                                 className="Tags"
                                 style={{fontWeight: "300"}}
                                 ref={this.tagsRef}
@@ -97,8 +93,7 @@ class NewPost extends React.Component {
 
                         <div className="Message">{this.state.message}</div>
 
-                        <Button 
-                            variant="contained"
+                        <Button variant="contained"
                             color="secondary"
                             type="submit"
                             value="POST"> <strong>NEW POST</strong> </Button>

@@ -11658,6 +11658,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63);
 /* harmony import */ var _cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_cat_theme_jpg__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Article__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(64);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
 
@@ -11666,13 +11668,11 @@ __webpack_require__.r(__webpack_exports__);
 const Home = props => {
   const posts = props.allPosts.map(p => {
     const time = Date(p.time);
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      key: p._id,
-      title: p.title,
-      author: p.author,
-      time: time,
-      content: p.content
-    });
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
+      key: p._id
+    }, p, {
+      time: time
+    }));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "Home"
@@ -12313,9 +12313,22 @@ module.exports = __webpack_require__.p + "6953743507b2899d4cebfd1fc8f69dc7.jpg";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(268);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 const Article = props => {
+  const {
+    title,
+    author,
+    content
+  } = _objectSpread({}, props);
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       width: '80%',
@@ -12323,12 +12336,22 @@ const Article = props => {
       padding: '10px',
       textAlign: 'left'
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, props.time)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     style: {
       textAlign: 'left',
       whiteSpace: 'pre-line'
     }
-  }, props.content));
+  }, content), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    key: t,
+    style: {
+      marginRight: "5px"
+    },
+    label: t,
+    component: "a",
+    href: "#chip",
+    variant: "outlined",
+    clickable: true
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Article);
@@ -12452,20 +12475,17 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         }
       }, sessionStorage.getItem('author')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        name: "title",
         className: "Title",
         ref: this.titleRef,
         placeholder: "Title..."
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         name: "content",
-        id: "Content",
         cols: "30",
         rows: "10",
         ref: this.contentRef,
         placeholder: "What do you think...?"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        name: "tags",
         className: "Tags",
         style: {
           fontWeight: "300"
@@ -27634,9 +27654,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(121);
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(268);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_4__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -27683,7 +27706,17 @@ const Article = props => {
       textAlign: 'left',
       whiteSpace: 'pre-line'
     }
-  }, content));
+  }, content), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    key: t,
+    style: {
+      marginRight: "5px"
+    },
+    label: t,
+    component: "a",
+    href: "#chip",
+    variant: "outlined",
+    clickable: true
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Article);
@@ -28831,6 +28864,1315 @@ exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: '
 
 // exports
 
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _Chip.default;
+  }
+});
+
+var _Chip = _interopRequireDefault(__webpack_require__(269));
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(127));
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(124));
+
+var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(125));
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(138));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(139));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(140));
+
+var _getPrototypeOf3 = _interopRequireDefault(__webpack_require__(142));
+
+var _inherits2 = _interopRequireDefault(__webpack_require__(143));
+
+var _react = _interopRequireDefault(__webpack_require__(1));
+
+var _propTypes = _interopRequireDefault(__webpack_require__(16));
+
+var _classnames = _interopRequireDefault(__webpack_require__(128));
+
+var _keycode = _interopRequireDefault(__webpack_require__(223));
+
+var _warning = _interopRequireDefault(__webpack_require__(15));
+
+var _utils = __webpack_require__(129);
+
+var _Cancel = _interopRequireDefault(__webpack_require__(270));
+
+var _withStyles = _interopRequireDefault(__webpack_require__(137));
+
+var _colorManipulator = __webpack_require__(210);
+
+var _unsupportedProp = _interopRequireDefault(__webpack_require__(282));
+
+var _helpers = __webpack_require__(242);
+
+__webpack_require__(283); // So we don't have any override priority issue.
+
+
+var styles = function styles(theme) {
+  var height = 32;
+  var backgroundColor = theme.palette.type === 'light' ? theme.palette.grey[300] : theme.palette.grey[700];
+  var deleteIconColor = (0, _colorManipulator.fade)(theme.palette.text.primary, 0.26);
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      fontFamily: theme.typography.fontFamily,
+      fontSize: theme.typography.pxToRem(13),
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: height,
+      color: theme.palette.getContrastText(backgroundColor),
+      backgroundColor: backgroundColor,
+      borderRadius: height / 2,
+      whiteSpace: 'nowrap',
+      transition: theme.transitions.create(['background-color', 'box-shadow']),
+      // label will inherit this from root, then `clickable` class overrides this for both
+      cursor: 'default',
+      // We disable the focus ring for mouse, touch and keyboard users.
+      outline: 'none',
+      textDecoration: 'none',
+      border: 'none',
+      // Remove `button` border
+      padding: 0,
+      // Remove `button` padding
+      verticalAlign: 'middle',
+      boxSizing: 'border-box'
+    },
+
+    /* Styles applied to the root element if `color="primary"`. */
+    colorPrimary: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    },
+
+    /* Styles applied to the root element if `color="secondary"`. */
+    colorSecondary: {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText
+    },
+
+    /* Styles applied to the root element if `onClick` is defined or `clickable={true}`. */
+    clickable: {
+      WebkitTapHighlightColor: 'transparent',
+      // Remove grey highlight
+      cursor: 'pointer',
+      '&:hover, &:focus': {
+        backgroundColor: (0, _colorManipulator.emphasize)(backgroundColor, 0.08)
+      },
+      '&:active': {
+        boxShadow: theme.shadows[1],
+        backgroundColor: (0, _colorManipulator.emphasize)(backgroundColor, 0.12)
+      }
+    },
+
+    /**
+     * Styles applied to the root element if
+     * `onClick` and `color="primary"` is defined or `clickable={true}`.
+     */
+    clickableColorPrimary: {
+      '&:hover, &:focus': {
+        backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.primary.main, 0.08)
+      },
+      '&:active': {
+        backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.primary.main, 0.12)
+      }
+    },
+
+    /**
+     * Styles applied to the root element if
+     * `onClick` and `color="secondary"` is defined or `clickable={true}`.
+     */
+    clickableColorSecondary: {
+      '&:hover, &:focus': {
+        backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.secondary.main, 0.08)
+      },
+      '&:active': {
+        backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.secondary.main, 0.12)
+      }
+    },
+
+    /* Styles applied to the root element if `onDelete` is defined. */
+    deletable: {
+      '&:focus': {
+        backgroundColor: (0, _colorManipulator.emphasize)(backgroundColor, 0.08)
+      }
+    },
+
+    /* Styles applied to the root element if `onDelete` and `color="primary"` is defined. */
+    deletableColorPrimary: {
+      '&:focus': {
+        backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.primary.main, 0.2)
+      }
+    },
+
+    /* Styles applied to the root element if `onDelete` and `color="secondary"` is defined. */
+    deletableColorSecondary: {
+      '&:focus': {
+        backgroundColor: (0, _colorManipulator.emphasize)(theme.palette.secondary.main, 0.2)
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"`. */
+    outlined: {
+      backgroundColor: 'transparent',
+      border: "1px solid ".concat(theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'),
+      '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.text.primary, theme.palette.action.hoverOpacity)
+      },
+      '& $avatar': {
+        marginLeft: -1
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="primary"`. */
+    outlinedPrimary: {
+      color: theme.palette.primary.main,
+      border: "1px solid ".concat(theme.palette.primary.main),
+      '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.primary.main, theme.palette.action.hoverOpacity)
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="secondary"`. */
+    outlinedSecondary: {
+      color: theme.palette.secondary.main,
+      border: "1px solid ".concat(theme.palette.secondary.main),
+      '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
+        backgroundColor: (0, _colorManipulator.fade)(theme.palette.secondary.main, theme.palette.action.hoverOpacity)
+      }
+    },
+
+    /* Styles applied to the `avatar` element. */
+    avatar: {
+      marginRight: -4,
+      width: height,
+      height: height,
+      color: theme.palette.type === 'light' ? theme.palette.grey[700] : theme.palette.grey[300],
+      fontSize: theme.typography.pxToRem(16)
+    },
+
+    /* Styles applied to the `avatar` element if `color="primary"` */
+    avatarColorPrimary: {
+      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.primary.dark
+    },
+
+    /* Styles applied to the `avatar` element if `color="secondary"` */
+    avatarColorSecondary: {
+      color: theme.palette.secondary.contrastText,
+      backgroundColor: theme.palette.secondary.dark
+    },
+
+    /* Styles applied to the `avatar` elements children. */
+    avatarChildren: {
+      width: 19,
+      height: 19
+    },
+
+    /* Styles applied to the `icon` element. */
+    icon: {
+      color: theme.palette.type === 'light' ? theme.palette.grey[700] : theme.palette.grey[300],
+      marginLeft: 4,
+      marginRight: -8
+    },
+
+    /* Styles applied to the `icon` element if `color="primary"` */
+    iconColorPrimary: {
+      color: 'inherit'
+    },
+
+    /* Styles applied to the `icon` element if `color="secondary"` */
+    iconColorSecondary: {
+      color: 'inherit'
+    },
+
+    /* Styles applied to the label `span` element`. */
+    label: {
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: 12,
+      paddingRight: 12,
+      userSelect: 'none',
+      whiteSpace: 'nowrap',
+      cursor: 'inherit'
+    },
+
+    /* Styles applied to the `deleteIcon` element. */
+    deleteIcon: {
+      // Remove grey highlight
+      WebkitTapHighlightColor: 'transparent',
+      color: deleteIconColor,
+      cursor: 'pointer',
+      height: 'auto',
+      margin: '0 4px 0 -8px',
+      '&:hover': {
+        color: (0, _colorManipulator.fade)(deleteIconColor, 0.4)
+      }
+    },
+
+    /* Styles applied to the deleteIcon element if `color="primary"` and `variant="default"`. */
+    deleteIconColorPrimary: {
+      color: (0, _colorManipulator.fade)(theme.palette.primary.contrastText, 0.7),
+      '&:hover, &:active': {
+        color: theme.palette.primary.contrastText
+      }
+    },
+
+    /* Styles applied to the deleteIcon element if `color="secondary"` and `variant="default"`. */
+    deleteIconColorSecondary: {
+      color: (0, _colorManipulator.fade)(theme.palette.primary.contrastText, 0.7),
+      '&:hover, &:active': {
+        color: theme.palette.primary.contrastText
+      }
+    },
+
+    /* Styles applied to the deleteIcon element if `color="primary"` and `variant="outlined"`. */
+    deleteIconOutlinedColorPrimary: {
+      color: (0, _colorManipulator.fade)(theme.palette.primary.main, 0.7),
+      '&:hover, &:active': {
+        color: theme.palette.primary.main
+      }
+    },
+
+    /* Styles applied to the deleteIcon element if `color="secondary"` and `variant="outlined"`. */
+    deleteIconOutlinedColorSecondary: {
+      color: (0, _colorManipulator.fade)(theme.palette.secondary.main, 0.7),
+      '&:hover, &:active': {
+        color: theme.palette.secondary.main
+      }
+    }
+  };
+};
+/**
+ * Chips represent complex entities in small blocks, such as a contact.
+ */
+
+
+exports.styles = styles;
+
+var Chip =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Chip, _React$Component);
+
+  function Chip() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Chip);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Chip)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _this.handleDeleteIconClick = function (event) {
+      // Stop the event from bubbling up to the `Chip`
+      event.stopPropagation();
+      var onDelete = _this.props.onDelete;
+
+      if (onDelete) {
+        onDelete(event);
+      }
+    };
+
+    _this.handleKeyDown = function (event) {
+      var onKeyDown = _this.props.onKeyDown;
+
+      if (onKeyDown) {
+        onKeyDown(event);
+      } // Ignore events from children of `Chip`.
+
+
+      if (event.currentTarget !== event.target) {
+        return;
+      }
+
+      var key = (0, _keycode.default)(event);
+
+      if (key === 'space' || key === 'enter' || key === 'backspace' || key === 'esc') {
+        event.preventDefault();
+      }
+    };
+
+    _this.handleKeyUp = function (event) {
+      var _this$props = _this.props,
+          onClick = _this$props.onClick,
+          onDelete = _this$props.onDelete,
+          onKeyUp = _this$props.onKeyUp;
+
+      if (onKeyUp) {
+        onKeyUp(event);
+      } // Ignore events from children of `Chip`.
+
+
+      if (event.currentTarget !== event.target) {
+        return;
+      }
+
+      var key = (0, _keycode.default)(event);
+
+      if (onClick && (key === 'space' || key === 'enter')) {
+        onClick(event);
+      } else if (onDelete && key === 'backspace') {
+        onDelete(event);
+      } else if (key === 'esc' && _this.chipRef) {
+        _this.chipRef.blur();
+      }
+    };
+
+    return _this;
+  }
+
+  (0, _createClass2.default)(Chip, [{
+    key: "render",
+    value: function render() {
+      var _classNames,
+          _this2 = this;
+
+      var _this$props2 = this.props,
+          avatarProp = _this$props2.avatar,
+          classes = _this$props2.classes,
+          classNameProp = _this$props2.className,
+          clickableProp = _this$props2.clickable,
+          color = _this$props2.color,
+          Component = _this$props2.component,
+          deleteIconProp = _this$props2.deleteIcon,
+          iconProp = _this$props2.icon,
+          label = _this$props2.label,
+          onClick = _this$props2.onClick,
+          onDelete = _this$props2.onDelete,
+          onKeyDown = _this$props2.onKeyDown,
+          onKeyUp = _this$props2.onKeyUp,
+          tabIndexProp = _this$props2.tabIndex,
+          variant = _this$props2.variant,
+          other = (0, _objectWithoutProperties2.default)(_this$props2, ["avatar", "classes", "className", "clickable", "color", "component", "deleteIcon", "icon", "label", "onClick", "onDelete", "onKeyDown", "onKeyUp", "tabIndex", "variant"]);
+      var clickable = clickableProp !== false && onClick ? true : clickableProp;
+      var className = (0, _classnames.default)(classes.root, (_classNames = {}, (0, _defineProperty2.default)(_classNames, classes["color".concat((0, _helpers.capitalize)(color))], color !== 'default'), (0, _defineProperty2.default)(_classNames, classes.clickable, clickable), (0, _defineProperty2.default)(_classNames, classes["clickableColor".concat((0, _helpers.capitalize)(color))], clickable && color !== 'default'), (0, _defineProperty2.default)(_classNames, classes.deletable, onDelete), (0, _defineProperty2.default)(_classNames, classes["deletableColor".concat((0, _helpers.capitalize)(color))], onDelete && color !== 'default'), (0, _defineProperty2.default)(_classNames, classes.outlined, variant === 'outlined'), (0, _defineProperty2.default)(_classNames, classes.outlinedPrimary, variant === 'outlined' && color === 'primary'), (0, _defineProperty2.default)(_classNames, classes.outlinedSecondary, variant === 'outlined' && color === 'secondary'), _classNames), classNameProp);
+      var deleteIcon = null;
+
+      if (onDelete) {
+        var _customClasses;
+
+        var customClasses = (_customClasses = {}, (0, _defineProperty2.default)(_customClasses, classes["deleteIconColor".concat((0, _helpers.capitalize)(color))], color !== 'default' && variant !== 'outlined'), (0, _defineProperty2.default)(_customClasses, classes["deleteIconOutlinedColor".concat((0, _helpers.capitalize)(color))], color !== 'default' && variant === 'outlined'), _customClasses);
+        deleteIcon = deleteIconProp && _react.default.isValidElement(deleteIconProp) ? _react.default.cloneElement(deleteIconProp, {
+          className: (0, _classnames.default)(deleteIconProp.props.className, classes.deleteIcon, customClasses),
+          onClick: this.handleDeleteIconClick
+        }) : _react.default.createElement(_Cancel.default, {
+          className: (0, _classnames.default)(classes.deleteIcon, customClasses),
+          onClick: this.handleDeleteIconClick
+        });
+      }
+
+      var avatar = null;
+
+      if (avatarProp && _react.default.isValidElement(avatarProp)) {
+        avatar = _react.default.cloneElement(avatarProp, {
+          className: (0, _classnames.default)(classes.avatar, avatarProp.props.className, (0, _defineProperty2.default)({}, classes["avatarColor".concat((0, _helpers.capitalize)(color))], color !== 'default')),
+          childrenClassName: (0, _classnames.default)(classes.avatarChildren, avatarProp.props.childrenClassName)
+        });
+      }
+
+      var icon = null;
+
+      if (iconProp && _react.default.isValidElement(iconProp)) {
+        icon = _react.default.cloneElement(iconProp, {
+          className: (0, _classnames.default)(classes.icon, iconProp.props.className, (0, _defineProperty2.default)({}, classes["iconColor".concat((0, _helpers.capitalize)(color))], color !== 'default'))
+        });
+      }
+
+      var tabIndex = tabIndexProp;
+
+      if (!tabIndex) {
+        tabIndex = onClick || onDelete || clickable ? 0 : -1;
+      }
+
+       true ? (0, _warning.default)(!avatar || !icon, 'Material-UI: the Chip component can not handle the avatar ' + 'and the icon property at the same time. Pick one.') : undefined;
+      return _react.default.createElement(Component, (0, _extends2.default)({
+        role: "button",
+        className: className,
+        tabIndex: tabIndex,
+        onClick: onClick,
+        onKeyDown: this.handleKeyDown,
+        onKeyUp: this.handleKeyUp,
+        ref: function ref(_ref) {
+          _this2.chipRef = _ref;
+        }
+      }, other), avatar || icon, _react.default.createElement("span", {
+        className: classes.label
+      }, label), deleteIcon);
+    }
+  }]);
+  return Chip;
+}(_react.default.Component);
+
+ true ? Chip.propTypes = {
+  /**
+   * Avatar element.
+   */
+  avatar: _propTypes.default.element,
+
+  /**
+   * This property isn't supported.
+   * Use the `component` property if you need to change the children structure.
+   */
+  children: _unsupportedProp.default,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css-api) below for more details.
+   */
+  classes: _propTypes.default.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * If true, the chip will appear clickable, and will raise when pressed,
+   * even if the onClick property is not defined.
+   * If false, the chip will not be clickable, even if onClick peoperty is defined.
+   * This can be used, for example,
+   * along with the component property to indicate an anchor Chip is clickable.
+   */
+  clickable: _propTypes.default.bool,
+
+  /**
+   * The color of the component. It supports those theme colors that make sense for this component.
+   */
+  color: _propTypes.default.oneOf(['default', 'primary', 'secondary']),
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a DOM element or a component.
+   */
+  component: _utils.componentPropType,
+
+  /**
+   * Override the default delete icon element. Shown only if `onDelete` is set.
+   */
+  deleteIcon: _propTypes.default.element,
+
+  /**
+   * Icon element.
+   */
+  icon: _propTypes.default.element,
+
+  /**
+   * The content of the label.
+   */
+  label: _propTypes.default.node,
+
+  /**
+   * @ignore
+   */
+  onClick: _propTypes.default.func,
+
+  /**
+   * Callback function fired when the delete icon is clicked.
+   * If set, the delete icon will be shown.
+   */
+  onDelete: _propTypes.default.func,
+
+  /**
+   * @ignore
+   */
+  onKeyDown: _propTypes.default.func,
+
+  /**
+   * @ignore
+   */
+  onKeyUp: _propTypes.default.func,
+
+  /**
+   * @ignore
+   */
+  tabIndex: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+
+  /**
+   * The variant to use.
+   */
+  variant: _propTypes.default.oneOf(['default', 'outlined'])
+} : undefined;
+Chip.defaultProps = {
+  component: 'div',
+  color: 'default',
+  variant: 'default'
+};
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiChip'
+})(Chip);
+
+exports.default = _default;
+
+/***/ }),
+/* 270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(1));
+
+var _pure = _interopRequireDefault(__webpack_require__(271));
+
+var _SvgIcon = _interopRequireDefault(__webpack_require__(280));
+
+var _ref = _react.default.createElement("path", {
+  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+});
+/**
+ * @ignore - internal component.
+ */
+
+
+var Cancel = function Cancel(props) {
+  return _react.default.createElement(_SvgIcon.default, props, _ref);
+};
+
+Cancel = (0, _pure.default)(Cancel);
+Cancel.muiName = 'SvgIcon';
+var _default = Cancel;
+exports.default = _default;
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _shouldUpdate = _interopRequireDefault(__webpack_require__(272));
+
+var _shallowEqual = _interopRequireDefault(__webpack_require__(278));
+
+var _setDisplayName = _interopRequireDefault(__webpack_require__(274));
+
+var _wrapDisplayName = _interopRequireDefault(__webpack_require__(276));
+
+var pure = function pure(BaseComponent) {
+  var hoc = (0, _shouldUpdate.default)(function (props, nextProps) {
+    return !(0, _shallowEqual.default)(props, nextProps);
+  });
+
+  if (true) {
+    return (0, _setDisplayName.default)((0, _wrapDisplayName.default)(BaseComponent, 'pure'))(hoc(BaseComponent));
+  }
+
+  return hoc(BaseComponent);
+};
+
+var _default = pure;
+exports.default = _default;
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(273));
+
+var _react = __webpack_require__(1);
+
+var _setDisplayName = _interopRequireDefault(__webpack_require__(274));
+
+var _wrapDisplayName = _interopRequireDefault(__webpack_require__(276));
+
+var shouldUpdate = function shouldUpdate(test) {
+  return function (BaseComponent) {
+    var factory = (0, _react.createFactory)(BaseComponent);
+
+    var ShouldUpdate =
+    /*#__PURE__*/
+    function (_Component) {
+      (0, _inheritsLoose2.default)(ShouldUpdate, _Component);
+
+      function ShouldUpdate() {
+        return _Component.apply(this, arguments) || this;
+      }
+
+      var _proto = ShouldUpdate.prototype;
+
+      _proto.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
+        return test(this.props, nextProps);
+      };
+
+      _proto.render = function render() {
+        return factory(this.props);
+      };
+
+      return ShouldUpdate;
+    }(_react.Component);
+
+    if (true) {
+      return (0, _setDisplayName.default)((0, _wrapDisplayName.default)(BaseComponent, 'shouldUpdate'))(ShouldUpdate);
+    }
+
+    return ShouldUpdate;
+  };
+};
+
+var _default = shouldUpdate;
+exports.default = _default;
+
+/***/ }),
+/* 273 */
+/***/ (function(module, exports) {
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+module.exports = _inheritsLoose;
+
+/***/ }),
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _setStatic = _interopRequireDefault(__webpack_require__(275));
+
+var setDisplayName = function setDisplayName(displayName) {
+  return (0, _setStatic.default)('displayName', displayName);
+};
+
+var _default = setDisplayName;
+exports.default = _default;
+
+/***/ }),
+/* 275 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var setStatic = function setStatic(key, value) {
+  return function (BaseComponent) {
+    /* eslint-disable no-param-reassign */
+    BaseComponent[key] = value;
+    /* eslint-enable no-param-reassign */
+
+    return BaseComponent;
+  };
+};
+
+var _default = setStatic;
+exports.default = _default;
+
+/***/ }),
+/* 276 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _getDisplayName = _interopRequireDefault(__webpack_require__(277));
+
+var wrapDisplayName = function wrapDisplayName(BaseComponent, hocName) {
+  return hocName + "(" + (0, _getDisplayName.default)(BaseComponent) + ")";
+};
+
+var _default = wrapDisplayName;
+exports.default = _default;
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var getDisplayName = function getDisplayName(Component) {
+  if (typeof Component === 'string') {
+    return Component;
+  }
+
+  if (!Component) {
+    return undefined;
+  }
+
+  return Component.displayName || Component.name || 'Component';
+};
+
+var _default = getDisplayName;
+exports.default = _default;
+
+/***/ }),
+/* 278 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _shallowEqual = _interopRequireDefault(__webpack_require__(279));
+
+var _default = _shallowEqual.default;
+exports.default = _default;
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ * 
+ */
+
+/*eslint-disable no-self-compare */
+
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+
+
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  } // Test for A's keys different from B.
+
+
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = shallowEqual;
+
+/***/ }),
+/* 280 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _SvgIcon.default;
+  }
+});
+
+var _SvgIcon = _interopRequireDefault(__webpack_require__(281));
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(127));
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(124));
+
+var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(125));
+
+var _react = _interopRequireDefault(__webpack_require__(1));
+
+var _propTypes = _interopRequireDefault(__webpack_require__(16));
+
+var _classnames = _interopRequireDefault(__webpack_require__(128));
+
+var _utils = __webpack_require__(129);
+
+var _withStyles = _interopRequireDefault(__webpack_require__(137));
+
+var _helpers = __webpack_require__(242);
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      userSelect: 'none',
+      width: '1em',
+      height: '1em',
+      display: 'inline-block',
+      fill: 'currentColor',
+      flexShrink: 0,
+      fontSize: 24,
+      transition: theme.transitions.create('fill', {
+        duration: theme.transitions.duration.shorter
+      })
+    },
+
+    /* Styles applied to the root element if `color="primary"`. */
+    colorPrimary: {
+      color: theme.palette.primary.main
+    },
+
+    /* Styles applied to the root element if `color="secondary"`. */
+    colorSecondary: {
+      color: theme.palette.secondary.main
+    },
+
+    /* Styles applied to the root element if `color="action"`. */
+    colorAction: {
+      color: theme.palette.action.active
+    },
+
+    /* Styles applied to the root element if `color="error"`. */
+    colorError: {
+      color: theme.palette.error.main
+    },
+
+    /* Styles applied to the root element if `color="disabled"`. */
+    colorDisabled: {
+      color: theme.palette.action.disabled
+    },
+
+    /* Styles applied to the root element if `fontSize="inherit"`. */
+    fontSizeInherit: {
+      fontSize: 'inherit'
+    },
+
+    /* Styles applied to the root element if `fontSize="small"`. */
+    fontSizeSmall: {
+      fontSize: 20
+    },
+
+    /* Styles applied to the root element if `fontSize="large"`. */
+    fontSizeLarge: {
+      fontSize: 35
+    }
+  };
+};
+
+exports.styles = styles;
+
+function SvgIcon(props) {
+  var _classNames;
+
+  var children = props.children,
+      classes = props.classes,
+      className = props.className,
+      color = props.color,
+      Component = props.component,
+      fontSize = props.fontSize,
+      nativeColor = props.nativeColor,
+      titleAccess = props.titleAccess,
+      viewBox = props.viewBox,
+      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "color", "component", "fontSize", "nativeColor", "titleAccess", "viewBox"]);
+  return _react.default.createElement(Component, (0, _extends2.default)({
+    className: (0, _classnames.default)(classes.root, (_classNames = {}, (0, _defineProperty2.default)(_classNames, classes["color".concat((0, _helpers.capitalize)(color))], color !== 'inherit'), (0, _defineProperty2.default)(_classNames, classes["fontSize".concat((0, _helpers.capitalize)(fontSize))], fontSize !== 'default'), _classNames), className),
+    focusable: "false",
+    viewBox: viewBox,
+    color: nativeColor,
+    "aria-hidden": titleAccess ? 'false' : 'true',
+    role: titleAccess ? 'img' : 'presentation'
+  }, other), children, titleAccess ? _react.default.createElement("title", null, titleAccess) : null);
+}
+
+ true ? SvgIcon.propTypes = {
+  /**
+   * Node passed into the SVG element.
+   */
+  children: _propTypes.default.node.isRequired,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css-api) below for more details.
+   */
+  classes: _propTypes.default.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The color of the component. It supports those theme colors that make sense for this component.
+   * You can use the `nativeColor` property to apply a color attribute to the SVG element.
+   */
+  color: _propTypes.default.oneOf(['inherit', 'primary', 'secondary', 'action', 'error', 'disabled']),
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a DOM element or a component.
+   */
+  component: _utils.componentPropType,
+
+  /**
+   * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
+   */
+  fontSize: _propTypes.default.oneOf(['inherit', 'default', 'small', 'large']),
+
+  /**
+   * Applies a color attribute to the SVG element.
+   */
+  nativeColor: _propTypes.default.string,
+
+  /**
+   * The shape-rendering attribute. The behavior of the different options is described
+   * [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering).
+   * If you are having issues with blurry icons you should investigate this property.
+   */
+  shapeRendering: _propTypes.default.string,
+
+  /**
+   * Provides a human-readable title for the element that contains it.
+   * https://www.w3.org/TR/SVG-access/#Equivalent
+   */
+  titleAccess: _propTypes.default.string,
+
+  /**
+   * Allows you to redefine what the coordinates without units mean inside an SVG element.
+   * For example, if the SVG element is 500 (width) by 200 (height),
+   * and you pass viewBox="0 0 50 20",
+   * this means that the coordinates inside the SVG will go from the top left corner (0,0)
+   * to bottom right (50,20) and each unit will be worth 10px.
+   */
+  viewBox: _propTypes.default.string
+} : undefined;
+SvgIcon.defaultProps = {
+  color: 'inherit',
+  component: 'svg',
+  fontSize: 'default',
+  viewBox: '0 0 24 24'
+};
+SvgIcon.muiName = 'SvgIcon';
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiSvgIcon'
+})(SvgIcon);
+
+exports.default = _default;
+
+/***/ }),
+/* 282 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function unsupportedProp(props, propName, componentName, location, propFullName) {
+  /* istanbul ignore if */
+  if (false) {}
+
+  var propFullNameSafe = propFullName || propName;
+
+  if (typeof props[propName] !== 'undefined') {
+    return new Error("The property `".concat(propFullNameSafe, "` is not supported. Please remove it."));
+  }
+
+  return null;
+}
+
+var _default = unsupportedProp;
+exports.default = _default;
+
+/***/ }),
+/* 283 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(122);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.styles = void 0;
+
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(124));
+
+var _extends2 = _interopRequireDefault(__webpack_require__(127));
+
+var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(125));
+
+var _react = _interopRequireDefault(__webpack_require__(1));
+
+var _propTypes = _interopRequireDefault(__webpack_require__(16));
+
+var _classnames = _interopRequireDefault(__webpack_require__(128));
+
+var _utils = __webpack_require__(129);
+
+var _withStyles = _interopRequireDefault(__webpack_require__(137));
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+      width: 40,
+      height: 40,
+      fontFamily: theme.typography.fontFamily,
+      fontSize: theme.typography.pxToRem(20),
+      borderRadius: '50%',
+      overflow: 'hidden',
+      userSelect: 'none'
+    },
+
+    /* Styles applied to the root element if there are children and not `src` or `srcSet` */
+    colorDefault: {
+      color: theme.palette.background.default,
+      backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[600]
+    },
+
+    /* Styles applied to the img element if either `src` or `srcSet` is defined. */
+    img: {
+      width: '100%',
+      height: '100%',
+      textAlign: 'center',
+      // Handle non-square image. The property isn't supported by IE 11.
+      objectFit: 'cover'
+    }
+  };
+};
+
+exports.styles = styles;
+
+function Avatar(props) {
+  var alt = props.alt,
+      childrenProp = props.children,
+      childrenClassNameProp = props.childrenClassName,
+      classes = props.classes,
+      classNameProp = props.className,
+      Component = props.component,
+      imgProps = props.imgProps,
+      sizes = props.sizes,
+      src = props.src,
+      srcSet = props.srcSet,
+      other = (0, _objectWithoutProperties2.default)(props, ["alt", "children", "childrenClassName", "classes", "className", "component", "imgProps", "sizes", "src", "srcSet"]);
+  var children = null;
+  var img = src || srcSet;
+
+  if (img) {
+    children = _react.default.createElement("img", (0, _extends2.default)({
+      alt: alt,
+      src: src,
+      srcSet: srcSet,
+      sizes: sizes,
+      className: classes.img
+    }, imgProps));
+  } else if (childrenClassNameProp && _react.default.isValidElement(childrenProp)) {
+    children = _react.default.cloneElement(childrenProp, {
+      className: (0, _classnames.default)(childrenClassNameProp, childrenProp.props.className)
+    });
+  } else {
+    children = childrenProp;
+  }
+
+  return _react.default.createElement(Component, (0, _extends2.default)({
+    className: (0, _classnames.default)(classes.root, (0, _defineProperty2.default)({}, classes.colorDefault, !img), classNameProp)
+  }, other), children);
+}
+
+ true ? Avatar.propTypes = {
+  /**
+   * Used in combination with `src` or `srcSet` to
+   * provide an alt attribute for the rendered `img` element.
+   */
+  alt: _propTypes.default.string,
+
+  /**
+   * Used to render icon or text elements inside the Avatar.
+   * `src` and `alt` props will not be used and no `img` will
+   * be rendered by default.
+   *
+   * This can be an element, or just a string.
+   */
+  children: _propTypes.default.node,
+
+  /**
+   * @ignore
+   * The className of the child element.
+   * Used by Chip and ListItemIcon to style the Avatar icon.
+   */
+  childrenClassName: _propTypes.default.string,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css-api) below for more details.
+   */
+  classes: _propTypes.default.object.isRequired,
+
+  /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a DOM element or a component.
+   */
+  component: _utils.componentPropType,
+
+  /**
+   * Attributes applied to the `img` element if the component
+   * is used to display an image.
+   */
+  imgProps: _propTypes.default.object,
+
+  /**
+   * The `sizes` attribute for the `img` element.
+   */
+  sizes: _propTypes.default.string,
+
+  /**
+   * The `src` attribute for the `img` element.
+   */
+  src: _propTypes.default.string,
+
+  /**
+   * The `srcSet` attribute for the `img` element.
+   */
+  srcSet: _propTypes.default.string
+} : undefined;
+Avatar.defaultProps = {
+  component: 'div'
+};
+
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiAvatar'
+})(Avatar);
+
+exports.default = _default;
 
 /***/ })
 /******/ ]);

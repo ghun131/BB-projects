@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 
 const Article = (props) => {
     const {_id, author, content, title} = {...props}
@@ -27,6 +28,14 @@ const Article = (props) => {
             <p style={{
                 textAlign: 'left',
                 whiteSpace: 'pre-line'}}>{content}</p>
+            {props.tags
+                .map(t => <Chip key={t}
+                    style={{marginRight: "5px"}}
+                    label={t}
+                    component="a"
+                    href="#chip"
+                    variant="outlined"
+                    clickable/>)}
         </div>
     )
 }

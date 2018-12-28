@@ -10,10 +10,8 @@ const Home = (props) => {
         return (
         <Article 
             key={p._id} 
-            title={p.title} 
-            author={p.author}
-            time={time}
-            content={p.content}/>
+            {...p}
+            time={time}/>
         )
     })
 
