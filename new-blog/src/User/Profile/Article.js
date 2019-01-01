@@ -34,7 +34,7 @@ const Article = (props) => {
                     style={{marginRight: "5px"}}
                     label={t}
                     component="a"
-                    href="#chip"
+                    href={"#" + t}
                     variant="outlined"
                     clickable/>)}
         </div>

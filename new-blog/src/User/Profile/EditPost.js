@@ -37,11 +37,12 @@ class EditPost extends React.Component {
     handleSubmitPost = (e) => {
         e.preventDefault();
 
-        const { title, content, tags } = {...this.state};
+        let { title, content, tags } = {...this.state};
+        const tagsArr = tags.split(",");
         const data = {
             title: title,
             content: content,
-            tags: tags
+            tags: tagsArr
         };
 
         axios.put(`/profile/edit/${this.state.id}`, {data})
