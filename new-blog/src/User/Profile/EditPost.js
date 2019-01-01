@@ -11,34 +11,38 @@ class EditPost extends React.Component {
         loading: false,
         title: '',
         content: '',
+        tags: '',
         message: ''
     }
 
     componentDidMount() {
-        // fill content and title into state to pass to input boxes
+        // fill content and title and tags into state in order to pass to input boxes
         const pathnameArr = this.props.location.pathname.split("/");
         const id = pathnameArr[pathnameArr.length - 1];
         const postId = id.slice(0, id.length - 1);
         const articles = this.props.articlesUpdate;
         const post = articles.filter(p => p._id === postId);
-        let { title, content } = {...this.state};
+        let { title, content, tags } = {...this.state};
         title = post[0].title;
-        content = post[0].content
+        content = post[0].content;
+        tags = post[0].tags.join();
         this.setState({
             id: postId,
-            title: title,
-            content: content
+            title,
+            content,
+            tags
         })
     }
 
     handleSubmitPost = (e) => {
         e.preventDefault();
 
-        const { title, content } = {...this.state}
+        const { title, content, tags } = {...this.state};
         const data = {
             title: title,
-            content: content
-        }
+            content: content,
+            tags: tags
+        };
 
         axios.put(`/profile/edit/${this.state.id}`, {data})
             .then(res => {
@@ -72,6 +76,14 @@ class EditPost extends React.Component {
                                 cols="30" rows="10" 
                                 value={this.state.content}
                                 onChange={this.handleChange} />
+
+                        <input  type="text"
+                                className="Tags"
+                                name="tags"
+                                style={{fontWeight: "300"}}
+                                onChange={this.handleChange}
+                                value={this.state.tags}/>
+
                         <div className="Message">{this.state.message}</div>
 
                         <Button 

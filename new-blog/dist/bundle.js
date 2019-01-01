@@ -28258,8 +28258,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
-/* harmony import */ var _Profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(250);
-
 
 
 
@@ -28592,6 +28590,7 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       loading: false,
       title: '',
       content: '',
+      tags: '',
       message: ''
     });
 
@@ -28600,12 +28599,14 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
       const {
         title,
-        content
+        content,
+        tags
       } = _objectSpread({}, this.state);
 
       const data = {
         title: title,
-        content: content
+        content: content,
+        tags: tags
       };
       axios__WEBPACK_IMPORTED_MODULE_4___default.a.put(`/profile/edit/${this.state.id}`, {
         data
@@ -28623,7 +28624,7 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    // fill content and title into state to pass to input boxes
+    // fill content and title and tags into state in order to pass to input boxes
     const pathnameArr = this.props.location.pathname.split("/");
     const id = pathnameArr[pathnameArr.length - 1];
     const postId = id.slice(0, id.length - 1);
@@ -28632,15 +28633,18 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     let {
       title,
-      content
+      content,
+      tags
     } = _objectSpread({}, this.state);
 
     title = post[0].title;
     content = post[0].content;
+    tags = post[0].tags.join();
     this.setState({
       id: postId,
-      title: title,
-      content: content
+      title,
+      content,
+      tags
     });
   }
 
@@ -28669,6 +28673,15 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         rows: "10",
         value: this.state.content,
         onChange: this.handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "Tags",
+        name: "tags",
+        style: {
+          fontWeight: "300"
+        },
+        onChange: this.handleChange,
+        value: this.state.tags
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Message"
       }, this.state.message), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
@@ -28723,7 +28736,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".EditPost {\r\n    text-align: center;\r\n    padding-top: 50px;\r\n}\r\n\r\n.EditPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.EditPost input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.EditPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.EditPost input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.EditPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.EditPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.EditPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
+exports.push([module.i, ".EditPost {\r\n    text-align: center;\r\n    padding-top: 50px;\r\n}\r\n\r\n.EditPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.Title input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.Tags {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 30px;\r\n    padding: 5px;\r\n    font-size: 15px;\r\n    font-weight: 300;\r\n}\r\n\r\n.EditPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.Title input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.EditPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.EditPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.EditPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
 
 // exports
 

@@ -8,7 +8,7 @@
     margin: 0px auto;
 }
 
-.EditPost input {
+.Title input {
     display: block;
     margin: 10px auto;
     width: 600px;
@@ -16,6 +16,16 @@
     padding: 5px;
     font-size: 30px;
     font-weight: 700;
+}
+
+.Tags {
+    display: block;
+    margin: 10px auto;
+    width: 600px;
+    height: 30px;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 300;
 }
 
 .EditPost textarea {
@@ -26,7 +36,7 @@
     padding: 10px;
 }
 
-.EditPost input::placeholder {
+.Title input::placeholder {
     font-weight: 700;
     font-size: 30px;
     color: black;

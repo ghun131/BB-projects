@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.get('/', middleware.checkToken, (req, res) => {
+router.get('/',  (req, res) => {
   const username = req.session.username;
   async function getUserPosts() {
     try {
@@ -29,6 +29,7 @@ router.put('/edit/:id', (req, res) => {
       if (req.body.data.title) {
         post.content = req.body.data.content;
         post.title = req.body.data.title;
+        post.tags = req.body.data.tags;
         const result = await post.save();
         res.send(post);
       } else {
