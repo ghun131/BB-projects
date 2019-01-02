@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Article from './Article';
+import ArticlesList from './PersonalArticles/ArticlesList';
 import Heading from './Heading';
 import ProfileNavBar from './ProfileNavBar';
 import FollowerFollowing from './FollowerFollowing';
@@ -55,17 +55,7 @@ class Profile extends React.Component {
         })
       };
 
-    render() {
-        let content = this.state.articles.map(p => {  
-            return (
-                <Article 
-                    key={p._id} 
-                    edit={this.handleEdit}
-                    alert={this.deleteAlert}
-                    {...p}/>
-            )
-        });
-        
+    render() {        
         return (
             <div style={{
                 width: '80%',
@@ -76,7 +66,10 @@ class Profile extends React.Component {
                 <Heading />
                 <FollowerFollowing />
                 <ProfileNavBar />
-                {content}
+                <ArticlesList 
+                    edited={this.handleEdit}
+                    deleted={this.deleteAlert}
+                    articlesList={this.state.articles}/>
             </div>
         )
     }

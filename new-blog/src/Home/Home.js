@@ -1,22 +1,36 @@
 import React from 'react';
 import './Home.css';
-import homePic from '../cat-theme.jpg';
 import Article from './Article';
+import TagCard from './TagCard';
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 
-const Home = (props) => {
-    const posts = props.allPosts.map(p => {
-        const time = Date(p.time);
+class Home extends React.Component {    
+    render() {
+        const posts = this.props.allPosts.map(p => {
+            return <Article key={p._id} {...p}/>
+        })
 
-        return <Article key={p._id} {...p}/>
-    })
+        const tags = this.props.hotTags.map(t => {
+            return <TagCard key={t._id} {...t} />
+        })
 
-    return (
-        <div className="Home">
-            <h1>Brave New World!</h1>
-                <img className="Photo" src={homePic} alt="cat photo"/>
-            {posts}
-        </div>           
-    )
+        return (
+            <div className="Home">
+                <Grid container spacing={24}>
+                    <Grid item xs={9}>
+                        {posts}
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Card style={{marginTop: "10px"}}>
+                            <h1>Popular Tags</h1>
+                            {tags}
+                        </Card>
+                    </Grid>
+                </Grid>
+            </div> 
+        )
+    }
 }
 
 export default Home;
