@@ -51,8 +51,7 @@ export default class App extends Component {
         axios.get('/api/posts')
             .then( res => {
                 console.log(res.data)
-                this.setState({ data: res.data,
-                                user: user });
+                this.setState({ data: res.data });
                 if ( email && password ) {
                     this.setState({ isLogIn: true,
                                     isUser: true })

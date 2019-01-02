@@ -3,8 +3,15 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.get('/',  (req, res) => {
-  const username = req.session.username;
+router.get('/:username', middleware.checkToken,  (req, res) => {
+  let username = req.session.username;
+  if (req.session.username) {
+    username = req.session.username
+  }
+  else {
+    username = req.params.username
+  }
+
   async function getUserPosts() {
     try {
       const profile = await Post

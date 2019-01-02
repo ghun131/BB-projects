@@ -165,8 +165,7 @@ class App extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/posts').then(res => {
         console.log(res.data);
         this.setState({
-          data: res.data,
-          user: user
+          data: res.data
         });
 
         if (email && password) {
@@ -11617,7 +11616,7 @@ const routePath = props => {
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_Register__WEBPACK_IMPORTED_MODULE_5__["default"], null)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
-    path: "/profile",
+    path: "/profile/:username",
     render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_7__["default"], _extends({
       articlesUpdate: props.articlesList
     }, props))
@@ -30121,7 +30120,7 @@ const NavBar = props => {
   }, "Log out")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     to: "/log-in"
   }, "Log in")), props.isUser && props.isLogIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-    to: "/profile"
+    to: `/profile/${localStorage.getItem("author")}`
   }, "Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     to: "/new-post",
     onClick: props.newPost

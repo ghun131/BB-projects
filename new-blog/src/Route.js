@@ -27,7 +27,7 @@ const routePath = (props) => {
                                 : <Register />
             }/>
 
-            <Route exact path="/profile"
+            <Route exact path="/profile/:username"
                 render={() => <Profile articlesUpdate={props.articlesList}
                                         {...props}/>} />
 
