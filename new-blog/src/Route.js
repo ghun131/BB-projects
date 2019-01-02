@@ -5,6 +5,7 @@ import Home from './Home/Home';
 import NewPost from './User/NewPost';
 import Register from './Auth/Register';
 import LogIn from './Auth/LogIn';
+import ArticlesWithPopularTags from './User/Profile/ArticlesWithPopularTags';
 import Profile from './User/Profile/Profile';
 import EditPost from './User/Profile/EditPost';
 
@@ -31,6 +32,8 @@ const routePath = (props) => {
             <Route exact path="/profile/:username"
                 render={() => <Profile articlesUpdate={props.articlesList}
                                         {...props}/>} />
+
+            <Route path="/profile/:username/:tags" component={ArticlesWithPopularTags} />
 
             <Route exact path="/profile/edit/:id" 
                 render={(history) => 

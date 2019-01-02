@@ -11584,9 +11584,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _User_NewPost__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(181);
 /* harmony import */ var _Auth_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(259);
 /* harmony import */ var _Auth_LogIn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(263);
-/* harmony import */ var _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(266);
-/* harmony import */ var _User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(277);
+/* harmony import */ var _User_Profile_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(63);
+/* harmony import */ var _User_Profile_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_User_Profile_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(266);
+/* harmony import */ var _User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(277);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
 
@@ -11621,13 +11624,16 @@ const routePath = props => {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/profile/:username",
-    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_7__["default"], _extends({
+    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({
       articlesUpdate: props.articlesList
     }, props))
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/profile/:username/:tags",
+    component: _User_Profile_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_7___default.a
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/profile/edit/:id",
-    render: history => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    render: history => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_9__["default"], {
       history: history,
       articlesUpdate: props.articlesList
     })
@@ -11700,7 +11706,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       style: {
         marginTop: "10px"
       }
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Popular Tags"), tags))));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Popular Tags"), tags))));
   }
 
 }
@@ -12322,7 +12328,12 @@ module.exports = function (css) {
 };
 
 /***/ }),
-/* 63 */,
+/* 63 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'D:\\BB-projects\\new-blog\\src\\User\\Profile\\ArticlesWithPopularTags.js'");
+
+/***/ }),
 /* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -30286,17 +30297,20 @@ Article.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65);
-/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
 const TagCard = props => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: `/profile/${localStorage.getItem("author") + "/" + props._id}`,
     style: {
       display: "inline-flex"
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_1___default.a, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_2___default.a, {
     style: {
       marginRight: "5px"
     },

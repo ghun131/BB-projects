@@ -10,6 +10,7 @@ So  basically, I want user to upload their picture into the Browser and React is
 [] Home page (URL: /#/ )
 - [x] List of tags
 - [] List of articles pulled from either Feed, Global, or by Tag
+  - [] Last step 
 - [] Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )
 - [x] Uses JWT (store the token in localStorage)

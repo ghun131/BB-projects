@@ -23,7 +23,7 @@ class Home extends React.Component {
                     </Grid>
                     <Grid item xs={3}>
                         <Card style={{marginTop: "10px"}}>
-                            <h1>Popular Tags</h1>
+                            <h3>Popular Tags</h3>
                             {tags}
                         </Card>
                     </Grid>
