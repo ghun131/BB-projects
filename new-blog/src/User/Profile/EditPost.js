@@ -26,7 +26,6 @@ class EditPost extends React.Component {
         title = post[0].title;
         content = post[0].content;
         tags = post[0].tags.join();
-        console.log('trigger!')
         this.setState({
             id: postId,
             title,

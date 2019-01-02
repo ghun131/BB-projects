@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Article from './Article';
 import Heading from './Heading';
 import ProfileNavBar from './ProfileNavBar';
+import FollowerFollowing from './FollowerFollowing';
 import { withRouter} from 'react-router-dom';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -55,7 +56,7 @@ class Profile extends React.Component {
       };
 
     render() {
-        const content = this.state.articles.map(p => {  
+        let content = this.state.articles.map(p => {  
             return (
                 <Article 
                     key={p._id} 
@@ -73,6 +74,7 @@ class Profile extends React.Component {
                 textAlign: 'left'
             }}>
                 <Heading />
+                <FollowerFollowing />
                 <ProfileNavBar />
                 {content}
             </div>

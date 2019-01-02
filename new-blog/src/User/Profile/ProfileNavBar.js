@@ -1,10 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 const ProfileNavBar = (props) => {
     return (
-        <div>
-            <Link to="/profile">Your posts</Link>
+        <div style={{ marginTop: "30px" }}>
+            <Link to={`/profile/${localStorage.getItem("author")}`}>
+                Your posts
+            </Link>
+            <Link to="/profile/tag">
+                #tag
+            </Link>
             <hr/>
         </div>
     )
