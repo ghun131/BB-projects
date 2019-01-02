@@ -26,7 +26,8 @@ class NewPost extends React.Component {
         e.preventDefault();
         const title = this.titleRef.current.value;
         const content = this.contentRef.current.value;
-        const tagsString = this.tagsRef.current.value;
+        let tagsString = this.tagsRef.current.value;
+        tagsString = tagsString.replace(/\s/g, "");
         const tags = tagsString.split(",");
 
         const token = localStorage.getItem('token');

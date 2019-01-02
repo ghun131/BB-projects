@@ -8,7 +8,7 @@ So  basically, I want user to upload their picture into the Browser and React is
 [x] Clean the states for "post" and "user"
 [] User some style like Material UI for font, color, space and no border
 [] Home page (URL: /#/ )
-- [] List of tags
+- [x] List of tags
 - [] List of articles pulled from either Feed, Global, or by Tag
 - [] Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )

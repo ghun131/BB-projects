@@ -12348,7 +12348,7 @@ const Article = props => {
     },
     label: t,
     component: "a",
-    href: "#chip",
+    href: "#" + t,
     variant: "outlined",
     clickable: true
   })));
@@ -21609,7 +21609,8 @@ class NewPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       e.preventDefault();
       const title = this.titleRef.current.value;
       const content = this.contentRef.current.value;
-      const tagsString = this.tagsRef.current.value;
+      let tagsString = this.tagsRef.current.value;
+      tagsString = tagsString.replace(/\s/g, "");
       const tags = tagsString.split(",");
       const token = localStorage.getItem('token');
       const post = {
@@ -29912,6 +29913,8 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         tags
       } = _objectSpread({}, this.state);
 
+      tags = tags.replace(/\s/g, "");
+      console.log(tags, typeof tags);
       const tagsArr = tags.split(",");
       const data = {
         title: title,
@@ -29927,9 +29930,10 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "handleChange", e => {
+      let value = e.target.value;
       this.setState({
-        [e.target.name]: [e.target.value]
-      });
+        [e.target.name]: value
+      }, () => console.log(this.state.tags));
     });
   }
 
@@ -29950,6 +29954,7 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     title = post[0].title;
     content = post[0].content;
     tags = post[0].tags.join();
+    console.log('trigger!');
     this.setState({
       id: postId,
       title,

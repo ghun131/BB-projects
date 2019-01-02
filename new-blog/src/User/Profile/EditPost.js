@@ -26,6 +26,7 @@ class EditPost extends React.Component {
         title = post[0].title;
         content = post[0].content;
         tags = post[0].tags.join();
+        console.log('trigger!')
         this.setState({
             id: postId,
             title,
@@ -38,6 +39,8 @@ class EditPost extends React.Component {
         e.preventDefault();
 
         let { title, content, tags } = {...this.state};
+        tags = tags.replace(/\s/g, "");
+        console.log(tags, typeof(tags))
         const tagsArr = tags.split(",");
         const data = {
             title: title,
@@ -53,8 +56,10 @@ class EditPost extends React.Component {
             .catch(err => console.log(err.message));
     }
 
-    handleChange = (e) => {    
-        this.setState({ [e.target.name]: [e.target.value] })
+    handleChange = (e) => {
+        let value = e.target.value;
+        this.setState({ [e.target.name]: value },
+            () => console.log(this.state.tags))
     }
 
     render() {
