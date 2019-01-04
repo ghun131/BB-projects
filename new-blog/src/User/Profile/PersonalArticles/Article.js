@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
@@ -30,13 +31,19 @@ const Article = (props) => {
                 textAlign: 'left',
                 whiteSpace: 'pre-line'}}>{content}</p>
             {props.tags
-                .map(t => <Chip key={t}
-                    style={{marginRight: "5px"}}
-                    label={t}
-                    component="a"
-                    href={"#" + t}
-                    variant="outlined"
-                    clickable/>)}
+                .map(t => 
+                    <Link 
+                        key={t}
+                        to={`/profile/${localStorage.getItem("author") + "/" + t}`} 
+                        style={{display: "inline-flex"}}>
+                            <Chip 
+                                style={{marginRight: "5px"}}
+                                label={t}
+                                component="span"
+                                variant="outlined"
+                                clickable/>
+                    </Link>
+            )}
         </div>
     )
 }

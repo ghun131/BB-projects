@@ -4,7 +4,8 @@ import Chip from '@material-ui/core/Chip';
 
 const TagCard = (props) => {
     return (
-        <Link to={`/profile/${localStorage.getItem("author") + "/" + props._id}`} style={{display: "inline-flex"}}>
+        <Link to={`/profile/${localStorage.getItem("author") + "/" + props._id}`} 
+            style={{display: "inline-flex"}}>
             <Chip style={{marginRight: "5px"}}
                     label={props._id}
                     href={"#" + props._id}
