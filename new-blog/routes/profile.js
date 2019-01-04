@@ -30,7 +30,6 @@ router.get('/:username', middleware.checkToken,  (req, res) => {
 
 router.get('/:username/:tag', (req, res) => {
   let tag = req.params.tag;
-  console.log('popular tags')
 
   async function getArticlesOfATag() {
     try {
