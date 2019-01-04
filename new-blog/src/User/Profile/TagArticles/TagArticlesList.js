@@ -2,7 +2,6 @@ import React from 'react';
 import TagArticle from './TagArticle';
 
 const TagArticlesList = (props) => {
-    console.log('a list of articles', props)
     return (
         <div>
             <h2 style={{textAlign: "center"}}>
