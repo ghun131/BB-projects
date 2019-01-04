@@ -1,17 +1,15 @@
 import React from 'react';
-import Article from './Article';
+import TagArticle from './TagArticle';
 
 const TagArticlesList = (props) => {
+    console.log('a list of articles', props)
     return (
         <div>
+            <h2 style={{textAlign: "center"}}>
+                #{props.tag}
+            </h2>
             {props.tagArticlesList.map(a => {
-                return (
-                    <Article
-                        key={a._id} 
-                        edit={props.edited}
-                        alert={props.deleted}
-                        {...a}/>
-                )
+                return <TagArticle key={a._id} {...a}/>
             })}
         </div>
     )

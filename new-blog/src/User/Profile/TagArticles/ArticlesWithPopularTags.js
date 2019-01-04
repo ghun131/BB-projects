@@ -1,23 +1,31 @@
 import React from 'react';
-import TagArticlesList from './TagArticle';
+import TagArticlesList from './TagArticlesList';
 import axios from 'axios';
 
 class ArticlesWithPopularTags extends React.Component {
     state={
-        data: []
+        data: [],
+        tagName: ''
     }
 
     componentDidMount() {
-        axios.get("/profile/:username/:tag")
+        const pathnameArr = this.props.location.pathname.split("/");
+        const tagName = pathnameArr[pathnameArr.length - 1];
+        axios.get(`/profile/${localStorage.getItem("author") + "/" + tagName}`)
             .then(res => {
-                this.setState({ data: res.data })
+                this.setState({ data: res.data, tagName })
             }).catch(err => console.log(err.message));
     }
 
     render() {
         return (
-            <div>
-                <TagArticlesList tagArticlesList={this.state.data}/>
+            <div style={{width: '80%',
+                    margin: '10px auto',
+                    padding: '10px',
+                    textAlign: 'left'}}>
+                <TagArticlesList 
+                    tagArticlesList={this.state.data}
+                    tag={this.state.tagName}/>
             </div>
         )
     }

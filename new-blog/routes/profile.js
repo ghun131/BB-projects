@@ -28,6 +28,26 @@ router.get('/:username', middleware.checkToken,  (req, res) => {
   getUserPosts()
 });
 
+router.get('/:username/:tag', (req, res) => {
+  let tag = req.params.tag;
+  console.log('popular tags')
+
+  async function getArticlesOfATag() {
+    try {
+      const tagArticles = await Post
+      .find({ tags: tag })
+      .sort('-time');
+
+      res.send(tagArticles);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  getArticlesOfATag();
+})
+
 router.put('/edit/:id', (req, res) => {
   async function updateUser() {
     try {

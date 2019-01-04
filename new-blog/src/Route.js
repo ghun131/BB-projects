@@ -5,7 +5,7 @@ import Home from './Home/Home';
 import NewPost from './User/NewPost';
 import Register from './Auth/Register';
 import LogIn from './Auth/LogIn';
-import ArticlesWithPopularTags from './User/Profile/ArticlesWithPopularTags';
+import ArticlesWithPopularTags from './User/Profile/TagArticles/ArticlesWithPopularTags';
 import Profile from './User/Profile/Profile';
 import EditPost from './User/Profile/EditPost';
 

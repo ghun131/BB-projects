@@ -11,7 +11,7 @@ class Home extends React.Component {
             return <Article key={p._id} {...p}/>
         })
 
-        const tags = this.props.hotTags.map(t => {
+        const tagsBox = this.props.hotTags.map(t => {
             return <TagCard key={t._id} {...t} />
         })
 
@@ -24,7 +24,7 @@ class Home extends React.Component {
                     <Grid item xs={3}>
                         <Card style={{marginTop: "10px"}}>
                             <h3>Popular Tags</h3>
-                            {tags}
+                            {tagsBox}
                         </Card>
                     </Grid>
                 </Grid>
