@@ -14,8 +14,6 @@ const routePath = (props) => {
         <div>
             <Route exact path="/" 
                 render={() => <Home user={props.isUser}
-                                hotTags={props.popularTags}
-                                allPosts={props.allPosts}
                                 articlesUpdate={props.articlesList}/>} />
                                 
             <Route path="/new-post" 

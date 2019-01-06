@@ -9,10 +9,8 @@ import './App.css';
 
 export default class App extends Component {
     state={
-        data: [],
         loading: false,
         articles: [],
-        tags: [],
         isUser: false,
         isLogIn: false,
         isNewPost: false
@@ -51,8 +49,6 @@ export default class App extends Component {
 
         axios.get('/api/posts')
             .then( res => {
-                console.log(res.data)
-                this.setState({ data: res.data.posts, tags: res.data.tags });
                 if ( email && password ) {
                     this.setState({ isLogIn: true,
                                     isUser: true })
@@ -75,10 +71,7 @@ export default class App extends Component {
     }
 
     handleClickNewPost = () => {
-        const post = {...this.state.post}
-        post.title = '';
-        post.content = '';
-        this.setState({ isNewPost: false, post: post });
+        this.setState({ isNewPost: false });
     }
 
     render() {
@@ -95,8 +88,6 @@ export default class App extends Component {
                 <RoutePath  isUser={this.state.isUser}
                             isLogIn={this.state.isLogIn}
                             articlesList={this.state.articles}
-                            allPosts={this.state.data}
-                            popularTags={this.state.tags}
                             isNewPost={this.state.isNewPost}/>
             </div>
         )
