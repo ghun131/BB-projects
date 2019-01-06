@@ -3,30 +3,81 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.get('/:username', middleware.checkToken,  (req, res) => {
-  let username = req.session.username;
+router.get('/:username',  (req, res) => {
+  let data = {};
+  let userName = req.session.username;
   if (req.session.username) {
-    username = req.session.username
+    userName = req.session.username
   }
   else {
-    username = req.params.username
+    userName = req.params.username
   }
 
   async function getUserPosts() {
     try {
-      const profile = await Post
-      .find({ author: username })
+      const posts = await Post
+      .find({ author: userName })
+      .limit(13)
       .sort('-time');
 
-      res.send(profile);
+      data.posts = posts;
+      res.send(data);
     }
     catch (err) {
       console.log(err.message);
     }
   }
 
-  getUserPosts()
+  async function totalUserPosts() {
+    try {
+      const totalNum = await Post.aggregate([
+        { $match: { author: userName }}, { $count: "posts"}
+      ]);
+
+      data.totalDocuments = totalNum;
+    } catch (err) {
+      console.log(err.message);
+    }
+    getUserPosts();
+  }
+
+  totalUserPosts();
 });
+
+router.get('/:username/:page', (req, res) => {
+  let data = {};
+  const userName = req.params.username;
+  const getDocs = req.params.page - 1;
+  async function getUserPosts() {
+    try {
+        const posts = await Post
+        .find({ author: userName })
+        .skip(13 * getDocs)
+        .limit(13)
+        .sort({ time: -1});
+        data.posts = posts;
+    } 
+      catch (err) {
+        console.log(err.message)
+    }
+    res.send(data);    
+  }
+
+  async function totalUserPosts() {
+    try {
+      const totalNum = await Post.aggregate([
+        { $match: { author: userName }}, { $count: "posts"}
+      ]);
+
+      data.totalDocuments = totalNum;
+    } catch (err) {
+      console.log(err.message);
+    }
+    getUserPosts();
+  }
+
+  totalUserPosts();
+})
 
 router.get('/:username/:tag', (req, res) => {
   let tag = req.params.tag;

@@ -6,19 +6,32 @@ import ProfileNavBar from './ProfileNavBar';
 import FollowerFollowing from './FollowerFollowing';
 import { withRouter} from 'react-router-dom';
 import axios from 'axios';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import PageNumber from './Pagination/PageNumber';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css' 
 
 class Profile extends React.Component {
     state={
         title: '',
         content: '',
-        articles: []
+        articles: [],
+        pageNums: []
     }
 
     componentDidMount() {
-        let articles = this.props.articlesUpdate;
-        this.setState({ articles })
+        axios.get(`/profile/${localStorage.getItem("author")}`)
+            .then( res => {
+                console.log('Profile', res.data)
+                let totalDocs = res.data.totalDocuments[0].posts;
+                let pageNums = [...this.state.pageNums];
+                for (let i = 1; i < totalDocs / 13 + 1; i++) {
+                    pageNums.push(i);
+                }
+                this.setState({ 
+                    articles: res.data.posts,
+                    pageNums
+                });
+            }).catch(error => console.log(error));
     }
 
     handleEdit = (id) => {
@@ -53,7 +66,16 @@ class Profile extends React.Component {
               }
             ]
         })
-      };
+    };
+
+    handleClick = (num) => {
+        console.log("clicked!")
+        let path = `/profile/${localStorage.getItem("author") + "/" + num}`;
+        axios.get(path)
+            .then( res => {
+                this.setState({ articles: res.data.posts });
+            }).catch(error => console.log(error));
+    }
 
     render() {        
         return (
@@ -70,6 +92,9 @@ class Profile extends React.Component {
                     edited={this.handleEdit}
                     deleted={this.deleteAlert}
                     articlesList={this.state.articles}/>
+                <PageNumber 
+                    clicked={this.handleClick}
+                    pageNumbers={this.state.pageNums}/>
             </div>
         )
     }

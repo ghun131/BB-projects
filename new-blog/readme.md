@@ -7,10 +7,10 @@ So  basically, I want user to upload their picture into the Browser and React is
 [] Server rendering html or pug (or anything else)
 [x] Clean the states for "post" and "user"
 [] User some style like Material UI for font, color, space and no border
-[] Home page (URL: /#/ )
+[x] Home page (URL: /#/ )
 - [x] List of tags
 - [x] List of articles pulled from either Feed, Global, or by Tag
-- [] Pagination for list of articles
+- [x] Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )
 - [x] Uses JWT (store the token in localStorage)
 - [] Authentication can be easily switched to session/cookie based

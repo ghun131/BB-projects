@@ -11688,8 +11688,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    let path = "/api/posts";
-    axios__WEBPACK_IMPORTED_MODULE_5___default.a.get(path).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_5___default.a.get("/api/posts").then(res => {
       let totalDocs = res.data.totalDocuments[0].posts;
       let pageNums = [...this.state.pageNums];
 
@@ -29842,10 +29841,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(183);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(284);
-/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(285);
-/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(296);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(284);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(285);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_10__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -29856,9 +29856,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
- // Import
 
- // Import css
+
+
 
 class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
@@ -29867,7 +29867,8 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     _defineProperty(this, "state", {
       title: '',
       content: '',
-      articles: []
+      articles: [],
+      pageNums: []
     });
 
     _defineProperty(this, "handleEdit", id => {
@@ -29888,7 +29889,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "deleteAlert", id => {
-      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_8__["confirmAlert"])({
+      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_9__["confirmAlert"])({
         title: 'Confirm to delete',
         message: 'Are you sure to delele this post.',
         buttons: [{
@@ -29900,13 +29901,33 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         }]
       });
     });
+
+    _defineProperty(this, "handleClick", num => {
+      console.log("clicked!");
+      let path = `/profile/${localStorage.getItem("author") + "/" + num}`;
+      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get(path).then(res => {
+        this.setState({
+          articles: res.data.posts
+        });
+      }).catch(error => console.log(error));
+    });
   }
 
   componentDidMount() {
-    let articles = this.props.articlesUpdate;
-    this.setState({
-      articles
-    });
+    axios__WEBPACK_IMPORTED_MODULE_7___default.a.get(`/profile/${localStorage.getItem("author")}`).then(res => {
+      console.log('Profile', res.data);
+      let totalDocs = res.data.totalDocuments[0].posts;
+      let pageNums = [...this.state.pageNums];
+
+      for (let i = 1; i < totalDocs / 13 + 1; i++) {
+        pageNums.push(i);
+      }
+
+      this.setState({
+        articles: res.data.posts,
+        pageNums
+      });
+    }).catch(error => console.log(error));
   }
 
   render() {
@@ -29921,6 +29942,9 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       edited: this.handleEdit,
       deleted: this.deleteAlert,
       articlesList: this.state.articles
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      clicked: this.handleClick,
+      pageNumbers: this.state.pageNums
     }));
   }
 
@@ -30796,6 +30820,42 @@ __webpack_require__.r(__webpack_exports__);
 const PageNumber = props => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, props.pageNumbers.map(num => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default.a, {
     key: num,
+    style: {
+      fontWeight: "700",
+      fontSize: "17px"
+    },
+    onClick: () => props.clicked(num)
+  }, num)));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PageNumber);
+
+/***/ }),
+/* 296 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(246);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+const PageNumber = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "center"
+    }
+  }, props.pageNumbers.map(num => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    key: num,
+    style: {
+      display: "block",
+      fontWeight: "strong",
+      fontSize: "17px"
+    },
     onClick: () => props.clicked(num)
   }, num)));
 };

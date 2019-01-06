@@ -15,8 +15,7 @@ class Home extends React.Component {
     }  
 
     componentDidMount() {
-        let path = "/api/posts";
-        axios.get(path)
+        axios.get("/api/posts")
             .then( res => {
                 let totalDocs = res.data.totalDocuments[0].posts;
                 let pageNums = [...this.state.pageNums];
