@@ -11648,13 +11648,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Home_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _PublicArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63);
 /* harmony import */ var _Tags_TagBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(181);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(183);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(210);
-/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(214);
-/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(295);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(183);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(210);
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(214);
+/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -11671,45 +11673,63 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     _defineProperty(this, "state", {
       data: [],
       tags: [],
-      currentPage: 1,
-      lastId: ''
+      pageNums: []
+    });
+
+    _defineProperty(this, "handleClick", num => {
+      let path = `/api/posts/${num}`;
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get(path).then(res => {
+        this.setState({
+          data: res.data.posts,
+          tags: res.data.tags
+        });
+      }).catch(error => console.log(error));
     });
   }
 
   componentDidMount() {
-    console.log('Home page component did mount');
-    axios__WEBPACK_IMPORTED_MODULE_4___default.a.get('/api/posts').then(res => {
+    let path = "/api/posts";
+    axios__WEBPACK_IMPORTED_MODULE_5___default.a.get(path).then(res => {
+      let totalDocs = res.data.totalDocuments[0].posts;
+      let pageNums = [...this.state.pageNums];
+
+      for (let i = 1; i < totalDocs / 13 + 1; i++) {
+        pageNums.push(i);
+      }
+
       this.setState({
         data: res.data.posts,
-        tags: res.data.tags
+        tags: res.data.tags,
+        pageNums
       });
     }).catch(error => console.log(error));
-  } // Don't need to care about posts per page because you only receive 13
-  // Get last ObjectId for url
-  // Call server to get the next 13 posts
+  } // get last article _id and page number to send to server
 
 
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "Home"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_6___default.a, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default.a, {
       container: true,
       spacing: 24
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_6___default.a, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default.a, {
       item: true,
       xs: 9
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PublicArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_2__["default"], {
       posts: this.state.data
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_6___default.a, {
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default.a, {
       item: true,
       xs: 3
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5___default.a, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6___default.a, {
       style: {
         marginTop: "10px"
       }
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Popular Tags"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Tags_TagBox__WEBPACK_IMPORTED_MODULE_3__["default"], {
       popularTags: this.state.tags
-    })))));
+    })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      clicked: this.handleClick,
+      pageNumbers: this.state.pageNums
+    }));
   }
 
 }
@@ -30759,6 +30779,28 @@ exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: '
 
 // exports
 
+
+/***/ }),
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(246);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+const PageNumber = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, props.pageNumbers.map(num => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    key: num,
+    onClick: () => props.clicked(num)
+  }, num)));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PageNumber);
 
 /***/ })
 /******/ ]);

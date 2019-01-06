@@ -2,6 +2,7 @@ import React from 'react';
 import './Home.css';
 import ArticlesList from './PublicArticles/ArticlesList';
 import TagBox from './Tags/TagBox';
+import PageNumber from './Pagination/PageNumber';
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
@@ -10,24 +11,37 @@ class Home extends React.Component {
     state={
         data: [],
         tags: [],
-        currentPage: 1,
-        lastId: ''
+        pageNums: [],
     }  
 
     componentDidMount() {
-        console.log('Home page component did mount')
-        axios.get('/api/posts')
+        let path = "/api/posts";
+        axios.get(path)
             .then( res => {
+                let totalDocs = res.data.totalDocuments[0].posts;
+                let pageNums = [...this.state.pageNums];
+                for (let i = 1; i < totalDocs / 13 + 1; i++) {
+                    pageNums.push(i);
+                }
                 this.setState({ 
                     data: res.data.posts, 
-                    tags: res.data.tags 
+                    tags: res.data.tags,
+                    pageNums
                 });
             }).catch(error => console.log(error));
     }
 
-    // Don't need to care about posts per page because you only receive 13
-    // Get last ObjectId for url
-    // Call server to get the next 13 posts
+    // get last article _id and page number to send to server
+    handleClick = (num) => {
+        let path = `/api/posts/${num}`;
+        axios.get(path)
+            .then( res => {
+                this.setState({ 
+                    data: res.data.posts, 
+                    tags: res.data.tags,
+                });
+            }).catch(error => console.log(error));
+    }
 
     render() {
         return (
@@ -43,6 +57,9 @@ class Home extends React.Component {
                         </Card>
                     </Grid>
                 </Grid>
+                <PageNumber 
+                    clicked={this.handleClick}
+                    pageNumbers={this.state.pageNums}/>
             </div> 
         )
     }

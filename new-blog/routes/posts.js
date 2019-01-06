@@ -18,6 +18,19 @@ router.get('/', (req, res) => {
     res.send(data);    
   }
 
+  async function totalNumberOfDocuments() {
+    try {
+      const totalNum = await Post.aggregate([
+        { $count: "posts"}
+      ]);
+
+      data.totalDocuments = totalNum;
+    } catch (err) {
+      console.log(err.message);
+    }
+    getPosts();
+  }
+
   async function getMostPopularTags() {
     try {
       const tags = await Post.aggregate(
@@ -32,19 +45,21 @@ router.get('/', (req, res) => {
     } catch (err) {
       console.log(err.message);
     }
-    getPosts();
+    totalNumberOfDocuments();
   }
+
   getMostPopularTags()
 })
 
-//Pagination for server
-router.get("/:pageNum/:last_id", (req, res) => {
+//Pagination for server by finding 13 documents after the last displayed document
+router.get("/:pageNum", (req, res) => {
   let data = {};
-  const lastId = req.params.last_id
+  const getDocs = req.params.pageNum - 1
   async function getPosts() {
     try {
         const posts = await Post
-        .find({'_id': {'$lt': lastId}})
+        .find()
+        .skip(13 * getDocs)
         .limit(13)
         .sort({ time: -1});
         data.posts = posts;
@@ -55,6 +70,19 @@ router.get("/:pageNum/:last_id", (req, res) => {
     res.send(data);    
   }
 
+  async function totalNumberOfDocuments() {
+    try {
+      const totalNum = await Post.aggregate([
+        { $count: "posts"}
+      ]);
+
+      data.totalDocuments = totalNum;
+    } catch (err) {
+      console.log(err.message);
+    }
+    getPosts();
+  }
+
   async function getMostPopularTags() {
     try {
       const tags = await Post.aggregate(
@@ -69,7 +97,7 @@ router.get("/:pageNum/:last_id", (req, res) => {
     } catch (err) {
       console.log(err.message);
     }
-    getPosts();
+    totalNumberOfDocuments();
   }
   getMostPopularTags()
 })
