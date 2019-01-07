@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.get('/:username',  (req, res) => {
+router.get('/:username', middleware.checkToken, (req, res) => {
   let data = {};
   let userName = req.session.username;
   if (req.session.username) {
@@ -44,7 +44,7 @@ router.get('/:username',  (req, res) => {
   totalUserPosts();
 });
 
-router.get('/:username/:page', (req, res) => {
+router.get('/:username/posts/:page', (req, res) => {
   let data = {};
   const userName = req.params.username;
   const getDocs = req.params.page - 1;

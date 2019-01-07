@@ -69,8 +69,7 @@ class Profile extends React.Component {
     };
 
     handleClick = (num) => {
-        console.log("clicked!")
-        let path = `/profile/${localStorage.getItem("author") + "/" + num}`;
+        let path = `/profile/${localStorage.getItem("author") + "/posts/" + num}`;
         axios.get(path)
             .then( res => {
                 this.setState({ articles: res.data.posts });
