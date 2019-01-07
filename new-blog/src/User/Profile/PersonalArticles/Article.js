@@ -12,7 +12,7 @@ const Article = (props) => {
         <div style={{ textAlign: 'left'}}>
             <Grid container spacing={24}>
                 <Grid item xs={9}>
-                    <h1>{title}</h1>
+                    <Link to={`/article/${_id}`}><h1>{title}</h1></Link>
                 </Grid>
                 <Grid 
                     item xs={3} 
@@ -29,7 +29,10 @@ const Article = (props) => {
             <p><em>{displayTime}</em></p>
             <p style={{
                 textAlign: 'left',
+                height: '2rem',
+                overflow: 'hidden',
                 whiteSpace: 'pre-line'}}>{content}</p>
+            <Link to={`/article/${_id}`}>Read more...</Link> <br/>
             {props.tags
                 .map(t => 
                     <Link 

@@ -11569,10 +11569,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _User_NewPost__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(240);
 /* harmony import */ var _Auth_Register__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(269);
 /* harmony import */ var _Auth_LogIn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(273);
-/* harmony import */ var _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(276);
-/* harmony import */ var _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(279);
-/* harmony import */ var _User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(289);
+/* harmony import */ var _ArticleDetail__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(297);
+/* harmony import */ var _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(276);
+/* harmony import */ var _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(279);
+/* harmony import */ var _User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(289);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
 
@@ -11605,17 +11607,21 @@ const routePath = props => {
     }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Auth_Register__WEBPACK_IMPORTED_MODULE_5__["default"], null)
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
+    path: "/article/:id",
+    component: _ArticleDetail__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
     path: "/profile/:username",
-    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({
+    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_9__["default"], _extends({
       articlesUpdate: props.articlesList
     }, props))
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/profile/:username/posts/:tags",
-    component: _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/profile/edit/:id",
-    render: history => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    render: history => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_10__["default"], {
       history: history,
       articlesUpdate: props.articlesList
     })
@@ -12394,6 +12400,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 const Article = props => {
   const {
+    _id,
     title,
     author,
     content,
@@ -12408,14 +12415,20 @@ const Article = props => {
       padding: '10px',
       textAlign: 'left'
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, displayTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: `article/${_id}`
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, displayTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     style: {
+      height: '2rem',
       textAlign: 'left',
+      overflow: 'hidden',
       whiteSpace: 'pre-line'
     }
-  }, content), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: `article/${_id}`
+  }, "Read more..."), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     key: t,
-    to: `/profile/${localStorage.getItem("author") + "/" + t}`,
+    to: `/profile/${localStorage.getItem("author") + "/posts/" + t}`,
     style: {
       display: "inline-flex"
     }
@@ -30055,7 +30068,9 @@ const Article = props => {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_3___default.a, {
     item: true,
     xs: 9
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_3___default.a, {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    to: `/article/${_id}`
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_3___default.a, {
     item: true,
     xs: 3,
     style: {
@@ -30075,9 +30090,13 @@ const Article = props => {
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, displayTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     style: {
       textAlign: 'left',
+      height: '2rem',
+      overflow: 'hidden',
       whiteSpace: 'pre-line'
     }
-  }, content), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+  }, content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    to: `/article/${_id}`
+  }, "Read more..."), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     key: t,
     to: `/profile/${localStorage.getItem("author") + "/" + t}`,
     style: {
@@ -30861,6 +30880,92 @@ exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: '
 
 // exports
 
+
+/***/ }),
+/* 297 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(206);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(65);
+/* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "state", {
+      data: {}
+    });
+  }
+
+  componentDidMount() {
+    // get a single article
+    console.log('component did mount');
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(this.props.history.location.pathname).then(res => {
+      console.log('component did mount after request', res.data);
+      this.setState({
+        data: res.data
+      });
+    }).catch(error => console.log(error));
+  }
+
+  render() {
+    console.log('render', this.state.data);
+
+    const {
+      author,
+      content,
+      title,
+      time
+    } = _objectSpread({}, this.state.data);
+
+    let displayTime = new Date(parseInt(time)).toString();
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        width: '80%',
+        margin: '10px auto',
+        padding: '10px',
+        textAlign: 'left'
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("em", null, displayTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      style: {
+        textAlign: 'left',
+        whiteSpace: 'pre-line'
+      }
+    }, content), this.state.data.author ? this.state.data.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      key: t,
+      to: `/profile/${localStorage.getItem("author") + "/posts/" + t}`,
+      style: {
+        display: "inline-flex"
+      }
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      style: {
+        marginRight: "5px"
+      },
+      label: t,
+      component: "span",
+      variant: "outlined",
+      clickable: true
+    }))) : "");
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ArticleDetail);
 
 /***/ })
 /******/ ]);

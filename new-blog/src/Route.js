@@ -5,6 +5,7 @@ import Home from './Home/Home';
 import NewPost from './User/NewPost';
 import Register from './Auth/Register';
 import LogIn from './Auth/LogIn';
+import ArticleDetail from './ArticleDetail';
 import ArticlesWithPopularTags from './User/Profile/TagArticles/ArticlesWithPopularTags';
 import Profile from './User/Profile/Profile';
 import EditPost from './User/Profile/EditPost';
@@ -26,6 +27,8 @@ const routePath = (props) => {
                                 <Redirect to="/api/log-in" />
                                 : <Register />
             }/>
+
+            <Route exact path="/article/:id" component={ArticleDetail} />
 
             <Route exact path="/profile/:username"
                 render={() => <Profile articlesUpdate={props.articlesList}
