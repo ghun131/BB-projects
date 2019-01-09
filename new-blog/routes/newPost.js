@@ -9,11 +9,11 @@ router.post('/', middleware.checkToken, (req, res) => {
   async function createPost() {
     let today = new Date();
     const newPost = new Post ({
-      author: author,
-      title: title,
-      email: email,
-      content: content,
-      tags: tags,
+      author,
+      title,
+      email,
+      content,
+      tags,
       time: Date.parse(today)
     })
 
