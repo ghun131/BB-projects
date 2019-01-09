@@ -21,7 +21,7 @@ class ArticleDetail extends React.Component {
 
     render() {
         console.log('render', this.state.data)
-        const { author, content, title, time} = {...this.state.data}
+        const { author, content, title, time} = {...this.state.data.article}
         let displayTime = new Date(parseInt(time)).toString();
         return (
             <div style={{

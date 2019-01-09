@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
 
     async function getComments() {
         try {
-            const comments = await Comment.find({ article: name });
+            const comments = await Comment.find({ articleId: req.params.id });
             data.comments = comments;
             res.send(data);
         }
@@ -36,27 +36,29 @@ router.get('/:id', (req, res) => {
     getOneArticle();
 })
 
-// router.post('/:id', (req, res) => {
-//     const id = req.params.id;
-//     const { author, comment, articleTitle } = req.body.data;
+router.post('/:id', (req, res) => {
+    const { author, comment, articleTitle } = req.body.data;
 
-//     async function createComment() {
-//         let today = new Date();
-//         const newComment = new Comment ({
-//             articleTitle: articleTitle,
-//             author: author,
-//             comment: comment,
-//             time: Date.parse(today)
-//         })
+    async function createComment() {
+        let today = new Date();
+        const newComment = new Comment ({
+            articleTitle,
+            articleId: req.params.id,
+            author,
+            comment,
+            time: Date.parse(today)
+        })
     
-//         try {
-//           await newComment.save();
-//           res.send(newComment);
-//     }
-//         catch (err) {
-//           console.log(err.message)
-//         }
-//     }
-// })
+        try {
+          await newComment.save();
+          res.send(newComment);
+    }
+        catch (err) {
+          console.log(err.message)
+        }
+    }
+
+    createComment();
+})
 
 module.exports = router;
