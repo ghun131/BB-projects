@@ -1,5 +1,6 @@
 import React from 'react';
 import "./NavBar.css";
+import Avatar from '@material-ui/core/Avatar';
 
 import { Link } from 'react-router-dom';
 
@@ -24,7 +25,8 @@ const NavBar = (props) => {
                         <i className="far fa-bell"></i>
                     </li>
                     <li className="Upgrade">Upgrade</li>
-                    <li className="Profile"><i className="fas fa-user"></i>
+                    <li className="Profile">
+                        <Avatar alt="your avatar" src={localStorage.getItem("picUrl")} />
                         <ul className="ProfileDropDown">
                             { !props.isUser?
                                 <li><Link to="/register">Sign up</Link></li>

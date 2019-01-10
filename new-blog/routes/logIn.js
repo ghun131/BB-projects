@@ -56,6 +56,7 @@ router.post('/', (req, res) => {
           package.email = result[0].email;
           package.username = result[0].username;
           package.bio = result[0].biography;
+          package.avaUrl = result[0].avaUrl;
           findUserPosts(email, package, res)      
         }
       })

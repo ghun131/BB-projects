@@ -34,6 +34,7 @@ class LogIn extends Component {
                     localStorage.setItem('author', res.data.package.username);
                     localStorage.setItem('token', res.data.package.token);
                     localStorage.setItem('bio', res.data.package.bio);
+                    localStorage.setItem('picUrl', res.data.package.avaUrl);
                     console.log(res.data.package)
                     this.setState({ 
                         message: res.data.message, 
