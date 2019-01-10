@@ -32240,7 +32240,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".Setting textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\ninput {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 10px;\r\n    font-size: 16px;\r\n}\r\n\r\n.Avatar {\r\n    height: 25px;\r\n    padding: 10px;\r\n}", ""]);
+exports.push([module.i, "h1 {\r\n    color: #292929;\r\n}\r\n\r\n.Setting textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    font-size: 18px;\r\n    padding: 10px;\r\n}\r\n\r\ninput {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 10px;\r\n    font-size: 18px;\r\n}\r\n\r\n.Avatar {\r\n    height: 25px;\r\n    padding: 10px;\r\n    font-size: 14px;\r\n}", ""]);
 
 // exports
 
