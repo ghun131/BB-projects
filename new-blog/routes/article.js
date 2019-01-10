@@ -64,4 +64,18 @@ router.post('/:id', (req, res) => {
     createComment();
 })
 
+router.delete('/comment/delete/:id', (req, res) => {
+    async function deleteComment() {
+        try {
+          const comment = await Comment.findByIdAndDelete(req.params.id);
+          res.send(comment);
+        }
+        catch(err) {
+          console.log(err.message);
+        }
+      }
+    
+      deleteComment()
+})
+
 module.exports = router;

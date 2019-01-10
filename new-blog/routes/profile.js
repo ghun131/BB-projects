@@ -124,7 +124,7 @@ router.put('/edit/:id', (req, res) => {
 router.delete('/delete/:id', (req, res) => {
   async function deletePost() {
     try {
-      const post = await Post.findByIdAndDelete(req.params.id)
+      const post = await Post.findByIdAndDelete(req.params.id);
       res.send(post);
     }
     catch(err) {

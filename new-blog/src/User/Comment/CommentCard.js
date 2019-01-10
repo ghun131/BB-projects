@@ -23,7 +23,9 @@ const CommentCard = (props) => {
                     subheader={displayTime}
                 />
                 <Divider />
-                <CardContent>{comment}</CardContent>
+                <CardContent style={{whiteSpace: "pre-line"}}>
+                    {comment}
+                </CardContent>
             </Card>
         </div>
     )
