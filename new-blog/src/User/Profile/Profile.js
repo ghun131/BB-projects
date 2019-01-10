@@ -8,7 +8,7 @@ import { withRouter} from 'react-router-dom';
 import axios from 'axios';
 import PageNumber from './Pagination/PageNumber';
 import { confirmAlert } from 'react-confirm-alert'; 
-import 'react-confirm-alert/src/react-confirm-alert.css' 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class Profile extends React.Component {
     state={

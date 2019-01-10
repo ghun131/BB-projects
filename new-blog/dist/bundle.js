@@ -29728,9 +29728,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(243);
 /* harmony import */ var _User_Comment_CommentsList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(277);
 /* harmony import */ var _User_Comment_CommentBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(288);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(301);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(302);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_8__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -29778,6 +29784,33 @@ class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
           comments
         });
       }).catch(error => console.log(error));
+    });
+
+    _defineProperty(this, "handleDeleteComment", id => {
+      let comments = [...this.state.comments];
+      let comment = comments.filter(p => p._id === id);
+      let index = comments.indexOf(comment[0]);
+      comments.splice(index, 1);
+      this.setState({
+        comments
+      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/article/comment/delete/${id}`, comment[0]).then(res => {
+        console.log(res.data);
+      }).catch(err => console.log(err.message));
+    });
+
+    _defineProperty(this, "deleteAlert", id => {
+      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_7__["confirmAlert"])({
+        title: 'Confirm to delete',
+        message: 'Are you sure to delele this comment permanently.',
+        buttons: [{
+          label: 'Yes',
+          onClick: () => this.handleDeleteComment(id)
+        }, {
+          label: 'No',
+          onClick: () => console.log('No')
+        }]
+      });
     });
   }
 
@@ -29846,7 +29879,8 @@ class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
     }, "Sign in"), " or ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
       to: "/log-in"
     }, "sign up"), "to add comment on this article"), author ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Comment_CommentsList__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      comments: this.state.comments
+      comments: this.state.comments,
+      deleted: this.deleteAlert
     }) : "");
   }
 
@@ -29872,7 +29906,9 @@ const CommentsList = props => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, props.comments.map(c => {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CommentCard__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
       key: c._id
-    }, c));
+    }, c, {
+      commentDeleted: props.deleted
+    }));
   }));
 };
 
@@ -29893,10 +29929,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_CardHeader__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_CardHeader__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(283);
 /* harmony import */ var _material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(285);
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(287);
-/* harmony import */ var _material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(184);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(285);
+/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(287);
+/* harmony import */ var _material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -29907,6 +29946,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const CommentCard = props => {
   let {
+    _id,
     author,
     comment,
     time
@@ -29918,12 +29958,18 @@ const CommentCard = props => {
       marginTop: "30px"
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_2___default.a, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_CardHeader__WEBPACK_IMPORTED_MODULE_3___default.a, {
-    avatar: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_6___default.a, null, firstLetter),
+    avatar: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7___default.a, null, firstLetter),
     title: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: `/profile/${author}`
     }, author),
-    subheader: displayTime
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_5___default.a, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    subheader: displayTime,
+    action: author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_5___default.a, {
+      size: "small",
+      onClick: () => props.commentDeleted(_id)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "fas fa-trash-alt fa-lg"
+    })) : ""
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_6___default.a, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_4___default.a, {
     style: {
       whiteSpace: "pre-line"
     }

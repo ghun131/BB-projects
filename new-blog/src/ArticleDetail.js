@@ -5,6 +5,8 @@ import Chip from '@material-ui/core/Chip';
 import Spinner from './Spinner';
 import CommentsList from './User/Comment/CommentsList';
 import CommentBox from './User/Comment/CommentBox';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class ArticleDetail extends React.Component {
     state={
@@ -56,6 +58,36 @@ class ArticleDetail extends React.Component {
             .catch (error => console.log(error))
     }
 
+    handleDeleteComment = (id) => {
+        let comments = [...this.state.comments];
+        let comment = comments.filter(p => p._id === id);
+        let index = comments.indexOf(comment[0]);
+        comments.splice(index, 1);
+        this.setState({ comments });
+        axios.delete(`/article/comment/delete/${id}`, comment[0])
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err.message))
+    }
+
+    deleteAlert = (id) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure to delele this comment permanently.',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => this.handleDeleteComment(id)
+              },
+              {
+                label: 'No',
+                onClick: () => console.log('No')
+              }
+            ]
+        })
+    };
+
     render() {
         const { author, content, title, time, tags} = {...this.state.article}
         let displayTime = new Date(parseInt(time)).toString();
@@ -100,7 +132,9 @@ class ArticleDetail extends React.Component {
                     
                         
                     {
-                        author ? <CommentsList comments={this.state.comments}/>
+                        author ? <CommentsList 
+                                    comments={this.state.comments}
+                                    deleted={this.deleteAlert}/>
                         : ""
                     }
                 </div>
