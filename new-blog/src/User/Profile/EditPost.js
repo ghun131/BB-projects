@@ -57,8 +57,7 @@ class EditPost extends React.Component {
 
     handleChange = (e) => {
         let value = e.target.value;
-        this.setState({ [e.target.name]: value },
-            () => console.log(this.state.tags))
+        this.setState({ [e.target.name]: value } )
     }
 
     render() {

@@ -29725,10 +29725,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 /* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(65);
 /* harmony import */ var _material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _CommentsList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(277);
+/* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(243);
+/* harmony import */ var _User_Comment_CommentsList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(277);
+/* harmony import */ var _User_Comment_CommentBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(283);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -29742,25 +29746,58 @@ class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
 
     _defineProperty(this, "state", {
       article: {},
-      comments: []
+      comments: [],
+      comment: '',
+      loading: false
+    });
+
+    _defineProperty(this, "handleCommentChange", e => {
+      this.setState({
+        comment: e.target.value
+      });
+    });
+
+    _defineProperty(this, "handleSubmitComment", e => {
+      e.preventDefault();
+      this.setState({
+        loading: true
+      });
+      const data = {
+        author: localStorage.getItem("author"),
+        articleTitle: this.state.article.title,
+        comment: this.state.comment
+      };
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(this.props.history.location.pathname, {
+        data
+      }).then(res => {
+        let comments = [...this.state.comments];
+        comments.unshift(res.data);
+        this.setState({
+          loading: false,
+          comment: '',
+          comments
+        });
+      }).catch(error => console.log(error));
     });
   }
 
   componentDidMount() {
     // get a single article
     console.log('component did mount before request');
+    this.setState({
+      loading: true
+    });
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(this.props.history.location.pathname).then(res => {
       console.log('component did mount after request', res.data);
       this.setState({
         article: res.data.article,
-        comments: res.data.comments
+        comments: res.data.comments,
+        loading: false
       });
     }).catch(error => console.log(error));
   }
 
   render() {
-    console.log('render', this.state.article);
-
     const {
       author,
       content,
@@ -29770,6 +29807,11 @@ class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
     } = _objectSpread({}, this.state.article);
 
     let displayTime = new Date(parseInt(time)).toString();
+
+    if (this.state.loading) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Spinner__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+    }
+
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       style: {
         width: '80%',
@@ -29796,11 +29838,14 @@ class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
       component: "span",
       variant: "outlined",
       clickable: true
-    }))) : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    }))) : ""), localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Comment_CommentBox__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      changed: this.handleCommentChange,
+      submitted: this.handleSubmitComment
+    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
       to: "/register"
     }, "Sign in"), " or ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
       to: "/log-in"
-    }, "sign up"), "to add comment on this article"), author ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CommentsList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, "sign up"), "to add comment on this article"), author ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Comment_CommentsList__WEBPACK_IMPORTED_MODULE_5__["default"], {
       comments: this.state.comments
     }) : "");
   }
@@ -30189,9 +30234,84 @@ var _default = (0, _withStyles.default)(styles, {
 exports.default = _default;
 
 /***/ }),
-/* 283 */,
-/* 284 */,
-/* 285 */,
+/* 283 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(184);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _CommentBox_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(284);
+/* harmony import */ var _CommentBox_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_CommentBox_css__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+const CommentBox = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: props.submitted
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    name: "comment",
+    cols: "30",
+    rows: "10",
+    onChange: props.changed,
+    placeholder: "Your comment..."
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    variant: "contained",
+    color: "secondary",
+    style: {
+      margin: "0 auto",
+      display: "block"
+    },
+    type: "submit",
+    value: "POST"
+  }, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "POST"), " "))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CommentBox);
+
+/***/ }),
+/* 284 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(285);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(61)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 285 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(60)(false);
+// imports
+
+
+// module
+exports.push([module.i, "textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 100px;\r\n    overflow: scroll;\r\n    padding: 10px;\r\n}\r\n\r\ntextarea::placeholder {\r\n    font-size: 16px;\r\n}\r\n\r\ntextarea:focus::placeholder {\r\n    color: transparent;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
 /* 286 */,
 /* 287 */,
 /* 288 */
@@ -31647,7 +31767,7 @@ class EditPost extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       let value = e.target.value;
       this.setState({
         [e.target.name]: value
-      }, () => console.log(this.state.tags));
+      });
     });
   }
 
@@ -31764,7 +31884,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".EditPost {\r\n    text-align: center;\r\n    padding-top: 50px;\r\n}\r\n\r\n.EditPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.Title input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.Tags {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 30px;\r\n    padding: 5px;\r\n    font-size: 15px;\r\n    font-weight: 300;\r\n}\r\n\r\n.EditPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.Title input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.EditPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.EditPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.EditPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n\r\n.Button {\r\n    background-color: cyan;\r\n    border: none;\r\n    border-radius: 10px;\r\n    cursor: pointer;\r\n    padding: 10px 20px;\r\n}\r\n\r\n.Button:hover {\r\n    background-color: green;\r\n    color: white;\r\n}", ""]);
+exports.push([module.i, ".EditPost {\r\n    text-align: center;\r\n    padding-top: 50px;\r\n}\r\n\r\n.EditPostWrapper {\r\n    width: 600px;\r\n    margin: 0px auto;\r\n}\r\n\r\n.Title input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 5px;\r\n    font-size: 30px;\r\n    font-weight: 700;\r\n}\r\n\r\n.Tags {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 30px;\r\n    padding: 5px;\r\n    font-size: 15px;\r\n    font-weight: 300;\r\n}\r\n\r\n.EditPost textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    padding: 10px;\r\n}\r\n\r\n.Title input::placeholder {\r\n    font-weight: 700;\r\n    font-size: 30px;\r\n    color: black;\r\n}\r\n\r\n.EditPost textarea::placeholder {\r\n    color: black;\r\n    font-size: 16px;\r\n}\r\n\r\n.EditPost input:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.EditPost textarea:focus::placeholder {\r\n    color: transparent;\r\n}\r\n\r\n.Message {\r\n    color: red;\r\n    font-style: italic;\r\n    font-size: 20px;\r\n}\r\n", ""]);
 
 // exports
 

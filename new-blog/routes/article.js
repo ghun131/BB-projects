@@ -25,7 +25,9 @@ router.get('/:id', (req, res) => {
 
     async function getComments() {
         try {
-            const comments = await Comment.find({ articleId: req.params.id });
+            const comments = await Comment
+                .find({ articleId: req.params.id })
+                .sort('-time')
             data.comments = comments;
             res.send(data);
         }
