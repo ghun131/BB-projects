@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../modal/Post');
+const User = require('../modal/User');
 const middleware = require('../middleware');
 
 router.get('/:username', (req, res) => {
@@ -107,7 +108,9 @@ router.put('/edit/:id', (req, res) => {
         post.content = req.body.data.content;
         post.title = req.body.data.title;
         post.tags = req.body.data.tags;
+        console.log("update post")
         const result = await post.save();
+        console.log("save updated post");
         res.send(post);
       } else {
         res.send('Please enter your text!');
@@ -133,6 +136,26 @@ router.delete('/delete/:id', (req, res) => {
   }
 
   deletePost()
+})
+
+router.put('/setting/:username', (req, res) => {
+  const {avaUrl, username, email, biography, password, passwordConf} = req.body.data
+  async function updateProfile() {
+    try {
+      let result = await User.update({ email: email }, {
+        $set: {
+          avaUrl, username, biography, password, passwordConf
+        }
+      });
+      
+      res.send(result);
+    }
+    catch(err) {
+      console.log(err.message)
+    }
+  }
+
+  updateProfile();
 })
 
 module.exports = router

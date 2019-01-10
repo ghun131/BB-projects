@@ -32125,7 +32125,7 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
     super(...args);
 
-    _defineProperty(this, "avatarRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+    _defineProperty(this, "avatarUrlRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
     _defineProperty(this, "userNameRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
@@ -32140,14 +32140,14 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     _defineProperty(this, "handleUpdateUser", e => {
       e.preventDefault();
       const data = {
-        avatarRef: this.avatarRef.current.value,
-        userNameRef: this.userNameRef.current.value,
-        bioRef: this.bioRef.current.value,
-        emailRef: this.emailRef.current.value,
-        passwordRef: this.passwordRef.current.value,
-        passwordConfRef: this.passwordConfRef.current.value
+        avaUrl: this.avatarUrlRef.current.value,
+        username: this.userNameRef.current.value,
+        biography: this.bioRef.current.value,
+        email: this.emailRef.current.value,
+        password: this.passwordRef.current.value,
+        passwordConf: this.passwordConfRef.current.value
       };
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(`/setting/${localStorage.getItem("author")}`, {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(`profile/setting/${localStorage.getItem("author")}`, {
         data
       }).then(res => {
         console.log(res.data);
@@ -32166,7 +32166,7 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Your Setting"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "url",
       className: "Avatar",
-      ref: this.avatarRef,
+      ref: this.avatarUrlRef,
       placeholder: "URL of profile picture"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "text",

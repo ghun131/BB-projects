@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import "./Setting.css";
 
 class Setting extends React.Component {
-    avatarRef = React.createRef();
+    avatarUrlRef = React.createRef();
     userNameRef = React.createRef();
     bioRef = React.createRef();
     emailRef = React.createRef();
@@ -15,15 +15,15 @@ class Setting extends React.Component {
         e.preventDefault();
 
         const data = {
-            avatarRef: this.avatarRef.current.value,
-            userNameRef: this.userNameRef.current.value,
-            bioRef: this.bioRef.current.value,
-            emailRef: this.emailRef.current.value,
-            passwordRef: this.passwordRef.current.value,
-            passwordConfRef: this.passwordConfRef.current.value
+            avaUrl: this.avatarUrlRef.current.value,
+            username: this.userNameRef.current.value,
+            biography: this.bioRef.current.value,
+            email: this.emailRef.current.value,
+            password: this.passwordRef.current.value,
+            passwordConf: this.passwordConfRef.current.value
         }
 
-        axios.put(`/setting/${localStorage.getItem("author")}`, {data})
+        axios.put(`profile/setting/${localStorage.getItem("author")}`, {data})
             .then (res => {
                 console.log(res.data);
                 this.props.history.push("/");
@@ -39,7 +39,7 @@ class Setting extends React.Component {
                         <h1>Your Setting</h1>
                         <input  type="url"
                                 className="Avatar"
-                                ref={this.avatarRef}
+                                ref={this.avatarUrlRef}
                                 placeholder="URL of profile picture"/>
 
                         <input  type="text"
