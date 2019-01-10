@@ -40,6 +40,7 @@ const NavBar = (props) => {
                                         </Link>
                                     </li>
                                     <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
+                                    <li><Link to="/setting" >Setting</Link></li>
                                 </div>
                             : ''}
                         </ul>

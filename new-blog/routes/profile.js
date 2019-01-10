@@ -99,7 +99,7 @@ router.get('/:username/:tag', (req, res) => {
 })
 
 router.put('/edit/:id', (req, res) => {
-  async function updateUser() {
+  async function updatePost() {
     try {
       const post = await Post.findById(req.params.id);
 
@@ -118,7 +118,7 @@ router.put('/edit/:id', (req, res) => {
     }
   }
 
-  updateUser()
+  updatePost()
 })
 
 router.delete('/delete/:id', (req, res) => {

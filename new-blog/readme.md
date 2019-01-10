@@ -19,7 +19,7 @@ So  basically, I want user to upload their picture into the Browser and React is
 - [x] Delete article button (only shown to article's author)
 - [] Render markdown from server client side
 - [x] Comments section at bottom of page
-- [] Delete comment button (only shown to comment's author)
+- [x] Delete comment button (only shown to comment's author)
 []Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
 - [] Show basic user info
 - [x] List of articles populated from author's created articles or author's favorited articles
