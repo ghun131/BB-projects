@@ -29582,6 +29582,7 @@ class LogIn extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           localStorage.setItem('password', user.password);
           localStorage.setItem('author', res.data.package.username);
           localStorage.setItem('token', res.data.package.token);
+          localStorage.setItem('bio', res.data.package.bio);
           console.log(res.data.package);
           this.setState({
             message: res.data.message,
@@ -32131,8 +32132,6 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "bioRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
-    _defineProperty(this, "emailRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
-
     _defineProperty(this, "passwordRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
     _defineProperty(this, "passwordConfRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
@@ -32143,7 +32142,6 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         avaUrl: this.avatarUrlRef.current.value,
         username: this.userNameRef.current.value,
         biography: this.bioRef.current.value,
-        email: this.emailRef.current.value,
         password: this.passwordRef.current.value,
         passwordConf: this.passwordConfRef.current.value
       };
@@ -32172,6 +32170,7 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       type: "text",
       className: "UserName",
       ref: this.userNameRef,
+      defaultValue: localStorage.getItem("author"),
       placeholder: "Your Username"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       name: "bio",
@@ -32179,20 +32178,23 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       rows: "10",
       ref: this.bioRef,
       placeholder: "Short bio about you"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    }, localStorage.getItem("bio")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "email",
       className: "Email",
       ref: this.emailRef,
+      defaultValue: localStorage.getItem("email"),
       placeholder: "Email"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "password",
       className: "Password",
       ref: this.passwordRef,
+      defaultValue: localStorage.getItem("password"),
       placeholder: "Password"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "password",
       className: "PasswordConf",
       ref: this.passwordConfRef,
+      defaultValue: localStorage.getItem("password"),
       placeholder: "Password Confirm"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2___default.a, {
       variant: "contained",
@@ -32240,7 +32242,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, "h1 {\r\n    color: #292929;\r\n}\r\n\r\n.Setting textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    font-size: 18px;\r\n    padding: 10px;\r\n}\r\n\r\ninput {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 10px;\r\n    font-size: 18px;\r\n}\r\n\r\n.Avatar {\r\n    height: 25px;\r\n    padding: 10px;\r\n    font-size: 14px;\r\n}", ""]);
+exports.push([module.i, "h1 {\r\n    color: #292929;\r\n}\r\n\r\n.Setting textarea {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 300px;\r\n    font-size: 18px;\r\n    padding: 10px;\r\n}\r\n\r\n.Setting input {\r\n    display: block;\r\n    margin: 10px auto;\r\n    width: 600px;\r\n    height: 40px;\r\n    padding: 10px;\r\n    font-size: 18px;\r\n}\r\n\r\n.Avatar {\r\n    height: 25px;\r\n    padding: 10px;\r\n    font-size: 14px;\r\n}", ""]);
 
 // exports
 

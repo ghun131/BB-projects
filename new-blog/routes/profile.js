@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../modal/Post');
 const User = require('../modal/User');
+const bcrypt = require('bcrypt');
 const middleware = require('../middleware');
 
 router.get('/:username', (req, res) => {
@@ -139,16 +140,21 @@ router.delete('/delete/:id', (req, res) => {
 })
 
 router.put('/setting/:username', (req, res) => {
-  const {avaUrl, username, email, biography, password, passwordConf} = req.body.data
+  let {avaUrl, username, email, biography, password, passwordConf} = req.body.data
   async function updateProfile() {
     try {
-      let result = await User.update({ email: email }, {
-        $set: {
-          avaUrl, username, biography, password, passwordConf
-        }
-      });
-      
-      res.send(result);
+      if (password === passwordConf) {
+        password = bcrypt.hashSync(passwordConf, 10)
+        let result = await User.updateOne({ email: email }, {
+          $set: {
+            avaUrl, username, biography, password, passwordConf
+          }
+        });
+        
+        res.send(result);
+      } else {
+        res.send("password and password confirmation needs to be the same!")
+      }
     }
     catch(err) {
       console.log(err.message)

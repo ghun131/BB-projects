@@ -11,7 +11,7 @@ h1 {
     padding: 10px;
 }
 
-input {
+.Setting input {
     display: block;
     margin: 10px auto;
     width: 600px;

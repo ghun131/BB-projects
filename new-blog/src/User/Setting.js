@@ -7,7 +7,6 @@ class Setting extends React.Component {
     avatarUrlRef = React.createRef();
     userNameRef = React.createRef();
     bioRef = React.createRef();
-    emailRef = React.createRef();
     passwordRef = React.createRef();
     passwordConfRef = React.createRef();
 
@@ -18,7 +17,6 @@ class Setting extends React.Component {
             avaUrl: this.avatarUrlRef.current.value,
             username: this.userNameRef.current.value,
             biography: this.bioRef.current.value,
-            email: this.emailRef.current.value,
             password: this.passwordRef.current.value,
             passwordConf: this.passwordConfRef.current.value
         }
@@ -45,26 +43,30 @@ class Setting extends React.Component {
                         <input  type="text"
                                 className="UserName"
                                 ref={this.userNameRef}
+                                defaultValue={localStorage.getItem("author")}
                                 placeholder="Your Username"/>
 
                         <textarea   name="bio"
                                     cols="30" rows="10" 
                                     ref={this.bioRef}
-                                    placeholder="Short bio about you"></textarea>
+                                    placeholder="Short bio about you">{localStorage.getItem("bio")}</textarea>
 
                         <input  type="email"
                                 className="Email"
                                 ref={this.emailRef}
-                                placeholder="Email"/>
+                                defaultValue={localStorage.getItem("email")}
+                                placeholder="Email" />
 
                         <input  type="password"
                                 className="Password"
                                 ref={this.passwordRef}
+                                defaultValue={localStorage.getItem("password")}
                                 placeholder="Password"/>
 
                         <input  type="password"
                                 className="PasswordConf"
                                 ref={this.passwordConfRef}
+                                defaultValue={localStorage.getItem("password")}
                                 placeholder="Password Confirm"/>
 
                         <Button variant="contained"
