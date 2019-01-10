@@ -6,6 +6,7 @@ const Comment = require('../modal/Comment');
 
 router.get('/:id', (req, res) => {
     let data = {}
+    console.log(req.params.id);
 
     async function getOneArticle() {
         try {
