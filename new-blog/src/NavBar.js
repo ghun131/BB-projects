@@ -15,9 +15,10 @@ const NavBar = (props) => {
                 <li className="Logo">
                     <Link to="/" 
                         style={{color: "#292929"}}
-                        onClick={refreshPage}>Blog Me li</Link>
+                        onClick={refreshPage}>BB Blog</Link>
                 </li>
                 <div style={{ display: "inline-block", right: "0", position: "absolute", top:"50%", transform: "translate(0, -50%)" }}>
+                    <li><Link to="/" onClick={refreshPage}>HOME</Link> </li>
                     <li className="Search">
                         <i className="fas fa-search"></i>
                     </li>
@@ -49,42 +50,12 @@ const NavBar = (props) => {
                     </li>
                 </div>
             </ul>
-            <ul>
-                <li><Link to="/" onClick={refreshPage}>HOME</Link> </li>
-                <li>
-                    <a>THE NEW NEW</a>
-                </li>
-                <li>
-                    <a>CULTURE</a>
-                </li>
-                <li>
-                    <a>TECH</a>
-                </li>
-                <li>
-                    <a>STARTUPS</a>
-                </li>
-                <li>
-                    <a>SELF</a>
-                </li>
-                <li>
-                    <a>POLITICS</a>
-                </li>
-                <li>
-                    <a>DESIGN</a>
-                </li>
-                <li>
-                    <a>HEALTH</a>
-                </li>
-                <li>
-                    <a>POPULAR</a>
-                </li>
-                <li>
-                    <a>COLLECTIONS</a>
-                </li>
-                <li>
-                    <a>MORE</a>
-                </li>
-            </ul>
+            <div className="Banner">
+                <h1 style={{ fontSize: "3rem", color: "white"}}>
+                    BB Blog
+                </h1>
+                <p style={{ fontSize: "1.5rem" }}>Music makes you brave</p>
+            </div>
         </div>
     )
 }

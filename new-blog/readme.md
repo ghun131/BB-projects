@@ -13,15 +13,15 @@ So  basically, I want user to upload their picture into the Browser and React is
 - [x] Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )
 - [x] Uses JWT (store the token in localStorage)
-[] Settings page (URL: /#/settings )
+[x] Settings page (URL: /#/settings )
 [x]Editor page to create/edit articles (URL: /#/editor, /#/editor/article-slug-here )
 []Article page (URL: /#/article/article-slug-here )
 - [x] Delete article button (only shown to article's author)
 - [] Render markdown from server client side
 - [x] Comments section at bottom of page
 - [x] Delete comment button (only shown to comment's author)
-[]Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
-- [] Show basic user info
+[x]Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
+- [x] Show basic user info
 - [x] List of articles populated from author's created articles or author's favorited articles
 
 

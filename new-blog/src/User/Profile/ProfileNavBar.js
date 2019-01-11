@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ProfileNavBar = (props) => {
     return (
@@ -7,6 +7,7 @@ const ProfileNavBar = (props) => {
             <Link to={`/profile/${localStorage.getItem("author")}`}>
                 Your posts
             </Link>
+            
             <hr/>
         </div>
     )
