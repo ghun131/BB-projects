@@ -8,6 +8,7 @@ const PageNumber = (props) => {
                 <Button
                     key={num}
                     style={{display: "block", fontWeight: "strong", fontSize: "17px"}}
+                    variant="outlined"
                     onClick={() => props.clicked(num)}>
                     {num}
                 </Button>

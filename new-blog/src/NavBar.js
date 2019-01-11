@@ -17,15 +17,18 @@ const NavBar = (props) => {
                         style={{color: "#292929"}}
                         onClick={refreshPage}>BB Blog</Link>
                 </li>
-                <div style={{ display: "inline-block", right: "0", position: "absolute", top:"50%", transform: "translate(0, -50%)" }}>
+                <div style={{   display: "flex", 
+                                alignItems: "center",
+                                right: "0", 
+                                position: "absolute", 
+                                top:"50%", 
+                                transform: "translate(0, -50%)" }}>
                     <li><Link to="/" onClick={refreshPage}>HOME</Link> </li>
-                    <li className="Search">
-                        <i className="fas fa-search"></i>
-                    </li>
-                    <li className="Bell">
-                        <i className="far fa-bell"></i>
-                    </li>
-                    <li className="Upgrade">Upgrade</li>
+                    <Link to="/new-post" className="NewPost">
+                        <i class="far fa-edit"></i>
+                        New Post
+                    </Link>
+                    <Link className="Setting" to="/setting">Setting</Link>
                     <li className="Profile">
                         <Avatar alt="your avatar" src={localStorage.getItem("picUrl")} />
                         <ul className="ProfileDropDown">

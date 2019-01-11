@@ -21698,11 +21698,11 @@ const TagCard = props => {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_2___default.a, {
     style: {
-      padding: "0",
-      border: "1px solid cyan"
+      padding: "0"
     },
     label: props._id,
     href: "#" + props._id,
+    variant: "outlined",
     clickable: true
   }));
 };
@@ -21729,6 +21729,7 @@ const PageNumber = props => {
       fontWeight: "700",
       fontSize: "17px"
     },
+    variant: "outlined",
     onClick: () => props.clicked(num)
   }, num)));
 };
@@ -31911,6 +31912,7 @@ const PageNumber = props => {
       fontWeight: "strong",
       fontSize: "17px"
     },
+    variant: "outlined",
     onClick: () => props.clicked(num)
   }, num)));
 };
@@ -32148,7 +32150,8 @@ const NavBar = props => {
     onClick: refreshPage
   }, "BB Blog")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
-      display: "inline-block",
+      display: "flex",
+      alignItems: "center",
       right: "0",
       position: "absolute",
       top: "50%",
@@ -32157,17 +32160,15 @@ const NavBar = props => {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/",
     onClick: refreshPage
-  }, "HOME"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "Search"
+  }, "HOME"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+    to: "/new-post",
+    className: "NewPost"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-search"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "Bell"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "far fa-bell"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "Upgrade"
-  }, "Upgrade"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    class: "far fa-edit"
+  }), "New Post"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+    className: "Setting",
+    to: "/setting"
+  }, "Setting"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "Profile"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_2___default.a, {
     alt: "your avatar",
@@ -32227,7 +32228,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.Search {\r\n    display: block;\r\n    margin: auto 15px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Bell {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Upgrade {\r\n    display: block;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    border: 1px solid #3F3F3F;\r\n    cursor: pointer;\r\n}\r\n\r\n.Upgrade:hover {\r\n    border-color: black;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.NewPost {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Setting {\r\n    display: block;\r\n    height: 20px;\r\n    line-height: 20px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Setting:hover {\r\n    border-color: black;\r\n}\r\n\r\n", ""]);
 
 // exports
 

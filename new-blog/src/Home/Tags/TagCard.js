@@ -6,9 +6,10 @@ const TagCard = (props) => {
     return (
         <Link to={`/profile/${localStorage.getItem("author") + "/posts/" + props._id}`} 
             style={{display: "inline-flex", padding: "5px"}}>
-            <Chip style={{padding: "0", border: "1px solid cyan"}}
+            <Chip style={{padding: "0"}}
                     label={props._id}
                     href={"#" + props._id}
+                    variant="outlined"
                     clickable/>
         </Link>
     )
