@@ -44,6 +44,7 @@ class EditPost extends React.Component {
         const data = {
             title: title,
             content: content,
+            avaUrl: localStorage.getItem("picUrl"),
             tags: tagsArr
         };
 

@@ -35,7 +35,7 @@ class NewPost extends React.Component {
             author: localStorage.getItem('author'),
             email: localStorage.getItem('email'),
             title: title,
-            avaUrl: localStorage.getItem('avaUrl'),
+            avaUrl: localStorage.getItem('picUrl'),
             content: content,
             tags: tags
         }

@@ -31,7 +31,7 @@ class Home extends React.Component {
             }).catch(error => console.log(error));
     }
 
-    // get last article _id and page number to send to server
+    // pagination
     handleClick = (num) => {
         let path = `/api/posts/${num}`;
         axios.get(path)

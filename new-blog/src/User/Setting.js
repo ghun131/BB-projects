@@ -21,6 +21,9 @@ class Setting extends React.Component {
             passwordConf: this.passwordConfRef.current.value
         }
 
+        localStorage.setItem("picUrl", data.avaUrl)
+        localStorage.setItem("bio", data.biography)
+
         axios.put(`profile/setting/${localStorage.getItem("author")}`, {data})
             .then (res => {
                 console.log(res.data);

@@ -24,33 +24,47 @@ const NavBar = (props) => {
                                 top:"50%", 
                                 transform: "translate(0, -50%)" }}>
                     <li><Link to="/" onClick={refreshPage}>HOME</Link> </li>
-                    <Link to="/new-post" className="NewPost">
-                        <i className="far fa-edit"></i>
-                        New Post
-                    </Link>
-                    <Link className="Setting" to="/setting">Setting</Link>
-                    <li className="Profile">
-                        <Avatar alt="your avatar" src={localStorage.getItem("picUrl")} />
-                        <ul className="ProfileDropDown">
-                            { !props.isUser?
-                                <li><Link to="/register">Sign up</Link></li>
-                            : '' }
-                            { props.isLogIn? 
-                                <li><Link to="/" onClick={props.logOut}>Log out</Link></li>
-                            : <li><Link to="/log-in">Log in</Link></li> }
-                            { props.isUser && props.isLogIn?
-                                <div>
-                                    <li>
-                                        <Link to={`/profile/${localStorage.getItem("author")}`}>
-                                            Profile
-                                        </Link>
-                                    </li>
-                                    <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
-                                    <li><Link to="/setting" >Setting</Link></li>
-                                </div>
-                            : ''}
-                        </ul>
-                    </li>
+                    { props.isUser ? 
+                        <div style={{
+                            display: "flex",
+                            alignItems: "center",
+                        }}>
+                            <Link to="/new-post" className="NewPost">
+                                <i className="far fa-edit"></i>
+                                New Post
+                            </Link>
+                            <Link className="Setting" to="/setting">Setting</Link>
+                            <li className="Profile">
+                                <Avatar alt="your avatar" src={localStorage.getItem("picUrl")} />
+                                <ul className="ProfileDropDown">
+                                    { !props.isUser?
+                                        <li><Link to="/register">Sign up</Link></li>
+                                    : '' }
+                                    { props.isLogIn? 
+                                        <li><Link to="/" onClick={props.logOut}>Log out</Link></li>
+                                    : <li><Link to="/log-in">Log in</Link></li> }
+                                    { props.isUser && props.isLogIn?
+                                        <div>
+                                            <li>
+                                                <Link to={`/profile/${localStorage.getItem("author")}`}>
+                                                    Profile
+                                                </Link>
+                                            </li>
+                                            <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
+                                            <li><Link to="/setting" >Setting</Link></li>
+                                        </div>
+                                    : ''}
+                                </ul>
+                            </li>
+                        </div>
+                        :
+                        <div>
+                            <Link to="/register">Sign up</Link>
+                            <Link to="/log-in">Log in</Link>
+                        </div>    
+                    }
+                    
+                    
                 </div>
             </ul>
         </div>

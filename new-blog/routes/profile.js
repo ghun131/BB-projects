@@ -90,7 +90,7 @@ router.put('/edit/:id', (req, res) => {
         post.content = req.body.data.content;
         post.title = req.body.data.title;
         post.tags = req.body.data.tags;
-        console.log("update post")
+        post.avaUrl = req.body.data.avaUrl;
         const result = await post.save();
         console.log("save updated post");
         res.send(post);
