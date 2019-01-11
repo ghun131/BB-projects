@@ -38,7 +38,7 @@ const Article = (props) => {
             {props.tags.map(t => 
                 <Link 
                     key={t}
-                    to={`/profile/${localStorage.getItem("author") + "/posts/" + t}`} 
+                    to={`/tag/${t}`} 
                     style={{display: "inline-flex"}}>
                         <Chip 
                             style={{marginRight: "5px"}}

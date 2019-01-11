@@ -37,7 +37,7 @@ const routePath = (props) => {
                     <Profile articlesUpdate={props.articlesList}
                         {...props}/>} />
 
-            <Route path="/profile/:username/posts/:tags" component={ArticlesWithPopularTags} />
+            <Route path="/tag/:tags" component={ArticlesWithPopularTags} />
 
             <Route exact path="/profile/edit/:id" 
                 render={(history) => 

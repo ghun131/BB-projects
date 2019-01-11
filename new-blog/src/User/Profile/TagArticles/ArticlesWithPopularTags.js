@@ -11,7 +11,7 @@ class ArticlesWithPopularTags extends React.Component {
     componentDidMount() {
         const pathnameArr = this.props.location.pathname.split("/");
         const tagName = pathnameArr[pathnameArr.length - 1];
-        axios.get(`/profile/${localStorage.getItem("author") + "/" + tagName}`)
+        axios.get(`/tag/${tagName}`)
             .then(res => {
                 console.log(res.data)
                 this.setState({ data: res.data, tagName })

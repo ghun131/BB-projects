@@ -11618,7 +11618,7 @@ const routePath = props => {
       articlesUpdate: props.articlesList
     }, props))
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "/profile/:username/posts/:tags",
+    path: "/tag/:tags",
     component: _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_9__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
@@ -12456,7 +12456,7 @@ const Article = props => {
     to: `article/${_id}`
   }, "Read more..."), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     key: t,
-    to: `/profile/${localStorage.getItem("author") + "/posts/" + t}`,
+    to: `/tag/${t}`,
     style: {
       display: "inline-flex"
     }
@@ -21716,7 +21716,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const TagCard = props => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: `/profile/${localStorage.getItem("author") + "/" + props._id}`,
+    to: `/tag/${props._id}`,
     style: {
       display: "inline-flex",
       padding: "5px"
@@ -31419,7 +31419,7 @@ class ArticlesWithPopularTags extends react__WEBPACK_IMPORTED_MODULE_0___default
   componentDidMount() {
     const pathnameArr = this.props.location.pathname.split("/");
     const tagName = pathnameArr[pathnameArr.length - 1];
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/profile/${localStorage.getItem("author") + "/" + tagName}`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/tag/${tagName}`).then(res => {
       console.log(res.data);
       this.setState({
         data: res.data,
