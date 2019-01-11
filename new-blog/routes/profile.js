@@ -81,25 +81,6 @@ router.get('/:username/posts/:page', (req, res) => {
   totalUserPosts();
 })
 
-router.get('/:username/:tag', (req, res) => {
-  let tag = req.params.tag;
-
-  async function getArticlesOfATag() {
-    try {
-      const tagArticles = await Post
-      .find({ tags: tag })
-      .sort('-time');
-
-      res.send(tagArticles);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
-  }
-
-  getArticlesOfATag();
-})
-
 router.put('/edit/:id', (req, res) => {
   async function updatePost() {
     try {

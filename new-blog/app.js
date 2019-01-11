@@ -8,6 +8,7 @@ const newPost = require('./routes/newPost');
 const article = require('./routes/article');
 const profile = require('./routes/profile');
 const posts = require('./routes/posts');
+const tags = require('./routes/tags');
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -38,6 +39,9 @@ app.use('/article', article)
 
 //POST method for new post
 app.use('/api/new-post', newPost);
+
+// GET articles for a tag
+app.use('/tag', tags);
 
 //POST method finds all posts of one author
 app.use('/profile', profile);

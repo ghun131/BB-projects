@@ -21716,7 +21716,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const TagCard = props => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: `/profile/${localStorage.getItem("author") + "/posts/" + props._id}`,
+    to: `/profile/${localStorage.getItem("author") + "/" + props._id}`,
     style: {
       display: "inline-flex",
       padding: "5px"
