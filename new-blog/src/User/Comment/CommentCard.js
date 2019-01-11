@@ -8,14 +8,17 @@ import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 
 const CommentCard = (props) => {
-    let {_id, author, comment, time} = props;
+    let {_id, author, comment, time, avaUrl} = props;
     let firstLetter = author.charAt(0).toUpperCase();
     let displayTime = new Date(parseInt(time)).toString();
     return (
         <div style={{marginTop: "30px"}}>
             <Card>
                 <CardHeader
-                    avatar={<Avatar>{firstLetter}</Avatar>} 
+                    avatar={ avaUrl? 
+                        <Avatar src={avaUrl}/>
+                        : <Avatar>{firstLetter}</Avatar>
+                    } 
                     title={
                         <Link to={`/profile/${author}`} >
                             {author}

@@ -59,13 +59,14 @@ router.put('/:id', (req, res) => {
 
 //add a new comment
 router.post('/:id', (req, res) => {
-    const { author, comment, articleTitle } = req.body.data;
+    const { author, comment, articleTitle, avaUrl } = req.body.data;
 
     async function createComment() {
         let today = new Date();
         const newComment = new Comment ({
             articleTitle,
             articleId: req.params.id,
+            avaUrl,
             author,
             comment,
             time: Date.parse(today)

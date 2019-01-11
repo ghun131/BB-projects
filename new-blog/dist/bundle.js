@@ -29807,6 +29807,7 @@ class ArticleDetail extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
       });
       const data = {
         author: localStorage.getItem("author"),
+        avaUrl: localStorage.getItem("picUrl"),
         articleTitle: this.state.article.title,
         comment: this.state.comment
       };
@@ -29986,7 +29987,8 @@ const CommentCard = props => {
     _id,
     author,
     comment,
-    time
+    time,
+    avaUrl
   } = props;
   let firstLetter = author.charAt(0).toUpperCase();
   let displayTime = new Date(parseInt(time)).toString();
@@ -29995,7 +29997,9 @@ const CommentCard = props => {
       marginTop: "30px"
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_2___default.a, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_CardHeader__WEBPACK_IMPORTED_MODULE_3___default.a, {
-    avatar: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7___default.a, null, firstLetter),
+    avatar: avaUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7___default.a, {
+      src: avaUrl
+    }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7___default.a, null, firstLetter),
     title: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: `/profile/${author}`
     }, author),

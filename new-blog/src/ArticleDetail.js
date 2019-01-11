@@ -42,6 +42,7 @@ class ArticleDetail extends React.Component {
         this.setState({ loading: true });
         const data = {
             author: localStorage.getItem("author"),
+            avaUrl: localStorage.getItem("picUrl"),
             articleTitle: this.state.article.title,
             comment: this.state.comment
         }
