@@ -39,6 +39,25 @@ router.get('/:id', (req, res) => {
     getOneArticle();
 })
 
+//update love for a particular article
+router.put('/:id', (req, res) => {
+    const incre = req.body.num;
+    async function updateLove(num) {
+        try {
+            const post = await Post
+            .findByIdAndUpdate(req.params.id, 
+                { $inc: { love: num } }, 
+                { new: true });
+            res.send(post);
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+
+    updateLove(incre)
+})
+
+//add a new comment
 router.post('/:id', (req, res) => {
     const { author, comment, articleTitle } = req.body.data;
 
@@ -64,6 +83,7 @@ router.post('/:id', (req, res) => {
     createComment();
 })
 
+// delete a comment
 router.delete('/comment/delete/:id', (req, res) => {
     async function deleteComment() {
         try {

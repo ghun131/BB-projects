@@ -126,7 +126,7 @@ router.put('/setting/:username', (req, res) => {
     try {
       if (password === passwordConf) {
         password = bcrypt.hashSync(passwordConf, 10)
-        let result = await User.updateOne({ email: email }, {
+        const result = await User.updateOne({ email: email }, {
           $set: {
             avaUrl, username, biography, password, passwordConf
           }

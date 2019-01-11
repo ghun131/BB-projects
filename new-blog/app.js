@@ -35,6 +35,7 @@ app.use('/api/log-in', logIn);
 // User log out POST to clear session
 app.use('/api/log-out', logOut);
 
+// Handle one article
 app.use('/article', article)
 
 //POST method for new post
