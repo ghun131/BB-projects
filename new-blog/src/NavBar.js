@@ -25,7 +25,7 @@ const NavBar = (props) => {
                                 transform: "translate(0, -50%)" }}>
                     <li><Link to="/" onClick={refreshPage}>HOME</Link> </li>
                     <Link to="/new-post" className="NewPost">
-                        <i class="far fa-edit"></i>
+                        <i className="far fa-edit"></i>
                         New Post
                     </Link>
                     <Link className="Setting" to="/setting">Setting</Link>

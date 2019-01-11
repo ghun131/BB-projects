@@ -14,7 +14,7 @@ class Heading extends React.Component {
                         <h1 style={{marginRight: "20px"}}>
                             {localStorage.getItem('author')}
                         </h1>
-                        <Link to={`profile/setting/${localStorage.getItem("author")}`}>
+                        <Link to="/setting">
                             <Button 
                                 variant="outlined"
                                 disableRipple

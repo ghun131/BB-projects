@@ -4,10 +4,15 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
 
 const Article = (props) => {
-    const {_id, author, content, title, time} = {...props}
+    const {_id, author, content, title, time, avaUrl} = {...props}
     let displayTime = new Date(parseInt(time)).toString();
+    let firstLetter = author.charAt(0).toUpperCase();
+
     return (
         <div style={{ textAlign: 'left'}}>
             <Grid container spacing={24}>
@@ -25,8 +30,15 @@ const Article = (props) => {
                     </Button>
                 </Grid>
             </Grid>
-            <h4>{author}</h4>
-            <p><em>{displayTime}</em></p>
+            <Link to={`/profile/${author}`} >
+                <CardHeader
+                    avatar={ avaUrl ? 
+                        <Avatar alt="user avatar" src={avaUrl}></Avatar>
+                        : <Avatar>{firstLetter}</Avatar>}
+                    title={author}
+                    subheader={displayTime}
+                />
+            </Link>
             <p style={{
                 textAlign: 'left',
                 height: '2rem',
@@ -47,6 +59,7 @@ const Article = (props) => {
                                 clickable/>
                     </Link>
             )}
+            <Divider style={{marginTop: "10px"}}/>
         </div>
     )
 }
