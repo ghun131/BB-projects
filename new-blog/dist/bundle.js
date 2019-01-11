@@ -11660,13 +11660,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PublicArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63);
 /* harmony import */ var _Tags_TagBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(181);
 /* harmony import */ var _Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(183);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(206);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(233);
-/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(237);
-/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Banner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(315);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(206);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(233);
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(237);
+/* harmony import */ var _material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_8__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -11689,7 +11691,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "handleClick", num => {
       let path = `/api/posts/${num}`;
-      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get(path).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_6___default.a.get(path).then(res => {
         this.setState({
           data: res.data.posts,
           tags: res.data.tags
@@ -11699,7 +11701,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_5___default.a.get("/api/posts").then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_6___default.a.get("/api/posts").then(res => {
       let totalDocs = res.data.totalDocuments[0].posts;
       let pageNums = [...this.state.pageNums];
 
@@ -11719,18 +11721,18 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "Home"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default.a, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Banner__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_8___default.a, {
       container: true,
       spacing: 24
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default.a, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_8___default.a, {
       item: true,
       xs: 9
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PublicArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_2__["default"], {
       posts: this.state.data
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_7___default.a, {
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_8___default.a, {
       item: true,
       xs: 3
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6___default.a, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_7___default.a, {
       style: {
         marginTop: "10px"
       }
@@ -21696,11 +21698,11 @@ const TagCard = props => {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Chip__WEBPACK_IMPORTED_MODULE_2___default.a, {
     style: {
-      padding: "0"
+      padding: "0",
+      border: "1px solid cyan"
     },
     label: props._id,
     href: "#" + props._id,
-    variant: "outlined",
     clickable: true
   }));
 };
@@ -32186,18 +32188,7 @@ const NavBar = props => {
     onClick: props.newPost
   }, "New Post")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/setting"
-  }, "Setting"))) : '')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "Banner"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    style: {
-      fontSize: "3rem",
-      color: "white"
-    }
-  }, "BB Blog"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    style: {
-      fontSize: "1.5rem"
-    }
-  }, "Music makes you brave")));
+  }, "Setting"))) : '')))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NavBar);
@@ -32236,7 +32227,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.Search {\r\n    display: block;\r\n    margin: auto 15px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Bell {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Upgrade {\r\n    display: block;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    border: 1px solid #3F3F3F;\r\n    cursor: pointer;\r\n}\r\n\r\n.Upgrade:hover {\r\n    border-color: black;\r\n}\r\n\r\n.Banner {\r\n    width: 100%;\r\n    color: white;\r\n    background-color: #5CB85C;\r\n    text-align: center;\r\n    padding: 2rem;\r\n    line-height: 1.5;\r\n    box-shadow: inset 0 8px 8px -8px rgba(0, 0, 0, 0.3), inset 0 -8px 8px -8px rgba(0, 0, 0, 0.3);\r\n}", ""]);
+exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.Search {\r\n    display: block;\r\n    margin: auto 15px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Bell {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Upgrade {\r\n    display: block;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    border: 1px solid #3F3F3F;\r\n    cursor: pointer;\r\n}\r\n\r\n.Upgrade:hover {\r\n    border-color: black;\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -32279,6 +32270,41 @@ exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: '
 
 // exports
 
+
+/***/ }),
+/* 315 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const Banner = () => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      width: "100%",
+      color: "white",
+      backgroundColor: "#5CB85C",
+      textAlign: "center",
+      padding: "2rem",
+      lineHeight: "1.5",
+      boxShadow: "inset 0 8px 8px -8px rgba(0, 0, 0, 0.3), inset 0 -8px 8px -8px rgba(0, 0, 0, 0.3)"
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    style: {
+      fontSize: "3rem",
+      color: "white"
+    }
+  }, "BB Blog"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    style: {
+      fontSize: "1.5rem"
+    }
+  }, "Music makes you brave"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Banner);
 
 /***/ })
 /******/ ]);

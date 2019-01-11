@@ -50,12 +50,6 @@ const NavBar = (props) => {
                     </li>
                 </div>
             </ul>
-            <div className="Banner">
-                <h1 style={{ fontSize: "3rem", color: "white"}}>
-                    BB Blog
-                </h1>
-                <p style={{ fontSize: "1.5rem" }}>Music makes you brave</p>
-            </div>
         </div>
     )
 }

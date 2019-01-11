@@ -3,6 +3,7 @@ import './Home.css';
 import ArticlesList from './PublicArticles/ArticlesList';
 import TagBox from './Tags/TagBox';
 import PageNumber from './Pagination/PageNumber';
+import Banner from './Banner';
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
@@ -45,6 +46,7 @@ class Home extends React.Component {
     render() {
         return (
             <div className="Home">
+                <Banner />
                 <Grid container spacing={24}>
                     <Grid item xs={9}>
                         <ArticlesList posts={this.state.data}/>

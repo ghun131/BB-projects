@@ -4,7 +4,7 @@ const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
 router.post('/', middleware.checkToken, (req, res) => {
-  const { author, title, content, email, tags } = req.body.post;
+  const { author, title, content, email, tags, avaUrl } = req.body.post;
 
   async function createPost() {
     let today = new Date();
@@ -14,6 +14,7 @@ router.post('/', middleware.checkToken, (req, res) => {
       email,
       content,
       tags,
+      avaUrl,
       time: Date.parse(today)
     })
 
