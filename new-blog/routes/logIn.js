@@ -38,6 +38,8 @@ router.post('/', (req, res) => {
       })
     } else {
       bcrypt.compare(password, result[0].password, (err, check) => {
+        console.log(password)
+        console.log(result[0].password)
         if (err) {
           return res.json({
             success: false,

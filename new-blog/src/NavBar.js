@@ -33,7 +33,9 @@ const NavBar = (props) => {
                                 <i className="far fa-edit"></i>
                                 New Post
                             </Link>
-                            <Link className="Setting" to="/setting">Setting</Link>
+                            <Link className="Setting" to={`/profile/setting/${localStorage.getItem("author")}`}>
+                                Setting
+                            </Link>
                             <li className="Profile">
                                 <Avatar alt="your avatar" src={localStorage.getItem("picUrl")} />
                                 <ul className="ProfileDropDown">
@@ -51,7 +53,11 @@ const NavBar = (props) => {
                                                 </Link>
                                             </li>
                                             <li><Link to="/new-post" onClick={props.newPost}>New Post</Link></li>
-                                            <li><Link to="/setting" >Setting</Link></li>
+                                            <li>
+                                                <Link className="Setting" to={`/profile/setting/${localStorage.getItem("author")}`}>
+                                                    Setting
+                                                </Link>
+                                            </li>
                                         </div>
                                     : ''}
                                 </ul>

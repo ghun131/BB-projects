@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../modal/Post');
+const User = require('../modal/User');
 const Comment = require('../modal/Comment');
 // const middleware = require('../middleware');
 
@@ -41,20 +42,44 @@ router.get('/:id', (req, res) => {
 
 //update love for a particular article
 router.put('/:id', (req, res) => {
-    const incre = req.body.num;
+    const { author, title } = req.body.payload;
+    let data = {};
     async function updateLove(num) {
         try {
             const post = await Post
             .findByIdAndUpdate(req.params.id, 
                 { $inc: { love: num } }, 
                 { new: true });
-            res.send(post);
-        } catch (err) {
+            data.post = post;
+            res.send(data)
+        } catch (err) { 
             console.log(err.message)
         }
     }
 
-    updateLove(incre)
+    async function updateFavouriteArticle() {
+        try {
+            const user = await User.findOne({ username: author });
+            let index = user.loveArticles.indexOf(title);
+            console.log(index)
+            if (index === -1) {
+                user.loveArticles.push(title);
+                const result = await user.save();
+                data.user = user;
+                updateLove(1)
+            } else {
+                user.loveArticles.splice(index, 1);
+                const result = await user.save();
+                data.user = user;
+                updateLove(-1)
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+
+    }
+
+    updateFavouriteArticle();
 })
 
 //add a new comment

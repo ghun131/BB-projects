@@ -15,8 +15,8 @@ class Setting extends React.Component {
 
         const data = {
             avaUrl: this.avatarUrlRef.current.value,
-            username: this.userNameRef.current.value,
             biography: this.bioRef.current.value,
+            email: localStorage.getItem("email"),
             password: this.passwordRef.current.value,
             passwordConf: this.passwordConfRef.current.value
         }
@@ -24,7 +24,7 @@ class Setting extends React.Component {
         localStorage.setItem("picUrl", data.avaUrl)
         localStorage.setItem("bio", data.biography)
 
-        axios.put(`profile/setting/${localStorage.getItem("author")}`, {data})
+        axios.put(`/profile/setting/${localStorage.getItem("author")}`, {data})
             .then (res => {
                 console.log(res.data);
                 this.props.history.push("/");

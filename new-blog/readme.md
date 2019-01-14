@@ -1,12 +1,14 @@
 [x] Copy the current route (/api/profile) then when it is refreshed,
 redirect to home (or index.html whatever) then go to the copied route.
-[] User can change their profile picture
-So  basically, I want user to upload their picture into the Browser and React is going to receive it. The React send the file to NodeJS server ad Node is going to upload the file to Cloudinary. Eventually, React is going to get the file to display for the client.
+[x] User can change their profile picture
 [x] User can be able to edit and delete their posts
 [x] User can comment in other User's post
+[] Add a love icon for each post
+[] Add followers and following
 [x] Clean the states for "post" and "user"
 [] User some style like Material UI for font, color, space and no border
 [] Fix authentication using Header
+[] Deploy your website
 [x] Home page (URL: /#/ )
 - [x] List of tags
 - [x] List of articles pulled from either Feed, Global, or by Tag

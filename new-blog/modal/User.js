@@ -24,6 +24,7 @@ var UserSchema = new mongoose.Schema({
     unique: true,
     require: true,
   },
+  loveArticles: [String],
   password: {
     type: String,
     required: true,

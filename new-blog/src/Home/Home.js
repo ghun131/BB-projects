@@ -18,6 +18,7 @@ class Home extends React.Component {
     componentDidMount() {
         axios.get("/api/posts")
             .then( res => {
+                console.log('Home posts', res.data)
                 let totalDocs = res.data.totalDocuments[0].posts;
                 let pageNums = [...this.state.pageNums];
                 for (let i = 1; i < totalDocs / 13 + 1; i++) {
@@ -32,7 +33,7 @@ class Home extends React.Component {
     }
 
     // pagination
-    handleClick = (num) => {
+    handleClickPageNumber = (num) => {
         let path = `/api/posts/${num}`;
         axios.get(path)
             .then( res => {
@@ -43,13 +44,37 @@ class Home extends React.Component {
             }).catch(error => console.log(error));
     }
 
+    // click heart symbol
+    handleClickLove = (id) => {
+        let data = [...this.state.data];
+
+        // get index of one article in the data array
+        let postArr = data.filter(p => p._id === id)
+        const index = data.indexOf(postArr[0]);
+        let payload = {
+            author: localStorage.getItem("author"),
+            title: data[index].title
+        }
+        axios.put(`/article/${id}`, {payload})
+            .then( res => {
+                console.log(res.data)
+                data[index].love = res.data.post.love;
+                localStorage.setItem("loveArticles", res.data.user.loveArticles);
+                this.setState({ data })
+            })
+            .catch(err => console.log(err))
+    }
+
     render() {
         return (
             <div className="Home">
                 <Banner />
                 <Grid container spacing={24}>
                     <Grid item xs={9}>
-                        <ArticlesList posts={this.state.data}/>
+                        <ArticlesList 
+                            posts={this.state.data}
+                            isLove={this.state.isLove}
+                            clickedLove={this.handleClickLove}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Card style={{marginTop: "10px"}}>
@@ -59,7 +84,7 @@ class Home extends React.Component {
                     </Grid>
                 </Grid>
                 <PageNumber 
-                    clicked={this.handleClick}
+                    clicked={this.handleClickPageNumber}
                     pageNumbers={this.state.pageNums}/>
             </div> 
         )

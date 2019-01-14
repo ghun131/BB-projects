@@ -51,7 +51,7 @@ const routePath = (props) => {
                     : <LogIn />
             }/>
 
-            <Route path="/setting" component={Setting}/>
+            <Route path="/profile/setting/:username" component={Setting}/>
         </div>
     )
 }

@@ -17,7 +17,6 @@ router.post('/', (req, res, next) => {
   
     // Check whether email is used or not?
       User.findOne({ email: email }, (err, item) => {
-        console.log(item);
         if (err) {
           return res.json(err);
         } else if (item) {
@@ -40,6 +39,9 @@ router.post('/', (req, res, next) => {
               let userData = {
                 email: email,
                 username: username,
+                avaUrl: '',
+                biography: '',
+                loveArticles: [],
                 password: password,
                 passwordConf: passwordConf,
               }

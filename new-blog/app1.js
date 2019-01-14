@@ -2,7 +2,11 @@ const bcrypt = require('bcrypt');
 
 let password = "wolfwolf";
 let passwordConf = "wolfwolf";
+let saltRounds = 10;
+let user = '';
 
-password = bcrypt.hashSync(passwordConf, 10);
-
-console.log(password);
+bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(passwordConf, salt, function(err, hash) {
+        this.user = hash;
+    });
+});
