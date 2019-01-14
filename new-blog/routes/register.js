@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../modal/User');
+const bcrypt = require('bcrypt');
 
 router.post('/', (req, res, next) => {
     const {email, username, password, passwordConf} = req.body.payload
@@ -42,9 +43,15 @@ router.post('/', (req, res, next) => {
                 avaUrl: '',
                 biography: '',
                 loveArticles: [],
+                salt: '',
                 password: password,
-                passwordConf: passwordConf,
+                passwordConf: passwordConf
               }
+              
+              let salt = bcrypt.genSaltSync(10);
+              let hash = bcrypt.hashSync(password, salt);
+
+              userData.password = hash;
             
               User.create(userData, (error, user) => {
                 if (error) {

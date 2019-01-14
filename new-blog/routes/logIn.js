@@ -38,8 +38,6 @@ router.post('/', (req, res) => {
       })
     } else {
       bcrypt.compare(password, result[0].password, (err, check) => {
-        console.log(password)
-        console.log(result[0].password)
         if (err) {
           return res.json({
             success: false,
@@ -59,6 +57,7 @@ router.post('/', (req, res) => {
           package.username = result[0].username;
           package.bio = result[0].biography;
           package.avaUrl = result[0].avaUrl;
+          package.loveArticles = result[0].loveArticles;
           findUserPosts(email, package, res)      
         }
       })
