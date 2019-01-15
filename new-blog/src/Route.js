@@ -32,10 +32,7 @@ const routePath = (props) => {
 
             <Route exact path="/article/:id" component={ArticleDetail} />
 
-            <Route exact path="/profile/:username"
-                render={() => 
-                    <Profile articlesUpdate={props.articlesList}
-                        {...props}/>} />
+            <Route path="/profile/:username" component={Profile}/>
 
             <Route path="/tag/:tags" component={ArticlesWithPopularTags} />
 

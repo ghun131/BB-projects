@@ -22,12 +22,18 @@ const Article = (props) => {
                 <Grid 
                     item xs={3} 
                     style={{ margin: '25px 0px', cursor: "pointer" }}>
-                    <Button size="small" onClick={() => props.edit(_id)}>
-                        <i className="fas fa-edit fa-lg" ></i>
-                    </Button>
-                    <Button size="small" onClick={() => props.alert(_id)}>
-                        <i className="fas fa-trash-alt fa-lg"></i>
-                    </Button>
+                    { 
+                    props.isLove ? "" :
+                    <span>
+                        <Button size="small" onClick={() => props.edit(_id)}>
+                            <i className="fas fa-edit fa-lg" ></i>
+                        </Button>
+                        <Button size="small" onClick={() => props.alert(_id)}>
+                            <i className="fas fa-trash-alt fa-lg"></i>
+                        </Button>
+                    </span>
+                    }
+                    
                 </Grid>
             </Grid>
             <Link to={`/profile/${author}`} >

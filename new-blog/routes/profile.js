@@ -4,7 +4,7 @@ const Post = require('../modal/Post');
 const User = require('../modal/User');
 const middleware = require('../middleware');
 
-router.get('/:username', (req, res) => {
+router.get('/:username/', (req, res) => {
   let data = {};
   let userName = req.session.username;
   if (req.session.username) {
@@ -45,6 +45,34 @@ router.get('/:username', (req, res) => {
   totalUserPosts();
 });
 
+router.get('/:username/posts', (req, res) => {
+  let data = {};
+  let userName = req.session.username;
+  if (req.session.username) {
+    userName = req.session.username
+  }
+  else {
+    userName = req.params.username
+  }
+
+  async function getUserPosts() {
+    try {
+      const posts = await Post
+      .find({ author: userName })
+      .limit(13)
+      .sort('-time');
+
+      data.posts = posts;
+      res.send(data);
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  getUserPosts();
+});
+
 router.get('/:username/posts/:page', (req, res) => {
   let data = {};
   const userName = req.params.username;
@@ -78,6 +106,27 @@ router.get('/:username/posts/:page', (req, res) => {
   }
 
   totalUserPosts();
+})
+
+router.post('/:username/love', (req, res) => {
+  let loveArticles = req.body.loveArticles;
+  async function getLovedArticles() {
+    try {
+        const posts = await Post
+        .find({ title: {
+          $in: loveArticles
+        }})
+        .limit(13)
+        .sort({ time: -1});
+
+      res.send(posts);    
+    } 
+      catch (err) {
+        console.log(err.message)
+    }
+  }
+
+  getLovedArticles();
 })
 
 router.put('/edit/:id', (req, res) => {

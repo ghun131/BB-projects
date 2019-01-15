@@ -39,6 +39,7 @@
 }
 
 .Profile:hover .ProfileDropDown {
+    margin-right: 100px;
     display: block;
 }
 

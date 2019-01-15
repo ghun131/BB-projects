@@ -7,7 +7,10 @@ const ProfileNavBar = (props) => {
             <Link to={`/profile/${localStorage.getItem("author")}`}>
                 Your posts
             </Link>
-            
+            <Link to={`/profile/${localStorage.getItem("author")}/love`}>
+                Favourite articles
+            </Link>
+                
             <hr/>
         </div>
     )

@@ -11574,8 +11574,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(301);
 /* harmony import */ var _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(304);
 /* harmony import */ var _User_Profile_EditPost__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(311);
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 
 
 
@@ -11612,11 +11610,8 @@ const routePath = props => {
     path: "/article/:id",
     component: _ArticleDetail__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
     path: "/profile/:username",
-    render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_User_Profile_Profile__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({
-      articlesUpdate: props.articlesList
-    }, props))
+    component: _User_Profile_Profile__WEBPACK_IMPORTED_MODULE_10__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/tag/:tags",
     component: _User_Profile_TagArticles_ArticlesWithPopularTags__WEBPACK_IMPORTED_MODULE_9__["default"]
@@ -12405,8 +12400,7 @@ const ArticlesList = props => {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
       key: p._id
     }, p, {
-      clickedHeart: props.clickedLove,
-      isLove: props.isLove
+      clickedHeart: props.clickedLove
     }));
   }));
 };
@@ -31881,19 +31875,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _PersonalArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(305);
-/* harmony import */ var _Heading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(307);
-/* harmony import */ var _ProfileNavBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(308);
-/* harmony import */ var _FollowerFollowing__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(309);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(13);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(217);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(310);
-/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(295);
-/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(296);
-/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
+/* harmony import */ var _PersonalArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(305);
+/* harmony import */ var _Heading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(307);
+/* harmony import */ var _ProfileNavBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(308);
+/* harmony import */ var _FollowerFollowing__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(309);
+/* harmony import */ var _PersonalArticles_FavouriteArticles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(319);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(217);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(310);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(295);
+/* harmony import */ var react_confirm_alert__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(296);
+/* harmony import */ var react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_confirm_alert_src_react_confirm_alert_css__WEBPACK_IMPORTED_MODULE_11__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -31915,7 +31912,8 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       title: '',
       content: '',
       articles: [],
-      pageNums: []
+      pageNums: [],
+      isLove: true
     });
 
     _defineProperty(this, "handleEdit", id => {
@@ -31930,13 +31928,13 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       this.setState({
         articles
       });
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.delete(`/profile/delete/${id}`, post[0]).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.delete(`/profile/delete/${id}`, post[0]).then(res => {
         console.log(res.data);
       }).catch(err => console.log(err.message));
     });
 
     _defineProperty(this, "deleteAlert", id => {
-      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_9__["confirmAlert"])({
+      Object(react_confirm_alert__WEBPACK_IMPORTED_MODULE_10__["confirmAlert"])({
         title: 'Confirm to delete',
         message: 'Are you sure to delele this post.',
         buttons: [{
@@ -31949,9 +31947,9 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       });
     });
 
-    _defineProperty(this, "handleClick", num => {
+    _defineProperty(this, "handleClickPageNum", num => {
       let path = `/profile/${localStorage.getItem("author") + "/posts/" + num}`;
-      axios__WEBPACK_IMPORTED_MODULE_7___default.a.get(path).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_8___default.a.get(path).then(res => {
         this.setState({
           articles: res.data.posts
         });
@@ -31960,7 +31958,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_7___default.a.get(`/profile/${localStorage.getItem("author")}`).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_8___default.a.get(`/profile/${localStorage.getItem("author")}`).then(res => {
       console.log('Profile', res.data);
       let totalDocs = res.data.totalDocuments[0].posts;
       let pageNums = [...this.state.pageNums];
@@ -31984,19 +31982,25 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         padding: '10px',
         textAlign: 'left'
       }
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Heading__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FollowerFollowing__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProfileNavBar__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PersonalArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      edited: this.handleEdit,
-      deleted: this.deleteAlert,
-      articlesList: this.state.articles
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_8__["default"], {
-      clicked: this.handleClick,
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Heading__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FollowerFollowing__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProfileNavBar__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+      path: "/profile/:username/love",
+      render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PersonalArticles_FavouriteArticles__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+      path: "/",
+      render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PersonalArticles_ArticlesList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        edited: this.handleEdit,
+        deleted: this.deleteAlert,
+        articlesList: this.state.articles
+      })
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Pagination_PageNumber__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      clicked: this.handleClickPageNum,
       pageNumbers: this.state.pageNums
     }));
   }
 
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["withRouter"])(Profile));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Profile));
 Profile.propTypes = {
   articlesUpdate: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object)
 };
@@ -32020,7 +32024,8 @@ const ArticlesList = props => {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
       key: a._id,
       edit: props.edited,
-      alert: props.deleted
+      alert: props.deleted,
+      isLove: props.isLove
     }, a));
   }));
 };
@@ -32095,7 +32100,7 @@ const Article = props => {
       margin: '25px 0px',
       cursor: "pointer"
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4___default.a, {
+  }, props.isLove ? "" : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4___default.a, {
     size: "small",
     onClick: () => props.edit(_id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -32105,7 +32110,7 @@ const Article = props => {
     onClick: () => props.alert(_id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-trash-alt fa-lg"
-  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+  }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     to: `/profile/${author}`
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_CardHeader__WEBPACK_IMPORTED_MODULE_6___default.a, {
     avatar: avaUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Avatar__WEBPACK_IMPORTED_MODULE_7___default.a, {
@@ -32195,7 +32200,6 @@ class Heading extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: "/setting"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2___default.a, {
       variant: "outlined",
-      disableRipple: true,
       style: {
         width: "100px",
         height: "30px",
@@ -32241,7 +32245,9 @@ const ProfileNavBar = props => {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: `/profile/${localStorage.getItem("author")}`
-  }, "Your posts"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
+  }, "Your posts"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: `/profile/${localStorage.getItem("author")}/love`
+  }, "Favourite articles"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ProfileNavBar);
@@ -32619,7 +32625,7 @@ exports = module.exports = __webpack_require__(60)(false);
 
 
 // module
-exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.NewPost {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    display: block;\r\n}\r\n\r\n.Setting {\r\n    display: block;\r\n    height: 20px;\r\n    line-height: 20px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Setting:hover {\r\n    border-color: black;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, ".Logo {\r\n    display: block;\r\n    font-size: 30px;\r\n    font-weight: 800;\r\n    padding: 20px 5px;\r\n}\r\n\r\n.NewPost {\r\n    display: block;\r\n    cursor: pointer;\r\n    margin: auto 15px;\r\n}\r\n\r\n.Profile {\r\n    display: block;\r\n    margin: auto 15px;\r\n    border-radius: 50%;\r\n    border: 1px solid white;\r\n    cursor: pointer;\r\n}\r\n\r\n.ProfileDropDown {\r\n    display: none;\r\n    background-color: white;\r\n    text-align: center;\r\n    position: absolute;\r\n    width: 200px;\r\n    right: -25%;\r\n    border-radius: 3px;\r\n    box-shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 0 1px rgba(0, 0, 0, .35);\r\n    z-index: 100;\r\n}\r\n\r\n.ProfileDropDown li {\r\n    display: block!important;\r\n    cursor: pointer;\r\n    padding: 15px;\r\n    color: #3F3F3F;\r\n}\r\n\r\n.Profile:hover .ProfileDropDown {\r\n    margin-right: 100px;\r\n    display: block;\r\n}\r\n\r\n.Setting {\r\n    display: block;\r\n    height: 20px;\r\n    line-height: 20px;\r\n    padding: 0 14px;\r\n    background-color: white;\r\n    border-radius: 4px;\r\n    cursor: pointer;\r\n}\r\n\r\n.Setting:hover {\r\n    border-color: black;\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -32662,6 +32668,73 @@ exports.push([module.i, ".App {\r\n    text-align: center;\r\n    font-family: '
 
 // exports
 
+
+/***/ }),
+/* 319 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Article__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(306);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(217);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+class FavouriteArticles extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "state", {
+      articles: [],
+      isLove: false
+    });
+
+    _defineProperty(this, "componentDidMount", () => {
+      let loveArticles = localStorage.getItem("loveArticles").split(",");
+      let path = `/profile/${localStorage.getItem("author")}/love`;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(path, {
+        loveArticles: loveArticles
+      }).then(res => {
+        console.log('Love Articles', res.data);
+
+        if (!res.data[0]) {
+          this.setState({
+            isLove: false
+          });
+        } else {
+          this.setState({
+            articles: res.data,
+            isLove: true
+          });
+        }
+      }).catch(error => console.log(error));
+    });
+  }
+
+  render() {
+    if (!this.state.isLove) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Nothing's here yet... Love something!!!");
+    } else {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.articles.map(a => {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Article__WEBPACK_IMPORTED_MODULE_1__["default"], _extends({
+          key: a._id,
+          isLove: this.state.isLove
+        }, a));
+      }));
+    }
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (FavouriteArticles);
 
 /***/ })
 /******/ ]);

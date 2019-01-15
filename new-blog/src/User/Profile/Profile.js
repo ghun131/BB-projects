@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import ArticlesList from './PersonalArticles/ArticlesList';
 import Heading from './Heading';
 import ProfileNavBar from './ProfileNavBar';
 import FollowerFollowing from './FollowerFollowing';
+import FavouriteArticles from './PersonalArticles/FavouriteArticles';
 import { withRouter} from 'react-router-dom';
 import axios from 'axios';
 import PageNumber from './Pagination/PageNumber';
@@ -15,7 +17,8 @@ class Profile extends React.Component {
         title: '',
         content: '',
         articles: [],
-        pageNums: []
+        pageNums: [],
+        isLove: true
     }
 
     componentDidMount() {
@@ -68,7 +71,7 @@ class Profile extends React.Component {
         })
     };
 
-    handleClick = (num) => {
+    handleClickPageNum = (num) => {
         let path = `/profile/${localStorage.getItem("author") + "/posts/" + num}`;
         axios.get(path)
             .then( res => {
@@ -87,12 +90,18 @@ class Profile extends React.Component {
                 <Heading />
                 <FollowerFollowing />
                 <ProfileNavBar />
-                <ArticlesList 
-                    edited={this.handleEdit}
-                    deleted={this.deleteAlert}
-                    articlesList={this.state.articles}/>
+                    <Switch>
+                        <Route path="/profile/:username/love" 
+                            render={() => <FavouriteArticles/>}/>
+                        <Route path="/"
+                            render={() => 
+                                <ArticlesList 
+                                    edited={this.handleEdit}
+                                    deleted={this.deleteAlert}
+                                    articlesList={this.state.articles}/>}/>
+                    </Switch>
                 <PageNumber 
-                    clicked={this.handleClick}
+                    clicked={this.handleClickPageNum}
                     pageNumbers={this.state.pageNums}/>
             </div>
         )

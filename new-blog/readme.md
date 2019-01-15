@@ -3,7 +3,7 @@ redirect to home (or index.html whatever) then go to the copied route.
 [x] User can change their profile picture
 [x] User can be able to edit and delete their posts
 [x] User can comment in other User's post
-[] Add a love icon for each post
+[x] Add a love icon for each post
 [] Add followers and following
 [x] Clean the states for "post" and "user"
 [] User some style like Material UI for font, color, space and no border

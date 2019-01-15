@@ -7,8 +7,7 @@ const ArticlesList = (props) => {
             {
                 props.posts.map(p => {
                     return <Article key={p._id} {...p} 
-                        clickedHeart={props.clickedLove}
-                        isLove={props.isLove}/>
+                        clickedHeart={props.clickedLove}/>
                 })
             }
         </div>

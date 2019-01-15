@@ -10,6 +10,7 @@ const ArticlesList = (props) => {
                         key={a._id} 
                         edit={props.edited}
                         alert={props.deleted}
+                        isLove={props.isLove}
                         {...a}/>
                 )
             })}

@@ -17,7 +17,6 @@ class Heading extends React.Component {
                         <Link to="/setting">
                             <Button 
                                 variant="outlined"
-                                disableRipple
                                 style={{width: "100px", height: "30px", 
                                     padding: "0 8px", textTransform: "none"}}>
                                         Edit profile
