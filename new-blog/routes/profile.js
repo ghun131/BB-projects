@@ -4,7 +4,7 @@ const Post = require('../modal/Post');
 const User = require('../modal/User');
 const middleware = require('../middleware');
 
-router.get('/:username/', (req, res) => {
+router.get('/:username/', middleware.checkToken, (req, res) => {
   let data = {};
   let userName = req.session.username;
   if (req.session.username) {
@@ -45,35 +45,7 @@ router.get('/:username/', (req, res) => {
   totalUserPosts();
 });
 
-router.get('/:username/posts', (req, res) => {
-  let data = {};
-  let userName = req.session.username;
-  if (req.session.username) {
-    userName = req.session.username
-  }
-  else {
-    userName = req.params.username
-  }
-
-  async function getUserPosts() {
-    try {
-      const posts = await Post
-      .find({ author: userName })
-      .limit(13)
-      .sort('-time');
-
-      data.posts = posts;
-      res.send(data);
-    }
-    catch (err) {
-      console.log(err.message);
-    }
-  }
-
-  getUserPosts();
-});
-
-router.get('/:username/posts/:page', (req, res) => {
+router.get('/:username/posts/:page', middleware.checkToken, (req, res) => {
   let data = {};
   const userName = req.params.username;
   const getDocs = req.params.page - 1;
@@ -108,7 +80,7 @@ router.get('/:username/posts/:page', (req, res) => {
   totalUserPosts();
 })
 
-router.post('/:username/love', (req, res) => {
+router.post('/:username/love', middleware.checkToken, (req, res) => {
   let loveArticles = req.body.loveArticles;
   async function getLovedArticles() {
     try {
@@ -129,7 +101,7 @@ router.post('/:username/love', (req, res) => {
   getLovedArticles();
 })
 
-router.put('/edit/:id', (req, res) => {
+router.put('/edit/:id', middleware.checkToken, (req, res) => {
   async function updatePost() {
     try {
       const post = await Post.findById(req.params.id);
@@ -154,7 +126,7 @@ router.put('/edit/:id', (req, res) => {
   updatePost()
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', middleware.checkToken, (req, res) => {
   async function deletePost() {
     try {
       const post = await Post.findByIdAndDelete(req.params.id);
@@ -168,7 +140,7 @@ router.delete('/delete/:id', (req, res) => {
   deletePost()
 })
 
-router.put('/setting/:username', (req, res) => {
+router.put('/setting/:username', middleware.checkToken, (req, res) => {
   let {avaUrl, email, biography} = req.body.data
   async function updateProfile() {
     try {

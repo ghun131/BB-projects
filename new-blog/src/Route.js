@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Home from './Home/Home';
 import NewPost from './User/NewPost';
@@ -32,7 +32,10 @@ const routePath = (props) => {
 
             <Route exact path="/article/:id" component={ArticleDetail} />
 
-            <Route path="/profile/:username" component={Profile}/>
+            <Switch>
+                <Route exact path="/profile/setting/:username" component={Setting}/>
+                <Route path="/profile/:username" component={Profile}/>
+            </Switch>
 
             <Route path="/tag/:tags" component={ArticlesWithPopularTags} />
 
@@ -47,8 +50,6 @@ const routePath = (props) => {
                     <Redirect to="/api/profile" />
                     : <LogIn />
             }/>
-
-            <Route path="/profile/setting/:username" component={Setting}/>
         </div>
     )
 }

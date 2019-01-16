@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const User = require('../modal/User');
 const Comment = require('../modal/Comment');
-// const middleware = require('../middleware');
+const middleware = require('../middleware');
 
 router.get('/:id', (req, res) => {
     let data = {}
@@ -41,7 +41,7 @@ router.get('/:id', (req, res) => {
 })
 
 //update love for a particular article
-router.put('/:id', (req, res) => {
+router.put('/:id', middleware.checkToken, (req, res) => {
     const { author, title } = req.body.payload;
     let data = {};
     async function updateLove(num) {
@@ -83,7 +83,7 @@ router.put('/:id', (req, res) => {
 })
 
 //add a new comment
-router.post('/:id', (req, res) => {
+router.post('/:id', middleware.checkToken, (req, res) => {
     const { author, comment, articleTitle, avaUrl } = req.body.data;
 
     async function createComment() {
@@ -110,7 +110,7 @@ router.post('/:id', (req, res) => {
 })
 
 // delete a comment
-router.delete('/comment/delete/:id', (req, res) => {
+router.delete('/comment/delete/:id', middleware.checkToken, (req, res) => {
     async function deleteComment() {
         try {
           const comment = await Comment.findByIdAndDelete(req.params.id);
