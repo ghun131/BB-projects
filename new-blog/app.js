@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
+require('./prod')(app);
+
 app.use(session({ 
     secret: 'very mysterious',
     saveUninitialized: false,
