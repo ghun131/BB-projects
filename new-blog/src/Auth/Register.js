@@ -3,7 +3,6 @@ import './Register.css';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Congratulation from './Congratulation';
-import Spinner from '../Spinner';
 import axios from 'axios';
 
 class Register extends React.Component {
@@ -56,7 +55,7 @@ class Register extends React.Component {
         render() {
                 let content;
                 if (this.state.loading) {
-                        content = <Spinner />
+                        content = <div>Loading...</div>
                 } else if (this.state.isSignedUp) {
                         content = 
                         <Switch>

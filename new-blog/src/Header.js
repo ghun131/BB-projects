@@ -1,5 +1,5 @@
 import React from 'react';
-import "./NavBar.css";
+import "./Header.css";
 import Avatar from '@material-ui/core/Avatar';
 
 import { Link } from 'react-router-dom';

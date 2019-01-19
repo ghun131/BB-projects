@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './EditPost.css';
-import Spinner from '../../Spinner';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button'
@@ -64,7 +63,7 @@ class EditPost extends React.Component {
     render() {
         let displayContent;
         if (this.state.loading) {
-            displayContent = <Spinner />;
+            displayContent = <div>Loading...</div>;
         } else {
             displayContent = 
             <div className="EditPost">

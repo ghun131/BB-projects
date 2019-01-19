@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './NewPost.css';
-import Spinner from '../Spinner';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button'
@@ -67,7 +66,7 @@ class NewPost extends React.Component {
 
     render() {
         let content;
-        if (this.state.loading) { content = <Spinner /> } 
+        if (this.state.loading) { content = <div>Loading...</div> } 
         else {
             content = 
             <div className="NewPost">

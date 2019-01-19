@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
-import Spinner from './Spinner';
 import CommentsList from './User/Comment/CommentsList';
 import CommentBox from './User/Comment/CommentBox';
 import { confirmAlert } from 'react-confirm-alert'; 
@@ -93,7 +92,7 @@ class ArticleDetail extends React.Component {
         const { author, content, title, time, tags} = {...this.state.article}
         let displayTime = new Date(parseInt(time)).toString();
         if (this.state.loading) {
-            return <Spinner />
+            return <div>Loading...</div>
         }
             return (
                 <div style={{

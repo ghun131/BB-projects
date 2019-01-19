@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-
 import RoutePath from './Route';
-import NavBar from './NavBar';
+import Header from './Header';
 import axios from 'axios';
 import './App.css';
 
@@ -79,7 +76,7 @@ export default class App extends Component {
             <div className="App">
             <header className="Nav">
                 <nav>
-                    <NavBar isLogIn={this.state.isLogIn}
+                    <Header isLogIn={this.state.isLogIn}
                             isUser={this.state.isUser}
                             logOut={this.handleLogOut}
                             newPost={this.handleClickNewPost}/>
@@ -93,9 +90,3 @@ export default class App extends Component {
         )
     }
 }
-
-ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-, document.getElementById('root'));

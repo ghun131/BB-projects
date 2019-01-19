@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './LogIn.css';
-import Spinner from '../Spinner';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
@@ -72,7 +71,7 @@ class LogIn extends Component {
     render() {
         let content;
         if (this.state.loading) {
-            content = <Spinner />
+            content = <div>Loading...</div>
         } else {
             content = 
                 <div className="LogIn">
