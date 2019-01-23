@@ -39,12 +39,12 @@ const routePath = (props) => {
 
             <Route path="/tag/:tags" component={ArticlesWithPopularTags} />
 
-            <Route exact path="/profile/edit/:id" 
-                render={(history) => 
-                    <EditPost history={history}
-                        articlesUpdate={props.articlesList}/>
+            <Route path="/editor/:id" 
+                    render={(history) => 
+                        <EditPost history={history}
+                            articlesUpdate={props.articlesList}/>
             } />
-
+            
             <Route path="/log-in" 
                 render={() => props.isLogIn? 
                     <Redirect to="/api/profile" />

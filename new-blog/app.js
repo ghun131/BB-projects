@@ -7,6 +7,7 @@ const logOut = require('./routes/logOut');
 const newPost = require('./routes/newPost');
 const article = require('./routes/article');
 const profile = require('./routes/profile');
+const editor = require('./routes/editor');
 const posts = require('./routes/posts');
 const tags = require('./routes/tags');
 const express = require('express');
@@ -39,6 +40,9 @@ app.use('/api/log-out', logOut);
 
 // Handle one article
 app.use('/article', article)
+
+// Editor page
+app.use('/editor', editor)
 
 //POST method for new post
 app.use('/api/new-post', newPost);

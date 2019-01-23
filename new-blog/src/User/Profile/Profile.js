@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 import ArticlesList from './PersonalArticles/ArticlesList';
 import Heading from './Heading';
 import ProfileNavBar from './ProfileNavBar';
-import FollowerFollowing from './FollowerFollowing';
 import FavouriteArticles from './PersonalArticles/FavouriteArticles';
 import { withRouter} from 'react-router-dom';
 import axios from 'axios';
@@ -38,7 +37,7 @@ class Profile extends React.Component {
     }
 
     handleEdit = (id) => {
-        this.props.history.push(`/profile/edit/${id} `);
+        this.props.history.push(`/editor/${id} `);
     }
 
     handleDelete = (id) => {
@@ -88,7 +87,6 @@ class Profile extends React.Component {
                 textAlign: 'left'
             }}>
                 <Heading />
-                <FollowerFollowing />
                 <ProfileNavBar />
                     <Switch>
                         <Route path="/profile/:username/love" 

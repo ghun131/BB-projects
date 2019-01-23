@@ -1,5 +1,4 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
 
 const LoveButton = (props) => {
     let loveArt = [];
@@ -8,16 +7,25 @@ const LoveButton = (props) => {
         loveArt = loveArticles.split(",").filter(art => art === props.title);
     }
     
-    return (
-        <div>
-            <IconButton onClick={props.loveClicked}>
-                {props.love}
-                { loveArt[0] ? 
-                    <i className="fas fa-heart"></i> 
-                    : <i className="far fa-heart"></i>}
-            </IconButton>
-        </div>
-    )
+    if (loveArt[0]) {
+        return (
+            <div onClick={props.loveClicked} className="btn btn-primary btn-sm pull-xs-right">
+                <i className="ion-heart"></i>
+                &nbsp;
+                {props.love}  
+            </div>
+        )
+    } 
+    else {
+        return (
+            <div onClick={props.loveClicked} className="btn btn-outline-primary btn-sm pull-xs-right">
+                <i className="ion-heart"></i>
+                &nbsp;
+                {props.love}  
+            </div>
+        )
+    }
+    
 }
 
 export default LoveButton;

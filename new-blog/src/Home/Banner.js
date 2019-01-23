@@ -2,17 +2,35 @@ import React from 'react';
 
 const Banner = () => {
     return (
-        <div style={{width: "100%",
-            color: "white",
+        <div style={{
+            color: 'white',
+            padding: '2rem',
+            marginBottom: '2rem',
             backgroundColor: "#5CB85C",
-            textAlign: "center",
-            padding: "2rem",
-            lineHeight: "1.5",
             boxShadow: "inset 0 8px 8px -8px rgba(0, 0, 0, 0.3), inset 0 -8px 8px -8px rgba(0, 0, 0, 0.3)"}}>
-            <h1 style={{ fontSize: "3rem", color: "white"}}>
-                BB Blog
-            </h1>
-            <p style={{ fontSize: "1.5rem" }}>Music makes you brave</p>
+                <div style={{ maxWidth: '720px',
+                        lineHeight: '1.5',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        paddingLeft: '15px',
+                        paddingRight: '15px' }}>
+                    <h1 style={{ 
+                        textShadow: '0px 1px 3px rgba(0, 0, 0, 0.3)',
+                        fontWeight: '700 !important',
+                        textAlign: 'center',
+                        fontSize: '3.5rem',
+                        paddingBottom: '0.5rem',
+                        color: 'inherit'}}>
+                        BB Blog
+                    </h1>
+                    <p style={{ 
+                        color: '#fff',
+                        textAlign: 'center',
+                        fontSize: '1.5rem',
+                        fontWeight: '300 !important',
+                        marginBottom: '0px' }}>Music makes you brave</p>
+                </div>
+            
         </div>
     )
 }

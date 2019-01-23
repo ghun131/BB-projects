@@ -28,7 +28,7 @@ const CommentCard = (props) => {
                     action={
                         author === localStorage.getItem("author") ?
                         <Button size="small" onClick={() => props.commentDeleted(_id)}>
-                            <i className="fas fa-trash-alt fa-lg"></i>
+                            <i className="ion-trash-a"></i>                            
                         </Button> : ""
                     }
                 />

@@ -19,7 +19,7 @@ class EditPost extends React.Component {
         const pathnameArr = this.props.location.pathname.split("/");
         const id = pathnameArr[pathnameArr.length - 1];
         const postId = id.slice(0, id.length - 1);
-        const articles = this.props.articlesUpdate;
+            const articles = this.props.articlesUpdate;
         const post = articles.filter(p => p._id === postId);
         let { title, content, tags } = {...this.state};
         title = post[0].title;
@@ -47,7 +47,7 @@ class EditPost extends React.Component {
             tags: tagsArr
         };
 
-        axios.put(`/profile/edit/${this.state.id}`, {data})
+        axios.put(`/editor/${this.state.id}`, {data})
             .then(res => {
                 this.props.history.push('/');
                 window.location.reload();

@@ -4,6 +4,7 @@ import ArticlesList from './PublicArticles/ArticlesList';
 import TagBox from './Tags/TagBox';
 import PageNumber from './Pagination/PageNumber';
 import Banner from './Banner';
+import NavBar from './NavBar';
 import axios from 'axios';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
@@ -71,6 +72,7 @@ class Home extends React.Component {
                 <Banner />
                 <Grid container spacing={24}>
                     <Grid item xs={9}>
+                        <NavBar />
                         <ArticlesList 
                             posts={this.state.data}
                             isLove={this.state.isLove}

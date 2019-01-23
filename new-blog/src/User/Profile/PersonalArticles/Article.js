@@ -26,10 +26,10 @@ const Article = (props) => {
                     props.isLove ? "" :
                     <span>
                         <Button size="small" onClick={() => props.edit(_id)}>
-                            <i className="fas fa-edit fa-lg" ></i>
+                            <i className="ion-edit"></i>
                         </Button>
                         <Button size="small" onClick={() => props.alert(_id)}>
-                            <i className="fas fa-trash-alt fa-lg"></i>
+                            <i className="ion-trash-a"></i>
                         </Button>
                     </span>
                     }

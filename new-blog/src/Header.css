@@ -1,8 +1,32 @@
+.NavBar {
+    border-radius: 0.25rem;
+    position: relative;
+    padding: 0.5rem 1rem;
+    line-height: 1.5;
+}
+
+.Container {
+    font-family: "Source Sans Pro", sans-serif;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .Logo {
+    font-family: "Titillium Web", sans-serif;
+    font-size: 1.5rem !important;
+    padding-top: 0rem !important;
+    margin-right: 2rem !important;
+    color: #5CB85C !important;
+    text-decoration: none;
+}
+
+.NavLink {
     display: block;
-    font-size: 30px;
-    font-weight: 800;
-    padding: 20px 5px;
+    padding-top: .425rem;
+    padding-bottom: .425rem;
 }
 
 .NewPost {

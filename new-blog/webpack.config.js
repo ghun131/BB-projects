@@ -1,4 +1,5 @@
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: "./src/index.js",
@@ -13,5 +14,6 @@ module.exports = {
             { test: /\.css$/, use: ["style-loader", "css-loader"]},
             { test: /\.(png|svg|jpg|gif)$/, use: ["file-loader"]}
         ]
-    }
+    },
+    plugins: [new BundleAnalyzerPlugin()]
 }
