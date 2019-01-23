@@ -1,0 +1,4 @@
+BACK/node_modules/
+BACK/yarn.lock
+FRONT/node_modules/
+FRONT/yarn.lock

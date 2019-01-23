@@ -32,7 +32,6 @@
     "file-loader": "^2.0.0",
     "helmet": "^3.15.0",
     "jsonwebtoken": "^8.3.0",
-    "jwt": "^0.2.0",
     "mongoose": "^5.4.4",
     "node-waf": "^1.0.0",
     "nodemon": "^1.18.6",
