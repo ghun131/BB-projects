@@ -1,9 +1,12 @@
 import React from 'react';
 import Header from '../components/Header';
-import Home from '../components/Home';
 import Footer from '../components/Footer';
 
+import UNSTATED from 'unstated-debug';
 import Routes from './Routes';
+
+UNSTATED.isEnable = true;
+UNSTATED.logStateChanges = false;
 
 class App extends React.Component {
     render() {

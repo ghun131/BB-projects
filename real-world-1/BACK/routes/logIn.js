@@ -27,6 +27,7 @@ async function findUserPosts(email, package, res) {
 router.post('/', (req, res) => {
   console.log('received!!!!!!!!!!')
   const { email, password } = req.body.user
+  console.log(email, password)
   let package = {}
 
   async function checkUser() {
@@ -34,7 +35,7 @@ router.post('/', (req, res) => {
     if (!result[0]) {
       res.json({
         success: false,
-        message: "No email found! Sign up to do cool stuff!"
+        message: "email or password invalid"
       })
     } else {
       bcrypt.compare(password, result[0].password, (err, check) => {
@@ -45,7 +46,7 @@ router.post('/', (req, res) => {
         } else if (!check) {
           return res.json({
             success: false,
-            message: 'Wrong password!'
+            message: 'email or password invalid'
           })
         } else {
           let token = jwt.sign({ email: result[0].email }, config.secret, { expiresIn: '24h' })

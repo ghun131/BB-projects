@@ -31,10 +31,10 @@ app.use('/api/posts', posts);
 app.use('/register', register);
 
 // POST log in after registering
-app.use('/api/log-in', logIn);
+app.use('/api/login', logIn);
 
 // User log out POST to clear session
-app.use('/api/log-out', logOut);
+app.use('/api/logout', logOut);
 
 // Handle one article
 app.use('/article', article)
