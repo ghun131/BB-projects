@@ -12855,7 +12855,7 @@ class Login extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, "Sign in"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       className: "text-xs-center"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-      to: ""
+      to: "/register"
     }, "Need an account?")), items.state.message ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "error-messages"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, items.state.message)) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -12909,6 +12909,16 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       message: ''
     });
 
+    _defineProperty(this, "saveLocalStorage", data => {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('author', data.username);
+      localStorage.setItem('bio', data.bio);
+      localStorage.setItem('picUrl', data.avaUrl);
+      localStorage.setItem('loveArticles', data.loveArticles);
+      localStorage.setItem('email', data.email);
+      localStorage.setItem('password', data.password);
+    });
+
     _defineProperty(this, "doLogin", (email, password, history) => {
       if (email && password) {
         const user = {
@@ -12923,13 +12933,7 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
             isLogin: res.data.success,
             message: res.data.message
           });
-          localStorage.setItem('token', res.data.package.token);
-          localStorage.setItem('author', res.data.package.username);
-          localStorage.setItem('bio', res.data.package.bio);
-          localStorage.setItem('picUrl', res.data.package.avaUrl);
-          localStorage.setItem('loveArticles', res.data.package.loveArticles);
-          localStorage.setItem('email', email);
-          localStorage.setItem('password', password);
+          this.saveLocalStorage(res.data.package);
           history.push('/');
         }).catch(err => console.log(err));
       } else {
@@ -12945,11 +12949,53 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }, 3000);
     });
 
-    _defineProperty(this, "doLogout", void 0);
+    _defineProperty(this, "doLogout", () => {
+      const payload = {
+        user: '',
+        token: ''
+      };
+      this.setState({
+        isLogin: false
+      });
+      window.localStorage.clear();
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('api/logout', payload);
+    });
 
-    _defineProperty(this, "doRegister", void 0);
+    _defineProperty(this, "doRegister", (data, history) => {
+      const payload = {
+        username: data.username,
+        email: data.email,
+        password: data.password
+      };
+      console.log(payload);
 
-    _defineProperty(this, "editProfile", void 0);
+      if (payload.email === '' || payload.password === '') {
+        this.setState({
+          message: 'Don\' leave anything empty!!!!'
+        });
+        setTimeout(() => this.setState({
+          message: ''
+        }), 3000);
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/register', {
+          payload
+        }).then(res => {
+          this.setState({
+            message: res.data.message
+          });
+          setTimeout(() => this.setState({
+            message: ''
+          }), 3000);
+
+          if (res.data.success) {
+            this.saveLocalStorage(res.data.package);
+            history.push('/');
+          }
+        }).catch(error => console.log(error));
+      }
+    });
+
+    _defineProperty(this, "editProfile", () => {});
   }
 
 }
@@ -14689,48 +14735,85 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(72);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-const Register = () => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "auth-page"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container page"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6 offset-md-3 col-xs-12"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    className: "text-xs-center"
-  }, "Sign up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "text-xs-center"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: ""
-  }, "Have an account?")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "error-messages"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "That email is already taken")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control form-control-lg",
-    type: "text",
-    placeholder: "Your Name"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control form-control-lg",
-    type: "text",
-    placeholder: "Email"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control form-control-lg",
-    type: "password",
-    placeholder: "Password"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-lg btn-primary pull-xs-right"
-  }, "Sign up"))))));
-};
+
+
+
+class Register extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "nameRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
+    _defineProperty(this, "passRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
+    _defineProperty(this, "emailRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
+    _defineProperty(this, "handleRegister", (e, doRegister) => {
+      e.preventDefault();
+      const data = {
+        username: this.nameRef.current.value.trim(),
+        password: this.passRef.current.value.trim(),
+        email: this.emailRef.current.value.trim()
+      };
+      console.log(data);
+      doRegister(data, this.props.history);
+    });
+  }
+
+  render() {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_2__["Subscribe"], {
+      to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
+    }, items => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "auth-page"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "container page"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "row"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-md-6 offset-md-3 col-xs-12"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      className: "text-xs-center"
+    }, "Sign up"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "text-xs-center"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: ""
+    }, "Have an account?")), items.state.message ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "error-messages"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, items.state.message)) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      onSubmit: e => this.handleRegister(e, items.doRegister)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control form-control-lg",
+      type: "text",
+      placeholder: "Your Name",
+      ref: this.nameRef
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control form-control-lg",
+      type: "text",
+      placeholder: "Email",
+      ref: this.emailRef
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control form-control-lg",
+      type: "password",
+      placeholder: "Password",
+      ref: this.passRef
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-lg btn-primary pull-xs-right"
+    }, "Sign up")))))));
+  }
+
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (Register);
 
@@ -14742,53 +14825,76 @@ const Register = () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
+/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-const Setting = () => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "settings-page"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container page"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6 offset-md-3 col-xs-12"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-    className: "text-xs-center"
-  }, "Your Settings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control",
-    type: "text",
-    placeholder: "URL of profile picture"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control form-control-lg",
-    type: "text",
-    placeholder: "Your Name"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-    className: "form-control form-control-lg",
-    rows: "8",
-    placeholder: "Short bio about you"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control form-control-lg",
-    type: "text",
-    placeholder: "Email"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
-    className: "form-group"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    className: "form-control form-control-lg",
-    type: "password",
-    placeholder: "Password"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-lg btn-primary pull-xs-right"
-  }, "Update Settings")))))));
-};
+
+
+
+class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "handleLogout", (e, doLogout) => {
+      e.preventDefault();
+      doLogout();
+    });
+  }
+
+  render() {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_1__["Subscribe"], {
+      to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    }, items => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "settings-page"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "container page"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "row"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-md-6 offset-md-3 col-xs-12"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      className: "text-xs-center"
+    }, "Your Settings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control",
+      type: "text",
+      placeholder: "URL of profile picture"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control form-control-lg",
+      type: "text",
+      placeholder: "Your Name"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      className: "form-control form-control-lg",
+      rows: "8",
+      placeholder: "Short bio about you"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control form-control-lg",
+      type: "text",
+      placeholder: "Email"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+      className: "form-group"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      className: "form-control form-control-lg",
+      type: "password",
+      placeholder: "Password"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-lg btn-primary pull-xs-right"
+    }, "Update Settings"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-outline-danger",
+      onClick: e => this.handleLogout(e, items.doLogout)
+    }, "Or click here to log out."))))));
+  }
+
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (Setting);
 

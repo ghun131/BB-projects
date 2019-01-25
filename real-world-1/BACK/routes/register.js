@@ -2,20 +2,12 @@ const express = require('express');
 const router = express.Router();
 const User = require('../modal/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 router.post('/', (req, res, next) => {
-    const {email, username, password, passwordConf} = req.body.payload
-
-    // confirm that user typed same password twice
-    if (password !== passwordConf) {
-      let err = new Error('Passwords do not match.');
-      err.status = 200;
-      return res.json({
-        success: false,
-        message: "Passwords do not match!"
-      })
-    } else {
-  
+    const {email, username, password} = req.body.payload
+ 
     // Check whether email is used or not?
       User.findOne({ email: email }, (err, item) => {
         if (err) {
@@ -34,7 +26,7 @@ router.post('/', (req, res, next) => {
             } else if (thing) {
               return res.json({
                 success: false,
-                message: "This user name is taken! Choose a cooler one!"
+                message: "This user name is already taken! Choose a cooler one!"
               })
             } else {
               let userData = {
@@ -45,20 +37,26 @@ router.post('/', (req, res, next) => {
                 loveArticles: [],
                 salt: '',
                 password: password,
-                passwordConf: passwordConf
+                passwordConf: password
               }
               
               let salt = bcrypt.genSaltSync(10);
               let hash = bcrypt.hashSync(password, salt);
 
+              let token = jwt.sign({ email: email }, config.secret, { expiresIn: '24h' })
               userData.password = hash;
             
               User.create(userData, (error, user) => {
+                userData.token = token;
                 if (error) {
                   return next(error);
                 } else {
+                  req.session.token = token;
+                  req.session.username = username;
+                  req.session.email = email;
                   return res.json({
-                    success: true
+                    success: true,
+                    package: userData
                   })
                 }
               });
@@ -67,7 +65,6 @@ router.post('/', (req, res, next) => {
   
         }
       })
-    }
   })
   
   module.exports = router;
