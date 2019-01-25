@@ -31,7 +31,6 @@ class Login extends React.Component {
                                     {
                                         items.state.message ? 
                                             <ul className="error-messages">
-                                    
                                                 <li>{items.state.message}</li>
                                             </ul>
                                             : ''

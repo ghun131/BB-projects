@@ -63,7 +63,7 @@ class UserContainer extends Container {
         } else  {
             axios.post('/register', {payload})
                 .then( res => {
-                    this.setState({ message: res.data.message })
+                    this.setState({ message: res.data.message, isLogin: res.data.success })
                     setTimeout(() => this.setState({ message: '' }), 3000);
                     if (res.data.success) {
                         this.saveLocalStorage(res.data.package);
@@ -73,8 +73,21 @@ class UserContainer extends Container {
         }
     }
 
-    editProfile = () => {
+    editProfile = (items, history) => {
+        const data = {
+            avaUrl: items.avaUrl,
+            biography: items.biography,
+            email: items.email
+        }
 
+        axios.put(`/profile/setting/${localStorage.getItem("author")}`, {data})
+            .then (res => {
+                console.log(res.data);
+                localStorage.setItem("picUrl", data.avaUrl)
+                localStorage.setItem("bio", data.biography)
+                history.push("/");
+            })
+            .catch(error => console.log(error));
     }
 }
 

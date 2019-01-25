@@ -15,8 +15,8 @@ const routePath = (props) => {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Setting} />
-            <Route path="/editor/" component={CreateEditArticle} />
-            <Route path="/article/" component={Article} />
+            <Route path="/editor" component={CreateEditArticle} />
+            <Route path="/article" component={Article} />
             
 
             <Route path="/profile" component={Profile} />

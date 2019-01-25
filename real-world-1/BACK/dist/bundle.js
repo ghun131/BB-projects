@@ -12053,44 +12053,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(72);
+
+
 
 
 
 const Header = () => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_2__["Subscribe"], {
+    to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
+  }, items => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "navbar navbar-light"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "navbar-brand",
-    to: "index.html"
+    to: "/"
   }, "conduit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "nav navbar-nav pull-xs-right"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link active",
-    to: ""
-  }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    to: "/"
+  }, "Home")), items.state.isLogin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link",
-    to: ""
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    to: "/editor"
+  }, "\xA0\xA0\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "ion-compose"
   }), "\xA0New Post")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link",
-    to: ""
+    to: "/settings"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "ion-gear-a"
   }), "\xA0Settings")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link",
-    to: ""
-  }, "Sign up"))))));
+    to: "/profile"
+  }, localStorage.getItem("author")))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    className: "nav-link",
+    to: "/login"
+  }, "\xA0\xA0\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "ion-compose"
+  }), "\xA0Sign in")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    className: "nav-link",
+    to: "/register"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "ion-compose"
+  }), "\xA0Sign up"))))))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Header);
@@ -12672,10 +12692,10 @@ const routePath = props => {
     path: "/settings",
     component: _components_Setting__WEBPACK_IMPORTED_MODULE_5__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "/editor/",
+    path: "/editor",
     component: _components_CreateEditArticle__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "/article/",
+    path: "/article",
     component: _components_Article__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/profile",
@@ -12981,7 +13001,8 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
           payload
         }).then(res => {
           this.setState({
-            message: res.data.message
+            message: res.data.message,
+            isLogin: res.data.success
           });
           setTimeout(() => this.setState({
             message: ''
@@ -12995,7 +13016,21 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }
     });
 
-    _defineProperty(this, "editProfile", () => {});
+    _defineProperty(this, "editProfile", (items, history) => {
+      const data = {
+        avaUrl: items.avaUrl,
+        biography: items.biography,
+        email: items.email
+      };
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/profile/setting/${localStorage.getItem("author")}`, {
+        data
+      }).then(res => {
+        console.log(res.data);
+        localStorage.setItem("picUrl", data.avaUrl);
+        localStorage.setItem("bio", data.biography);
+        history.push("/");
+      }).catch(error => console.log(error));
+    });
   }
 
 }
@@ -14837,9 +14872,26 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
     super(...args);
 
+    _defineProperty(this, "avaUrlRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
+    _defineProperty(this, "bioRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
+    _defineProperty(this, "emailRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
     _defineProperty(this, "handleLogout", (e, doLogout) => {
       e.preventDefault();
       doLogout();
+    });
+
+    _defineProperty(this, "handleSetting", (e, editProfile) => {
+      e.preventDefault();
+      const formData = {
+        avaUrl: this.avaUrlRef.current.value.trim(),
+        biography: this.bioRef.current.value.trim(),
+        email: this.emailRef.current.value.trim()
+      };
+      console.log(formData);
+      editProfile(formData, this.props.history);
     });
   }
 
@@ -14856,34 +14908,42 @@ class Setting extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "col-md-6 offset-md-3 col-xs-12"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "text-xs-center"
-    }, "Your Settings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+    }, "Your Settings"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      onSubmit: e => this.handleSetting(e, items.editProfile)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "form-control",
       type: "text",
+      ref: this.avaUrlRef,
       placeholder: "URL of profile picture"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "form-control form-control-lg",
       type: "text",
+      defaultValue: localStorage.getItem("author"),
       placeholder: "Your Name"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       className: "form-control form-control-lg",
       rows: "8",
+      ref: this.bioRef,
       placeholder: "Short bio about you"
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
+    }, localStorage.getItem("bio") ? localStorage.getItem("bio") : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "form-control form-control-lg",
+      ref: this.emailRef,
+      defaultValue: localStorage.getItem("email"),
       type: "text",
       placeholder: "Email"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       className: "form-control form-control-lg",
+      disable: "true",
       type: "password",
       placeholder: "Password"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
