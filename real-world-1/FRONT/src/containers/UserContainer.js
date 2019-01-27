@@ -89,6 +89,9 @@ class UserContainer extends Container {
             })
             .catch(error => console.log(error));
     }
+
+    // followOthers
 }
 
-export default UserContainer;
+let container = new UserContainer();
+export default container;
