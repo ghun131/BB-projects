@@ -4,7 +4,7 @@ const Post = require('../modal/Post');
 const User = require('../modal/User');
 const middleware = require('../middleware');
 
-router.get('/:username/', middleware.checkToken, (req, res) => {
+router.get('/:username', middleware.checkToken, (req, res) => {
   let data = {};
   let userName = req.session.username;
   if (req.session.username) {
@@ -12,6 +12,19 @@ router.get('/:username/', middleware.checkToken, (req, res) => {
   }
   else {
     userName = req.params.username
+  }
+
+  async function getUserInfo() {
+    try {
+      const user = await User
+      .find({ username: userName })
+
+      data.user = user;
+      res.send(data)
+    }
+    catch(err) {
+      console.log(err.message);
+    }
   }
 
   async function getUserPosts() {
@@ -22,7 +35,7 @@ router.get('/:username/', middleware.checkToken, (req, res) => {
       .sort('-time');
 
       data.posts = posts;
-      res.send(data);
+      getUserInfo();
     }
     catch (err) {
       console.log(err.message);

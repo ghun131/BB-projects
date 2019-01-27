@@ -1,6 +1,6 @@
 Routing Guidelines
 [] Home page (URL: /#/ )
- [] - List of tags
+ [x] - List of tags
  [] - List of articles pulled from either Feed, Global, or by Tag
  [] - Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )
