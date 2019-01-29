@@ -6,6 +6,13 @@ import { Subscribe } from 'unstated';
 
 class Home extends React.Component {
     componentDidMount() {
+        if (localStorage.getItem("email")) {
+            // Auto log in when user info is saved into local storage
+            UserContainer.doLogin (
+                localStorage.getItem("email"),
+                localStorage.getItem("password"),
+                this.props.history )
+        }
         PostContainer.getGlobalPosts();
     }
 
@@ -15,7 +22,6 @@ class Home extends React.Component {
                 {
                     (postThings, userThings) => (
                         <div>
-                            {console.log('Home page', postThings.state)}
                             <div className="home-page">
                 
                                 <div className="banner">
@@ -41,7 +47,7 @@ class Home extends React.Component {
                                             </div>
                             
                                             {
-                                                postThings.state.data[0] ? 
+                                                postThings.state.data ? 
                                                 postThings.state.data.map( p => 
                                                     <div className="article-preview" key={p._id}>
                                                         <div className="article-meta">
@@ -89,7 +95,7 @@ class Home extends React.Component {
                             
                                                 <div className="tag-list">
                                                 {
-                                                    postThings.state.tags[0] ? 
+                                                    postThings.state.tags ? 
                                                     postThings.state.tags.map(t => 
                                                         <Link key={t._id} to="" className="tag-pill tag-default">{t._id}</Link>
                                                     ) : ""

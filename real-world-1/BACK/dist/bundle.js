@@ -12142,13 +12142,15 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     });
 
     _defineProperty(this, "saveLocalStorage", data => {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('author', data.username);
-      localStorage.setItem('bio', data.bio);
-      localStorage.setItem('picUrl', data.avaUrl);
-      localStorage.setItem('loveArticles', data.loveArticles);
-      localStorage.setItem('email', data.email);
-      localStorage.setItem('password', data.password);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('author', data.username);
+        localStorage.setItem('bio', data.bio);
+        localStorage.setItem('picUrl', data.avaUrl);
+        localStorage.setItem('loveArticles', data.loveArticles);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('password', data.password);
+      }
     });
 
     _defineProperty(this, "doLogin", (email, password, history) => {
@@ -12160,13 +12162,16 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('api/login', {
           user
         }).then(res => {
-          console.log(res.data);
+          console.log('Log in', res.data);
           this.setState({
             isLogin: res.data.success,
             message: res.data.message
           });
-          this.saveLocalStorage(res.data.package);
-          history.push('/');
+
+          if (res.data.success) {
+            this.saveLocalStorage(res.data.package);
+            history.push('/');
+          }
         }).catch(err => console.log(err));
       } else {
         this.setState({
@@ -14585,13 +14590,18 @@ __webpack_require__.r(__webpack_exports__);
 
 class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   componentDidMount() {
+    if (localStorage.getItem("email")) {
+      // Auto log in when user info is saved into local storage
+      _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"].doLogin(localStorage.getItem("email"), localStorage.getItem("password"), this.props.history);
+    }
+
     _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
   }
 
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_4__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
-    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log('Home page', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "home-page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
@@ -14619,7 +14629,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: "nav-link active",
       to: ""
-    }, "Global Feed")))), postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "Global Feed")))), postThings.state.data ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-preview",
       key: p._id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -14658,7 +14668,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "sidebar"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Popular Tags"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "tag-list"
-    }, postThings.state.tags[0] ? postThings.state.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    }, postThings.state.tags ? postThings.state.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       key: t._id,
       to: "",
       className: "tag-pill tag-default"
@@ -14706,15 +14716,20 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       return monthNames[month] + " " + day + "," + year;
     });
 
+    _defineProperty(this, "pagination", (data, pageNumState) => {
+      let totalDocs = data.totalDocuments[0].posts;
+      let pageNums = [...pageNumState];
+
+      for (let i = 1; i < totalDocs / 13 + 1; i++) {
+        pageNums.push(i);
+      }
+
+      return pageNums;
+    });
+
     _defineProperty(this, "getGlobalPosts", () => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/posts").then(res => {
-        let totalDocs = res.data.totalDocuments[0].posts;
-        let pageNums = [...this.state.pageNums];
-
-        for (let i = 1; i < totalDocs / 13 + 1; i++) {
-          pageNums.push(i);
-        }
-
+        let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
           data: res.data.posts,
           tags: res.data.tags,
@@ -14725,22 +14740,27 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getUserPosts", author => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/profile/${author}`).then(res => {
-        let totalDocs = res.data.totalDocuments[0].posts;
-        let pageNums = [...this.state.pageNums];
-
-        for (let i = 1; i < totalDocs / 13 + 1; i++) {
-          pageNums.push(i);
-        }
-
+        let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
           data: res.data.posts,
           author: res.data.user,
           pageNums
-        }, () => console.log(this.state.author));
+        });
       }).catch(error => console.log(error));
     });
-  } // getFavouritePosts
-  // editPost
+
+    _defineProperty(this, "getFavouritePosts", (username, loveArticles) => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${username}/favourites`, {
+        loveArticles: loveArticles
+      }).then(res => {
+        let pageNums = this.pagination(res.data, this.state.pageNums);
+        this.setState({
+          data: res.data.posts,
+          pageNums
+        });
+      });
+    });
+  } // editPost
   // deletePost
   // likePost
   // comment
@@ -15112,6 +15132,11 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       let author = authorArr[authorArr.length - 1];
       _containers_PostContainer__WEBPACK_IMPORTED_MODULE_4__["default"].getUserPosts(author);
     });
+
+    _defineProperty(this, "handleClick", (e, getFavouritePosts, username, loveArticles) => {
+      e.preventDefault();
+      getFavouritePosts(username, loveArticles);
+    });
   }
 
   render() {
@@ -15119,7 +15144,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_4__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, console.log(postThings, userThings), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, console.log(postThings.state.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15142,20 +15167,22 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "col-xs-12 col-md-10 offset-md-1"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "articles-toggle"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    }, postThings.state.author[0] ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "nav nav-pills outline-active"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: "nav-link active",
-      to: ""
+      to: `profile/${postThings.state.author[0].username}`
     }, "My Articles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: "nav-link",
-      to: ""
-    }, "Favorited Articles")))), postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "article-preview"
+      to: `profile/${postThings.state.author[0].username}/favourites`,
+      onClick: e => this.handleClick(e, postThings.getFavouritePosts, postThings.state.author[0].username, postThings.state.author[0].loveArticles)
+    }, "Favorited Articles"))) : ""), postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-preview",
+      key: p._id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-meta"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {

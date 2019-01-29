@@ -93,7 +93,7 @@ router.get('/:username/posts/:page', middleware.checkToken, (req, res) => {
   totalUserPosts();
 })
 
-router.post('/:username/love', middleware.checkToken, (req, res) => {
+router.post('/:username/favourites', middleware.checkToken, (req, res) => {
   let loveArticles = req.body.loveArticles;
   async function getLovedArticles() {
     try {

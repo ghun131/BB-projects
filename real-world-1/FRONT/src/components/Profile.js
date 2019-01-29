@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 import { Subscribe } from 'unstated';
 import UserContainer from '../containers/UserContainer';
 import PostContainer from '../containers/PostContainer';
@@ -12,13 +12,18 @@ class Profile extends React.Component {
         PostContainer.getUserPosts(author)
     }
 
+    handleClick = (e, getFavouritePosts, username, loveArticles) => {
+        e.preventDefault();
+        getFavouritePosts(username, loveArticles)
+    }
+
     render() {
         return (
             <Subscribe to={[UserContainer, PostContainer]}>
                 {
                     (userThings, postThings) => (
                         <div className="profile-page">
-                        {console.log(postThings, userThings)}
+                        {console.log(postThings.state.author)}
                         <div className="user-info">
                             <div className="container">
                                 <div className="row">
@@ -47,20 +52,33 @@ class Profile extends React.Component {
     
                                 <div className="col-xs-12 col-md-10 offset-md-1">
                                     <div className="articles-toggle">
-                                    <ul className="nav nav-pills outline-active">
-                                        <li className="nav-item">
-                                        <Link className="nav-link active" to="">My Articles</Link>
-                                        </li>
-                                        <li className="nav-item">
-                                        <Link className="nav-link" to="">Favorited Articles</Link>
-                                        </li>
-                                    </ul>
+                                    {
+                                        postThings.state.author[0] ? 
+                                        <ul className="nav nav-pills outline-active">
+                                            <li className="nav-item">
+                                            <Link className="nav-link active" to={`profile/${postThings.state.author[0].username}`}>
+                                                My Articles
+                                            </Link>
+                                            </li>
+                                            <li className="nav-item">
+                                            <Link className="nav-link" 
+                                                to={`profile/${postThings.state.author[0].username}/favourites`}
+                                                onClick={(e) => 
+                                                    this.handleClick(e, 
+                                                        postThings.getFavouritePosts, 
+                                                        postThings.state.author[0].username, 
+                                                        postThings.state.author[0].loveArticles)}>
+                                                Favorited Articles
+                                            </Link>
+                                            </li>
+                                        </ul> : ""
+                                    }
                                     </div>
     
                                     {
                                         postThings.state.data[0] ?
                                         postThings.state.data.map( p => 
-                                            <div className="article-preview">
+                                            <div className="article-preview" key={p._id}>
                                                 <div className="article-meta">
                                                     <Link to=""><img src={p.avaUrl} /></Link>
                                                     <div className="info">

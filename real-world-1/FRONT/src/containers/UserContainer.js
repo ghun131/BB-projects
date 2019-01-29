@@ -9,13 +9,15 @@ class UserContainer extends Container {
     };
 
     saveLocalStorage = (data) => {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('author', data.username);
-        localStorage.setItem('bio', data.bio);
-        localStorage.setItem('picUrl', data.avaUrl);
-        localStorage.setItem('loveArticles', data.loveArticles);
-        localStorage.setItem('email', data.email);
-        localStorage.setItem('password', data.password);
+        if(data.token) {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('author', data.username);
+            localStorage.setItem('bio', data.bio);
+            localStorage.setItem('picUrl', data.avaUrl);
+            localStorage.setItem('loveArticles', data.loveArticles);
+            localStorage.setItem('email', data.email);
+            localStorage.setItem('password', data.password);
+        }
     }
 
     doLogin = (email, password, history) => {
@@ -26,10 +28,12 @@ class UserContainer extends Container {
             }
             axios.post('api/login', {user})
                 .then(res => {
-                    console.log(res.data);
+                    console.log('Log in', res.data);
                     this.setState({ isLogin: res.data.success , message: res.data.message});
-                    this.saveLocalStorage(res.data.package)
-                    history.push('/');
+                    if (res.data.success) {
+                        this.saveLocalStorage(res.data.package)
+                        history.push('/');
+                    }
                 }).catch(err => console.log(err) )
         }
         else {

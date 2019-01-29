@@ -22,14 +22,19 @@ class PostContainer extends Container {
         return monthNames[month] + " " + day + "," + year;
     }
 
+    pagination = (data, pageNumState) => {
+        let totalDocs = data.totalDocuments[0].posts;
+        let pageNums = [...pageNumState];
+        for (let i = 1; i < totalDocs / 13 + 1; i++) {
+            pageNums.push(i);
+        }
+        return pageNums
+    }
+
     getGlobalPosts = () => {
         axios.get("/api/posts")
             .then( res => {
-                let totalDocs = res.data.totalDocuments[0].posts;
-                let pageNums = [...this.state.pageNums];
-                for (let i = 1; i < totalDocs / 13 + 1; i++) {
-                    pageNums.push(i);
-                }
+                let pageNums = this.pagination(res.data, this.state.pageNums);
                 this.setState({ 
                     data: res.data.posts, 
                     tags: res.data.tags,
@@ -41,19 +46,25 @@ class PostContainer extends Container {
     getUserPosts = (author) => {
         axios.get(`/profile/${author}`)
             .then( res => {
-                let totalDocs = res.data.totalDocuments[0].posts;
-                let pageNums = [...this.state.pageNums];
-                for (let i = 1; i < totalDocs / 13 + 1; i++) {
-                    pageNums.push(i);
-                }
+                let pageNums = this.pagination(res.data, this.state.pageNums);
                 this.setState({ 
                     data: res.data.posts,
                     author: res.data.user,
                     pageNums
-                }, () => console.log(this.state.author));
+                });
             }).catch(error => console.log(error));
     }
-    // getFavouritePosts
+
+    getFavouritePosts = (username, loveArticles) => {
+        axios.post(`/profile/${username}/favourites`, {loveArticles: loveArticles})
+            .then( res => {
+                let pageNums = this.pagination(res.data, this.state.pageNums);
+                this.setState({ 
+                    data: res.data.posts,
+                    pageNums
+                });
+            })
+    }
     // editPost
     // deletePost
     // likePost
