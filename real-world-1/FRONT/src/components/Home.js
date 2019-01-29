@@ -6,7 +6,6 @@ import { Subscribe } from 'unstated';
 
 class Home extends React.Component {
     componentDidMount() {
-        console.log('Home page mounted')
         PostContainer.getGlobalPosts();
     }
 
@@ -14,8 +13,9 @@ class Home extends React.Component {
         return (
             <Subscribe to={[PostContainer, UserContainer]}>
                 {
-                    items => (
+                    (postThings, userThings) => (
                         <div>
+                            {console.log('Home page', postThings.state)}
                             <div className="home-page">
                 
                                 <div className="banner">
@@ -41,14 +41,18 @@ class Home extends React.Component {
                                             </div>
                             
                                             {
-                                                items.state.data[0] ? 
-                                                items.state.data.map( p => 
+                                                postThings.state.data[0] ? 
+                                                postThings.state.data.map( p => 
                                                     <div className="article-preview" key={p._id}>
                                                         <div className="article-meta">
-                                                            <Link to="/profile"><img src={p.avaUrl} /></Link>
+                                                            <Link to={`/profile/${p.author}`}>
+                                                                <img src={p.avaUrl} />
+                                                            </Link>
                                                             <div className="info">
-                                                                <Link  to="/profile" className="author">{p.author}</Link>
-                                                                <span className="date">{items.displayTime(p.time)}</span>
+                                                                <Link to={`/profile/${p.author}`} className="author">
+                                                                    {p.author}
+                                                                </Link>
+                                                                <span className="date">{postThings.displayTime(p.time)}</span>
                                                             </div>
                                                             <button className="btn btn-outline-primary btn-sm pull-xs-right">
                                                                 <i className="ion-heart"></i> {p.love}
@@ -60,6 +64,16 @@ class Home extends React.Component {
                                                                 {p.content}
                                                             </p>
                                                             <span>Read more...</span>
+                                                            <ul className="tag-list">
+                                                                {
+                                                                    p.tags ? 
+                                                                    p.tags.map( t => 
+                                                                        <li className="tag-default tag-pill tag-outline" key={t}>
+                                                                            {t}
+                                                                        </li>
+                                                                    ) : ""
+                                                                }
+                                                            </ul>
                                                         </Link>
                                                     </div>
                                                 )
@@ -75,8 +89,8 @@ class Home extends React.Component {
                             
                                                 <div className="tag-list">
                                                 {
-                                                    items.state.tags[0] ? 
-                                                    items.state.tags.map(t => 
+                                                    postThings.state.tags[0] ? 
+                                                    postThings.state.tags.map(t => 
                                                         <Link key={t._id} to="" className="tag-pill tag-default">{t._id}</Link>
                                                     ) : ""
                                                 }

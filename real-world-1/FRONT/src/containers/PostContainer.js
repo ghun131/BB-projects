@@ -6,7 +6,8 @@ class PostContainer extends Container {
     state={
         data: [],
         tags: [],
-        pageNums: []
+        pageNums: [],
+        author: []
     }
 
     displayTime = (time) => {
@@ -24,7 +25,6 @@ class PostContainer extends Container {
     getGlobalPosts = () => {
         axios.get("/api/posts")
             .then( res => {
-                console.log('Home', res.data)
                 let totalDocs = res.data.totalDocuments[0].posts;
                 let pageNums = [...this.state.pageNums];
                 for (let i = 1; i < totalDocs / 13 + 1; i++) {
@@ -34,12 +34,25 @@ class PostContainer extends Container {
                     data: res.data.posts, 
                     tags: res.data.tags,
                     pageNums
-                }, () => console.log(this.state));
+                });
         }).catch(error => console.log(error));
     }
 
-    // clickLove
-    // getUserPosts
+    getUserPosts = (author) => {
+        axios.get(`/profile/${author}`)
+            .then( res => {
+                let totalDocs = res.data.totalDocuments[0].posts;
+                let pageNums = [...this.state.pageNums];
+                for (let i = 1; i < totalDocs / 13 + 1; i++) {
+                    pageNums.push(i);
+                }
+                this.setState({ 
+                    data: res.data.posts,
+                    author: res.data.user,
+                    pageNums
+                }, () => console.log(this.state.author));
+            }).catch(error => console.log(error));
+    }
     // getFavouritePosts
     // editPost
     // deletePost

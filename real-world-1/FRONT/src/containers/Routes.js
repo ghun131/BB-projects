@@ -17,9 +17,8 @@ const routePath = (props) => {
             <Route path="/settings" component={Setting} />
             <Route path="/editor" component={CreateEditArticle} />
             <Route path="/article" component={Article} />
-            
 
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile/:username" component={Profile} />
         </div>
     )
 }

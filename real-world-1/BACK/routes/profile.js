@@ -4,7 +4,7 @@ const Post = require('../modal/Post');
 const User = require('../modal/User');
 const middleware = require('../middleware');
 
-router.get('/:username', middleware.checkToken, (req, res) => {
+router.get('/:username', (req, res) => {
   let data = {};
   let userName = req.session.username;
   if (req.session.username) {
