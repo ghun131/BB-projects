@@ -15286,28 +15286,28 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
     }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-page"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, console.log('state', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "How to build webapps that scale"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, postThings.state.data.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-meta"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${localStorage.getItem("author")}`
+      to: `/profile/${postThings.state.data.author}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: localStorage.getItem("picUrl")
+      src: postThings.state.data.avaUrl
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "",
       className: "author"
-    }, "Eric Simons"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, postThings.state.data.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
-    }, "January 20th")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow Eric Simons ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }), "\xA0 Follow ", postThings.state.data.author, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
     }, "(10)")), "\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-primary"
@@ -15321,28 +15321,26 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "row article-content"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-12"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Web development technologies have evolved at an incredible clip over the past few years."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      id: "introducing-ionic"
-    }, "Introducing RealWorld."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It's a great solution for learning how other frameworks work."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, postThings.state.data.content)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-actions"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-meta"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${localStorage.getItem("author")}`
+      to: `/profile/${postThings.state.data.author}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: localStorage.getItem("picUrl")
+      src: postThings.state.data.avaUrl
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${localStorage.getItem("author")}`,
+      to: `/profile/${postThings.state.data.author}`,
       className: "author"
-    }, "Eric Simons"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, postThings.state.data.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
-    }, "January 20th")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow Eric Simons ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }), "\xA0 Follow ", postThings.state.data.author, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
     }, "(10)")), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-primary"

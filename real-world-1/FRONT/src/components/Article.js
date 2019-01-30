@@ -13,29 +13,32 @@ class Article extends React.Component {
                 {
                     (postThings) => (
                         <div className="article-page">
+                        {console.log('state', postThings.state)}
                             <div className="banner">
                                 <div className="container">
                     
-                                <h1>How to build webapps that scale</h1>
+                                <h1>{postThings.state.data.title}</h1>
                     
                                 <div className="article-meta">
-                                    <Link to={`/profile/${localStorage.getItem("author")}`}>
-                                        <img src={localStorage.getItem("picUrl")} />
+                                    <Link to={`/profile/${postThings.state.data.author}`}>
+                                        <img src={postThings.state.data.avaUrl} />
                                     </Link>
                                     <div className="info">
-                                        <Link to="" className="author">Eric Simons</Link>
-                                        <span className="date">January 20th</span>
+                                        <Link to="" className="author">{postThings.state.data.author}</Link>
+                                        <span className="date">
+                                            {PostContainer.displayTime(postThings.state.data.time)}
+                                        </span>
                                     </div>
                                     <button className="btn btn-sm btn-outline-secondary">
                                         <i className="ion-plus-round"></i>
                                         &nbsp;
-                                        Follow Eric Simons <span className="counter">(10)</span>
+                                        Follow {postThings.state.data.author} <span className="counter">(10)</span>
                                     </button>
                                     &nbsp;&nbsp;
                                     <button className="btn btn-sm btn-outline-primary">
-                                    <i className="ion-heart"></i>
+                                        <i className="ion-heart"></i>
                                     &nbsp;
-                                    Favorite Post <span className="counter">(29)</span>
+                                        Favorite Post <span className="counter">(29)</span>
                                     </button>
                                 </div>
                     
@@ -46,11 +49,7 @@ class Article extends React.Component {
                     
                                 <div className="row article-content">
                                 <div className="col-md-12">
-                                    <p>
-                                    Web development technologies have evolved at an incredible clip over the past few years.
-                                    </p>
-                                    <h2 id="introducing-ionic">Introducing RealWorld.</h2>
-                                    <p>It's a great solution for learning how other frameworks work.</p>
+                                    {postThings.state.data.content}
                                 </div>
                                 </div>
                     
@@ -58,26 +57,29 @@ class Article extends React.Component {
                     
                                 <div className="article-actions">
                                 <div className="article-meta">
-                                    <Link to={`/profile/${localStorage.getItem("author")}`}>
-                                        <img src={localStorage.getItem("picUrl")} />
+                                    <Link to={`/profile/${postThings.state.data.author}`}>
+                                        <img src={postThings.state.data.avaUrl} />
                                     </Link>
                                     <div className="info">
-                                        <Link to={`/profile/${localStorage.getItem("author")}`} className="author">
-                                            Eric Simons
+                                        <Link to={`/profile/${postThings.state.data.author}`} className="author">
+                                            {postThings.state.data.title}
                                         </Link>
-                                        <span className="date">January 20th</span>
+                                        <span className="date">
+                                            {PostContainer.displayTime(postThings.state.data.time)}
+                                        </span>
                                     </div>
                     
                                     <button className="btn btn-sm btn-outline-secondary">
                                     <i className="ion-plus-round"></i>
                                     &nbsp;
-                                    Follow Eric Simons <span className="counter">(10)</span>
+                                        Follow {postThings.state.data.author} 
+                                        <span className="counter">(10)</span>
                                     </button>
                                     &nbsp;
                                     <button className="btn btn-sm btn-outline-primary">
-                                    <i className="ion-heart"></i>
-                                    &nbsp;
-                                    Favorite Post <span className="counter">(29)</span>
+                                        <i className="ion-heart"></i>
+                                        &nbsp;
+                                        Favorite Post <span className="counter">(29)</span>
                                     </button>
                                 </div>
                                 </div>

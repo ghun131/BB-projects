@@ -66,7 +66,9 @@ class PostContainer extends Container {
         axios.get(path)
             .then( res => {
                 console.log('one post', res.data)
-                this.setState({ data: res.data.article });
+                this.setState({ 
+                    data: res.data.article,
+                });
             })
             .catch (error => console.log(error))
     }
