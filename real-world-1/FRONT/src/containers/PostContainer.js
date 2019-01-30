@@ -55,14 +55,10 @@ class PostContainer extends Container {
             }).catch(error => console.log(error));
     }
 
-    getFavouritePosts = (username, loveArticles) => {
-        axios.post(`/profile/${username}/favourites`, {loveArticles: loveArticles})
+    getFavouritePosts = (username) => {
+        axios.post(`/profile/${username}/favourites`, {loveArticles: this.state.author[0].loveArticles})
             .then( res => {
-                let pageNums = this.pagination(res.data, this.state.pageNums);
-                this.setState({ 
-                    data: res.data.posts,
-                    pageNums
-                });
+                this.setState({ data: res.data });
             })
     }
     // editPost

@@ -14531,7 +14531,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Setting__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(102);
 /* harmony import */ var _components_CreateEditArticle__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(103);
 /* harmony import */ var _components_Profile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(104);
-/* harmony import */ var _components_Article__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(105);
+/* harmony import */ var _components_Article__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(106);
 
 
 
@@ -14749,14 +14749,12 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(error => console.log(error));
     });
 
-    _defineProperty(this, "getFavouritePosts", (username, loveArticles) => {
+    _defineProperty(this, "getFavouritePosts", username => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${username}/favourites`, {
-        loveArticles: loveArticles
+        loveArticles: this.state.author[0].loveArticles
       }).then(res => {
-        let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
-          data: res.data.posts,
-          pageNums
+          data: res.data
         });
       });
     });
@@ -15113,9 +15111,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
-/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(60);
-/* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(99);
+/* harmony import */ var _ArticlePreview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(105);
+/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(60);
+/* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(99);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -15127,24 +15129,36 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
     super(...args);
 
-    _defineProperty(this, "componentDidMount", () => {
+    _defineProperty(this, "takeLastWord", () => {
       let authorArr = this.props.location.pathname.split("/");
-      let author = authorArr[authorArr.length - 1];
-      _containers_PostContainer__WEBPACK_IMPORTED_MODULE_4__["default"].getUserPosts(author);
+      let lastWord = authorArr[authorArr.length - 1].trim();
+      return lastWord;
     });
 
-    _defineProperty(this, "handleClick", (e, getFavouritePosts, username, loveArticles) => {
-      e.preventDefault();
-      getFavouritePosts(username, loveArticles);
+    _defineProperty(this, "componentDidMount", () => {
+      let lastWord = this.takeLastWord();
+      _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(lastWord);
+    });
+
+    _defineProperty(this, "componentDidUpdate", prevProps => {
+      if (this.props.location.pathname !== prevProps.location.pathname) {
+        let lastWord = this.takeLastWord();
+
+        if (lastWord === 'favourites') {
+          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getFavouritePosts(lastWord);
+        } else {
+          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(lastWord);
+        }
+      }
     });
   }
 
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_2__["Subscribe"], {
-      to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_4__["default"]]
+      to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, console.log(postThings.state.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15171,49 +15185,30 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "nav nav-pills outline-active"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      className: "nav-link active",
-      to: `profile/${postThings.state.author[0].username}`
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+      exact: true,
+      className: "nav-link",
+      activeClassName: "active",
+      to: `/profile/${postThings.state.author[0].username}`
     }, "My Articles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       className: "nav-link",
-      to: `profile/${postThings.state.author[0].username}/favourites`,
-      onClick: e => this.handleClick(e, postThings.getFavouritePosts, postThings.state.author[0].username, postThings.state.author[0].loveArticles)
-    }, "Favorited Articles"))) : ""), postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "article-preview",
-      key: p._id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "article-meta"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: ""
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: p.avaUrl
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "info"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
-      className: "author"
-    }, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "date"
-    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_4__["default"].displayTime(p.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-outline-primary btn-sm pull-xs-right"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "ion-heart"
-    }), " ", p.love)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
-      className: "preview-link"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      style: {
-        overflow: "hidden",
-        height: "1.5rem"
-      }
-    }, p.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Read more..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "tag-list"
-    }, p.tags ? p.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      key: t,
-      className: "tag-default tag-pill tag-outline"
-    }, t)) : "")))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles..."))))));
+      to: `/profile/${postThings.state.author[0].username}/favourites`
+    }, "Favorited Articles"))) : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      exact: true,
+      path: "/profile/:username",
+      key: "userPosts",
+      render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
+        key: p._id
+      }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      path: "/profile/:username/favourites",
+      key: "favourites",
+      render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
+        key: p._id
+      }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
+    })))))));
   }
 
 }
@@ -15222,6 +15217,66 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
 /***/ }),
 /* 105 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+
+
+
+
+
+class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  render() {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_3__["Subscribe"], {
+      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-preview",
+      key: this.props._id
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-meta"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: ""
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: this.props.avaUrl
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "info"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "author"
+    }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "date"
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].displayTime(this.props.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-outline-primary btn-sm pull-xs-right"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-heart"
+    }), " ", this.props.love)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "preview-link"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      style: {
+        overflow: "hidden",
+        height: "1.5rem"
+      }
+    }, this.props.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Read more..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "tag-list"
+    }, this.props.tags ? this.props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: t,
+      className: "tag-default tag-pill tag-outline"
+    }, t)) : ""))));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (ArticlePreview);
+
+/***/ }),
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

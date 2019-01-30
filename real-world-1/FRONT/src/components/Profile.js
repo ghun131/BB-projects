@@ -1,20 +1,31 @@
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom'
+import { NavLink, Link, Route, Switch } from 'react-router-dom'
 import { Subscribe } from 'unstated';
+import ArticlePreview from './ArticlePreview';
 import UserContainer from '../containers/UserContainer';
 import PostContainer from '../containers/PostContainer';
 
 class Profile extends React.Component {
-
-    componentDidMount = () => {
+    takeLastWord = () => {
         let authorArr = this.props.location.pathname.split("/");
-        let author = authorArr[authorArr.length - 1]
-        PostContainer.getUserPosts(author)
+        let lastWord = authorArr[authorArr.length - 1].trim();
+        return lastWord;
     }
 
-    handleClick = (e, getFavouritePosts, username, loveArticles) => {
-        e.preventDefault();
-        getFavouritePosts(username, loveArticles)
+    componentDidMount = () => {
+            let lastWord = this.takeLastWord();
+            PostContainer.getUserPosts( lastWord )
+    }
+
+    componentDidUpdate = (prevProps) => {
+        if( this.props.location.pathname !== prevProps.location.pathname ) {
+            let lastWord = this.takeLastWord();
+            if (lastWord === 'favourites') {
+                PostContainer.getFavouritePosts( lastWord );
+            } else {
+                PostContainer.getUserPosts( lastWord )
+            }
+        }
     }
 
     render() {
@@ -23,7 +34,6 @@ class Profile extends React.Component {
                 {
                     (userThings, postThings) => (
                         <div className="profile-page">
-                        {console.log(postThings.state.author)}
                         <div className="user-info">
                             <div className="container">
                                 <div className="row">
@@ -56,58 +66,43 @@ class Profile extends React.Component {
                                         postThings.state.author[0] ? 
                                         <ul className="nav nav-pills outline-active">
                                             <li className="nav-item">
-                                            <Link className="nav-link active" to={`profile/${postThings.state.author[0].username}`}>
-                                                My Articles
-                                            </Link>
+                                                <NavLink 
+                                                    exact
+                                                    className="nav-link"
+                                                    activeClassName="active"
+                                                    to={`/profile/${postThings.state.author[0].username}`}>
+                                                    My Articles
+                                                </NavLink>
                                             </li>
                                             <li className="nav-item">
-                                            <Link className="nav-link" 
-                                                to={`profile/${postThings.state.author[0].username}/favourites`}
-                                                onClick={(e) => 
-                                                    this.handleClick(e, 
-                                                        postThings.getFavouritePosts, 
-                                                        postThings.state.author[0].username, 
-                                                        postThings.state.author[0].loveArticles)}>
-                                                Favorited Articles
-                                            </Link>
+                                                <NavLink  
+                                                    className="nav-link"
+                                                    to={`/profile/${postThings.state.author[0].username}/favourites`}>
+                                                    Favorited Articles
+                                                </NavLink>
                                             </li>
                                         </ul> : ""
                                     }
                                     </div>
+
+                                    <Switch>
+                                        <Route exact path="/profile/:username" key="userPosts" render={() => 
+                                            postThings.state.data[0] ?
+                                                postThings.state.data.map( p => 
+                                                    <ArticlePreview key={p._id} {...p} />
+                                                ): <div>Loading articles...</div>}/>
+
+                                        <Route  path="/profile/:username/favourites" key="favourites" 
+                                            render={() =>
+                                                postThings.state.data[0] ?
+                                                    postThings.state.data.map( p => 
+                                                        <ArticlePreview key={p._id} {...p} />
+                                                    ): <div>Loading articles...</div>
+                                        }/>
+                                    </Switch>
     
-                                    {
-                                        postThings.state.data[0] ?
-                                        postThings.state.data.map( p => 
-                                            <div className="article-preview" key={p._id}>
-                                                <div className="article-meta">
-                                                    <Link to=""><img src={p.avaUrl} /></Link>
-                                                    <div className="info">
-                                                    <Link to="" className="author">{p.author}</Link>
-                                                    <span className="date">{PostContainer.displayTime(p.time)}</span>
-                                                    </div>
-                                                    <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                                                    <i className="ion-heart"></i> {p.love}
-                                                    </button>
-                                                </div>
-                                                <Link to="" className="preview-link">
-                                                    <h1>{p.title}</h1>
-                                                    <p style={{overflow: "hidden", height: "1.5rem"}}>
-                                                        {p.content}
-                                                    </p>
-                                                    <span>Read more...</span>
-                                                    <ul className="tag-list">
-                                                        {
-                                                            p.tags ? 
-                                                            p.tags.map( t => 
-                                                                <li key={t} className="tag-default tag-pill tag-outline">
-                                                                    {t}
-                                                                </li>
-                                                            ) : ""
-                                                        }
-                                                    </ul>
-                                                </Link>
-                                            </div>
-                                        ): <div>Loading articles...</div>
+                                    { 
+                                        
                                     }
                                 </div>
                             </div>
