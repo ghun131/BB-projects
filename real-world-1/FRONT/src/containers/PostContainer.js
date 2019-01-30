@@ -90,7 +90,7 @@ class PostContainer extends Container {
             })
             .catch(err => console.log(err.message));
     }
-    
+
     deletePost = (id, history) => {
         axios.delete(`/profile/delete/${id}`)
             .then(res => {
@@ -99,8 +99,29 @@ class PostContainer extends Container {
             })
             .catch(err => console.log(err.message))
     }
-    // likePost
-    // getTags
+
+    likePost = (id, title) => {
+        let payload = {
+            author: localStorage.getItem("author"),
+            title: title
+        }
+
+        axios.put(`/article/${id}`, {payload})
+            .then( res => {
+                //update state so UI will update
+                let data = [...this.state.data];
+                let likedPost = data.filter( i => i._id === res.data.post._id )
+                let index = data.indexOf(likedPost[0]);
+                data[index] = res.data.post;
+                this.setState({ data });
+                localStorage.setItem("loveArticles", res.data.user.loveArticles);
+            })
+            .catch(err => console.log(err))
+    }
+    
+    getTags = () => {
+        
+    }
     // getPostsByTag
 }
 

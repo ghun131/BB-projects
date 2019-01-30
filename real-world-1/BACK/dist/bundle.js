@@ -14770,9 +14770,29 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         history.push('/');
       }).catch(err => console.log(err.message));
     });
-  } // likePost
-  // getTags
-  // getPostsByTag
+
+    _defineProperty(this, "likePost", (id, title) => {
+      let payload = {
+        author: localStorage.getItem("author"),
+        title: title
+      };
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/article/${id}`, {
+        payload
+      }).then(res => {
+        //update state so UI will update
+        let data = [...this.state.data];
+        let likedPost = data.filter(i => i._id === res.data.post._id);
+        let index = data.indexOf(likedPost[0]);
+        data[index] = res.data.post;
+        this.setState({
+          data
+        });
+        localStorage.setItem("loveArticles", res.data.user.loveArticles);
+      }).catch(err => console.log(err));
+    });
+
+    _defineProperty(this, "getTags", () => {});
+  } // getPostsByTag
 
 
 }
@@ -14791,13 +14811,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 
 
 class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "handleLike", (e, likePost, id, title) => {
+      e.preventDefault();
+      likePost(id, title);
+    });
+  }
+
   render() {
+    // get user favourite articles from local storage
+    let loveArt = [];
+    let loveArticles = localStorage.getItem("loveArticles");
+
+    if (loveArticles != 'undefined' && loveArticles != undefined) {
+      loveArt = loveArticles.split(",").filter(art => art === this.props.title);
+    }
+
+    let liked = 'btn btn-primary btn-sm pull-xs-right';
+    let disliked = 'btn btn-outline-primary btn-sm pull-xs-right';
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_3__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"]]
     }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -14817,7 +14858,8 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
     }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].displayTime(this.props.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-outline-primary btn-sm pull-xs-right"
+      className: loveArt[0] ? liked : disliked,
+      onClick: e => this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-heart"
     }), " ", this.props.love)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {

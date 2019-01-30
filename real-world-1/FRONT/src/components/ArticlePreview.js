@@ -4,7 +4,24 @@ import PostContainer from '../containers/PostContainer';
 import { Subscribe } from 'unstated';
 
 class ArticlePreview extends React.Component {
+    
+    handleLike = (e, likePost, id, title) => {
+        e.preventDefault();
+
+        likePost(id, title)
+    }
+
     render() {
+        // get user favourite articles from local storage
+        let loveArt = [];
+        let loveArticles = localStorage.getItem("loveArticles");
+        if (loveArticles != 'undefined' && loveArticles != undefined) { 
+            loveArt = loveArticles.split(",").filter(art => art === this.props.title);
+        }
+
+        let liked = 'btn btn-primary btn-sm pull-xs-right';
+        let disliked = 'btn btn-outline-primary btn-sm pull-xs-right';
+
         return (
             <Subscribe to={[PostContainer]}>
                 {
@@ -20,7 +37,11 @@ class ArticlePreview extends React.Component {
                                     </Link>
                                     <span className="date">{PostContainer.displayTime(this.props.time)}</span>
                                 </div>
-                                <button className="btn btn-outline-primary btn-sm pull-xs-right">
+                                <button className={ loveArt[0] ? liked : disliked }
+                                    onClick={(e) => 
+                                        this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
+                                    }
+                                >
                                     <i className="ion-heart"></i> {this.props.love}
                                 </button>
                             </div>

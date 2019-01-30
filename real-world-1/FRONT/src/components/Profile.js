@@ -100,10 +100,6 @@ class Profile extends React.Component {
                                                     ): <div>Loading articles...</div>
                                         }/>
                                     </Switch>
-    
-                                    { 
-                                        
-                                    }
                                 </div>
                             </div>
                         </div>
