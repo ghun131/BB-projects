@@ -12,6 +12,7 @@ const routePath = (props) => {
     return (
         <div>
             <Route exact path="/" component={Home} />
+            <Route path="/tag/:tagName" component={Home}/>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Setting} />

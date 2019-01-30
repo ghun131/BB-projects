@@ -19,7 +19,7 @@ const Header = () => {
                                     
                                 </li>
                                 {
-                                    items.state.isLogin ? 
+                                    items.state.isLogin || localStorage.getItem("author") ? 
                                         <span>
                                             <li className="nav-item">
                                                 <Link className="nav-link" to="/editor">

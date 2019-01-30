@@ -12077,7 +12077,7 @@ const Header = () => {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link active",
     to: "/"
-  }, "Home")), items.state.isLogin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  }, "Home")), items.state.isLogin || localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "nav-link",
@@ -12159,6 +12159,7 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
           email: email,
           password: password
         };
+        console.log('send to server', user);
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('api/login', {
           user
         }).then(res => {
@@ -14549,6 +14550,9 @@ const routePath = props => {
     path: "/",
     component: _components_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/tag/:tagName",
+    component: _components_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/login",
     component: _components_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -14586,6 +14590,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -14594,13 +14600,26 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 
 class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
-  componentDidMount() {
-    if (localStorage.getItem("email")) {
-      // Auto log in when user info is saved into local storage
-      _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"].doLogin(localStorage.getItem("email"), localStorage.getItem("password"), this.props.history);
-    }
+  constructor(...args) {
+    super(...args);
 
-    _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
+    _defineProperty(this, "componentDidMount", () => {
+      if (this.props.location.pathname !== '/') {
+        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getPostsByTag(this.props.location.pathname);
+      } else {
+        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
+      }
+    });
+
+    _defineProperty(this, "componentDidUpdate", prevProps => {
+      if (this.props.location.pathname !== prevProps.location.pathname) {
+        if (this.props.location.pathname !== '/') {
+          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getPostsByTag(this.props.location.pathname);
+        } else {
+          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
+        }
+      }
+    });
   }
 
   render() {
@@ -14626,17 +14645,35 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "nav nav-pills outline-active"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       className: "nav-link disabled",
       to: ""
     }, "Your Feed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      className: "nav-link active",
-      to: ""
-    }, "Global Feed")))), postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
-      key: p._id
-    }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+      exact: true,
+      className: "nav-link",
+      activeClassName: "active",
+      to: "/"
+    }, "Global Feed")), this.props.location.pathname !== "/" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      className: "nav-item"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+      exact: true,
+      className: "nav-link",
+      activeClassName: "active",
+      to: `/tag/${postThings.state.tagName}`
+    }, "#", postThings.state.tagName)) : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      exact: true,
+      path: "/",
+      render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+        key: p._id
+      }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      path: "/tag/:tagName",
+      render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+        key: p._id
+      }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
+    }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "sidebar"
@@ -14644,7 +14681,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "tag-list"
     }, postThings.state.tags ? postThings.state.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       key: t._id,
-      to: "",
+      to: `/tag/${t._id}`,
       className: "tag-pill tag-default"
     }, t._id)) : ""))))))));
   }
@@ -14678,7 +14715,14 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       data: [],
       tags: [],
       pageNums: [],
-      author: []
+      author: [],
+      tagName: ''
+    });
+
+    _defineProperty(this, "takeLastWord", pathname => {
+      let arr = pathname.split("/");
+      let lastWord = arr[arr.length - 1].trim();
+      return lastWord;
     });
 
     _defineProperty(this, "displayTime", time => {
@@ -14712,7 +14756,8 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(error => console.log(error));
     });
 
-    _defineProperty(this, "getUserPosts", author => {
+    _defineProperty(this, "getUserPosts", pathname => {
+      let author = this.takeLastWord(pathname);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/profile/${author}`).then(res => {
         let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
@@ -14723,7 +14768,8 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(error => console.log(error));
     });
 
-    _defineProperty(this, "getFavouritePosts", username => {
+    _defineProperty(this, "getFavouritePosts", pathname => {
+      let username = this.takeLastWord(pathname);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${username}/favourites`, {
         loveArticles: this.state.author[0].loveArticles
       }).then(res => {
@@ -14791,9 +14837,17 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(err => console.log(err));
     });
 
-    _defineProperty(this, "getTags", () => {});
-  } // getPostsByTag
-
+    _defineProperty(this, "getPostsByTag", pathname => {
+      let tag = this.takeLastWord(pathname);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/tag/${tag}`).then(res => {
+        console.log(res.data);
+        this.setState({
+          data: res.data,
+          tagName: tag
+        });
+      }).catch(err => console.log(err.message));
+    });
+  }
 
 }
 
@@ -15277,25 +15331,18 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
     super(...args);
 
-    _defineProperty(this, "takeLastWord", () => {
-      let authorArr = this.props.location.pathname.split("/");
-      let lastWord = authorArr[authorArr.length - 1].trim();
-      return lastWord;
-    });
-
     _defineProperty(this, "componentDidMount", () => {
-      let lastWord = this.takeLastWord();
-      _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(lastWord);
+      _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(this.props.location.pathname);
     });
 
     _defineProperty(this, "componentDidUpdate", prevProps => {
       if (this.props.location.pathname !== prevProps.location.pathname) {
-        let lastWord = this.takeLastWord();
+        let path = this.props.location.pathname.trim();
 
-        if (lastWord === 'favourites') {
-          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getFavouritePosts(lastWord);
+        if (path === `/profile/${localStorage.getItem('author')}/favourites`) {
+          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getFavouritePosts(this.props.location.pathname);
         } else {
-          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(lastWord);
+          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(this.props.location.pathname);
         }
       }
     });

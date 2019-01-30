@@ -1,20 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, NavLink, Switch } from 'react-router-dom';
 import PostContainer from '../containers/PostContainer';
 import UserContainer from '../containers/UserContainer';
 import ArticlePreview from './ArticlePreview';
 import { Subscribe } from 'unstated';
 
 class Home extends React.Component {
-    componentDidMount() {
-        if (localStorage.getItem("email")) {
-            // Auto log in when user info is saved into local storage
-            UserContainer.doLogin (
-                localStorage.getItem("email"),
-                localStorage.getItem("password"),
-                this.props.history )
+    componentDidMount = () => {
+        if (this.props.location.pathname !== '/') {
+            PostContainer.getPostsByTag(this.props.location.pathname)
+        } else {
+            PostContainer.getGlobalPosts();
         }
-        PostContainer.getGlobalPosts();
+    }
+
+    componentDidUpdate = (prevProps) => {
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            if (this.props.location.pathname !== '/') {
+                PostContainer.getPostsByTag(this.props.location.pathname)
+            } else {
+                PostContainer.getGlobalPosts();
+            }
+        }
     }
 
     render() {
@@ -39,20 +46,52 @@ class Home extends React.Component {
                                             <div className="feed-toggle">
                                                 <ul className="nav nav-pills outline-active">
                                                 <li className="nav-item">
-                                                    <Link className="nav-link disabled" to="">Your Feed</Link>
+                                                    <NavLink 
+                                                        className="nav-link disabled" 
+                                                        to="">
+                                                        Your Feed
+                                                    </NavLink>
                                                 </li>
                                                 <li className="nav-item">
-                                                    <Link className="nav-link active" to="">Global Feed</Link>
+                                                    <NavLink 
+                                                        exact
+                                                        className="nav-link" 
+                                                        activeClassName="active" to="/">
+                                                        Global Feed
+                                                    </NavLink>
                                                 </li>
+                                                {
+                                                    this.props.location.pathname !== "/" ?
+                                                        <li className="nav-item">
+                                                            <NavLink 
+                                                                exact
+                                                                className="nav-link" 
+                                                                activeClassName="active" 
+                                                                to={`/tag/${postThings.state.tagName}`}>
+                                                                #{postThings.state.tagName}
+                                                            </NavLink>
+                                                        </li> : ""
+                                                }
                                                 </ul>
                                             </div>
+
+                                            <Switch>
+                                                <Route exact path="/" render={() =>
+                                                    postThings.state.data[0] ? 
+                                                    postThings.state.data.map (p => 
+                                                        <ArticlePreview key={p._id} {...p} />
+                                                            ): <div>Loading articles...</div>
+                                                }/>
+
+                                                <Route path="/tag/:tagName" render={() => 
+                                                    postThings.state.data[0] ? 
+                                                    postThings.state.data.map (p => 
+                                                        <ArticlePreview key={p._id} {...p} />
+                                                            ): <div>Loading articles...</div>
+                                                }/>
+                                            </Switch>
                             
-                                            {
-                                                postThings.state.data[0] ? 
-                                                postThings.state.data.map (p => 
-                                                    <ArticlePreview key={p._id} {...p} />
-                                                        ): <div>Loading articles...</div>
-                                            }
+                                            
                                             
                                                     
                                         </div>
@@ -65,7 +104,11 @@ class Home extends React.Component {
                                                 {
                                                     postThings.state.tags ? 
                                                     postThings.state.tags.map(t => 
-                                                        <Link key={t._id} to="" className="tag-pill tag-default">{t._id}</Link>
+                                                        <Link key={t._id} 
+                                                            to={`/tag/${t._id}`}
+                                                            className="tag-pill tag-default">
+                                                            {t._id}
+                                                        </Link>
                                                     ) : ""
                                                 }
                                                 </div>

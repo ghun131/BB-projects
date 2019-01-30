@@ -26,6 +26,8 @@ class UserContainer extends Container {
                 email: email,
                 password: password
             }
+
+            console.log('send to server', user)
             axios.post('api/login', {user})
                 .then(res => {
                     console.log('Log in', res.data);

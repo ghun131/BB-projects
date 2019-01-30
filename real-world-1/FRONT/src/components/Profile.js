@@ -6,24 +6,17 @@ import UserContainer from '../containers/UserContainer';
 import PostContainer from '../containers/PostContainer';
 
 class Profile extends React.Component {
-    takeLastWord = () => {
-        let authorArr = this.props.location.pathname.split("/");
-        let lastWord = authorArr[authorArr.length - 1].trim();
-        return lastWord;
-    }
-
     componentDidMount = () => {
-        let lastWord = this.takeLastWord();
-        PostContainer.getUserPosts( lastWord )
+        PostContainer.getUserPosts( this.props.location.pathname )
     }
 
     componentDidUpdate = (prevProps) => {
         if( this.props.location.pathname !== prevProps.location.pathname ) {
-            let lastWord = this.takeLastWord();
-            if (lastWord === 'favourites') {
-                PostContainer.getFavouritePosts( lastWord );
+            let path = this.props.location.pathname.trim();
+            if (path === `/profile/${localStorage.getItem('author')}/favourites`) {
+                PostContainer.getFavouritePosts( this.props.location.pathname );
             } else {
-                PostContainer.getUserPosts( lastWord )
+                PostContainer.getUserPosts( this.props.location.pathname )
             }
         }
     }

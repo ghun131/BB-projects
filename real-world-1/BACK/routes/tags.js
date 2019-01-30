@@ -4,7 +4,6 @@ const Post = require('../modal/Post');
 
 router.get('/:tag', (req, res) => {
     let tag = req.params.tag;
-  
     async function getArticlesOfATag() {
       try {
         const tagArticles = await Post

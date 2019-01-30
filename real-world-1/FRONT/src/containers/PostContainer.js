@@ -7,7 +7,14 @@ class PostContainer extends Container {
         data: [],
         tags: [],
         pageNums: [],
-        author: []
+        author: [],
+        tagName: ''
+    }
+
+    takeLastWord = (pathname) => {
+        let arr = pathname.split("/");
+        let lastWord = arr[arr.length - 1].trim();
+        return lastWord;
     }
 
     displayTime = (time) => {
@@ -43,7 +50,8 @@ class PostContainer extends Container {
         }).catch(error => console.log(error));
     }
 
-    getUserPosts = (author) => {
+    getUserPosts = (pathname) => {
+        let author = this.takeLastWord(pathname);
         axios.get(`/profile/${author}`)
             .then( res => {
                 let pageNums = this.pagination(res.data, this.state.pageNums);
@@ -55,7 +63,8 @@ class PostContainer extends Container {
             }).catch(error => console.log(error));
     }
 
-    getFavouritePosts = (username) => {
+    getFavouritePosts = (pathname) => {
+        let username = this.takeLastWord(pathname);
         axios.post(`/profile/${username}/favourites`, {loveArticles: this.state.author[0].loveArticles})
             .then( res => {
                 this.setState({ data: res.data });
@@ -118,11 +127,15 @@ class PostContainer extends Container {
             })
             .catch(err => console.log(err))
     }
-    
-    getTags = () => {
-        
+
+    getPostsByTag = (pathname) => {
+        let tag = this.takeLastWord(pathname);
+        axios.get(`/tag/${tag}`)
+            .then(res => {
+                console.log(res.data)
+                this.setState({ data: res.data, tagName: tag })
+            }).catch(err => console.log(err.message));
     }
-    // getPostsByTag
 }
 
 let container = new PostContainer();
