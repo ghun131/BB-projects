@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PostContainer from '../containers/PostContainer';
 import UserContainer from '../containers/UserContainer';
+import ArticlePreview from './ArticlePreview';
 import { Subscribe } from 'unstated';
 
 class Home extends React.Component {
@@ -47,43 +48,10 @@ class Home extends React.Component {
                                             </div>
                             
                                             {
-                                                postThings.state.data ? 
-                                                postThings.state.data.map( p => 
-                                                    <div className="article-preview" key={p._id}>
-                                                        <div className="article-meta">
-                                                            <Link to={`/profile/${p.author}`}>
-                                                                <img src={p.avaUrl} />
-                                                            </Link>
-                                                            <div className="info">
-                                                                <Link to={`/profile/${p.author}`} className="author">
-                                                                    {p.author}
-                                                                </Link>
-                                                                <span className="date">{postThings.displayTime(p.time)}</span>
-                                                            </div>
-                                                            <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                                                                <i className="ion-heart"></i> {p.love}
-                                                            </button>
-                                                        </div>
-                                                        <Link to="/article" className="preview-link">
-                                                            <h1>{p.title}</h1>
-                                                            <p style={{overflow: "hidden", height: "1.5rem"}}>
-                                                                {p.content}
-                                                            </p>
-                                                            <span>Read more...</span>
-                                                            <ul className="tag-list">
-                                                                {
-                                                                    p.tags ? 
-                                                                    p.tags.map( t => 
-                                                                        <li className="tag-default tag-pill tag-outline" key={t}>
-                                                                            {t}
-                                                                        </li>
-                                                                    ) : ""
-                                                                }
-                                                            </ul>
-                                                        </Link>
-                                                    </div>
-                                                )
-                                                : <div>Loading articles...</div>
+                                                postThings.state.data[0] ? 
+                                                postThings.state.data.map (p => 
+                                                    <ArticlePreview key={p._id} {...p} />
+                                                        ): <div>Loading articles...</div>
                                             }
                                             
                                                     

@@ -14581,7 +14581,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99);
 /* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(60);
-/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
+/* harmony import */ var _ArticlePreview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(105);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(56);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
 
 
 
@@ -14599,7 +14603,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   render() {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_4__["Subscribe"], {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_5__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
     }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "home-page"
@@ -14629,40 +14633,9 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: "nav-link active",
       to: ""
-    }, "Global Feed")))), postThings.state.data ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "article-preview",
+    }, "Global Feed")))), postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
       key: p._id
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "article-meta"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${p.author}`
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: p.avaUrl
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "info"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${p.author}`,
-      className: "author"
-    }, p.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "date"
-    }, postThings.displayTime(p.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-outline-primary btn-sm pull-xs-right"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "ion-heart"
-    }), " ", p.love)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "/article",
-      className: "preview-link"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, p.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      style: {
-        overflow: "hidden",
-        height: "1.5rem"
-      }
-    }, p.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Read more..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "tag-list"
-    }, p.tags ? p.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      className: "tag-default tag-pill tag-outline",
-      key: t
-    }, t)) : "")))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-3"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "sidebar"
@@ -14739,7 +14712,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     });
 
     _defineProperty(this, "getUserPosts", author => {
-      console.log('getUserPosts', author);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/profile/${author}`).then(res => {
         let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
