@@ -90,7 +90,15 @@ class PostContainer extends Container {
             })
             .catch(err => console.log(err.message));
     }
-    // deletePost
+    
+    deletePost = (id, history) => {
+        axios.delete(`/profile/delete/${id}`)
+            .then(res => {
+                console.log('deleted post', res.data);
+                history.push('/');
+            })
+            .catch(err => console.log(err.message))
+    }
     // likePost
     // getTags
     // getPostsByTag

@@ -14763,8 +14763,14 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         history.push('/');
       }).catch(err => console.log(err.message));
     });
-  } // deletePost
-  // likePost
+
+    _defineProperty(this, "deletePost", (id, history) => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/profile/delete/${id}`).then(res => {
+        console.log('deleted post', res.data);
+        history.push('/');
+      }).catch(err => console.log(err.message));
+    });
+  } // likePost
   // getTags
   // getPostsByTag
 
@@ -15152,7 +15158,7 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_1__["default"]]
     }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "editor-page"
-    }, console.log('state', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"
@@ -15258,7 +15264,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, console.log('postContainer state', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15340,6 +15346,11 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     _defineProperty(this, "componentDidMount", () => {
       _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].getPost(this.props.history.location.pathname);
     });
+
+    _defineProperty(this, "handleDelete", (e, deletePost, id) => {
+      e.preventDefault();
+      deletePost(id, this.props.history);
+    });
   }
 
   render() {
@@ -15376,7 +15387,8 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }), "\xA0 Follow ", postThings.state.data.author, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
     }, "(10)")), "\xA0\xA0", postThings.state.data.author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-outline-danger"
+      className: "btn btn-sm btn-outline-danger",
+      onClick: e => this.handleDelete(e, postThings.deletePost, postThings.state.data._id)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-trash-a"
     }), "\xA0 Delete Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

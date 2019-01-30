@@ -8,6 +8,12 @@ class Article extends React.Component {
         PostContainer.getPost(this.props.history.location.pathname);
     }
 
+    handleDelete = (e, deletePost, id) => {
+        e.preventDefault();
+        deletePost(id, this.props.history);
+        
+    }
+
     render() {
         return (
             <Subscribe to={[PostContainer]}>
@@ -51,7 +57,8 @@ class Article extends React.Component {
 
                                     {
                                         postThings.state.data.author === localStorage.getItem("author") ?
-                                            <button className="btn btn-sm btn-outline-danger">
+                                            <button className="btn btn-sm btn-outline-danger"
+                                                onClick={(e) => this.handleDelete(e, postThings.deletePost, postThings.state.data._id)}>
                                                 <i className="ion-trash-a"></i>
                                                 &nbsp;
                                                 Delete Article

@@ -25,7 +25,6 @@ class CreateEditArticle extends React.Component {
             {
                 (postThings) => (
                     <div className="editor-page">
-                    {console.log('state', postThings.state)}
                         <div className="container page">
                             <div className="row">
             
