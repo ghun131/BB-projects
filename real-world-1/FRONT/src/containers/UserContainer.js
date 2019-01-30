@@ -44,7 +44,7 @@ class UserContainer extends Container {
             }, 3000);
     }
 
-    doLogout = () => {
+    doLogout = (history) => {
         const payload = {
             user: '',
             token: ''
@@ -52,6 +52,7 @@ class UserContainer extends Container {
         this.setState({ isLogin: false })
         window.localStorage.clear();
         axios.post('api/logout', payload)
+        history.push("/")
     }
 
     doRegister = (data, history) => {

@@ -130,7 +130,7 @@ router.delete('/delete/:id', middleware.checkToken, (req, res) => {
   deletePost()
 })
 
-router.put('/setting/:username', middleware.checkToken, (req, res) => {
+router.put('/setting/:username', (req, res) => {
   let {avaUrl, email, biography} = req.body.data
   async function updateProfile() {
     try {

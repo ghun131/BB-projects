@@ -67,12 +67,29 @@ class PostContainer extends Container {
             .then( res => {
                 console.log('one post', res.data)
                 this.setState({ 
-                    data: res.data.article,
+                    data: res.data.article
                 });
             })
             .catch (error => console.log(error))
     }
-    // editPost
+    editPost = (id, items, history) => {
+        let { title, content, tags } = items;
+        tags = tags.replace(/\s/g, "");
+        const tagsArr = tags.split(",");
+        const data = {
+            title: title,
+            content: content,
+            avaUrl: localStorage.getItem("picUrl"),
+            tags: tagsArr
+        };
+
+        axios.put(`/editor/${id}`, {data})
+            .then(res => {
+                console.log(res.data)
+                history.push('/');
+            })
+            .catch(err => console.log(err.message));
+    }
     // deletePost
     // likePost
     // getTags

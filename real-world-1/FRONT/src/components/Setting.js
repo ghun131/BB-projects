@@ -10,7 +10,7 @@ class Setting extends React.Component {
 
     handleLogout = (e, doLogout) => {
         e.preventDefault();
-        doLogout();
+        doLogout(this.props.history);
     }
 
     handleSetting = (e, editProfile) => {
@@ -43,6 +43,7 @@ class Setting extends React.Component {
                                     <fieldset className="form-group">
                                         <input className="form-control" 
                                             type="text"
+                                            defaultValue={localStorage.getItem("picUrl")}
                                             ref={this.avaUrlRef}
                                             placeholder="URL of profile picture" />
                                     </fieldset>

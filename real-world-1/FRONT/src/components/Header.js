@@ -28,12 +28,14 @@ const Header = () => {
                                                 </Link>
                                             </li>
                                             <li className="nav-item">
-                                                <Link className="nav-link" to="/settings">
+                                                <Link className="nav-link" to={`/settings/${localStorage.getItem("author")}`}>
                                                 <i className="ion-gear-a"></i>&nbsp;Settings
                                                 </Link>
                                             </li>
                                             <li className="nav-item">
-                                                <Link className="nav-link" to="/profile">{localStorage.getItem("author")}</Link>
+                                                <Link className="nav-link" to={`/profile/${localStorage.getItem("author")}`}>
+                                                    {localStorage.getItem("author")}
+                                                </Link>
                                             </li>
                                         </span>
                                     :
