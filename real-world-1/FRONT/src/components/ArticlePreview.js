@@ -11,16 +11,20 @@ class ArticlePreview extends React.Component {
                     postThings => (
                         <div className="article-preview" key={this.props._id}>
                             <div className="article-meta">
-                                <Link to=""><img src={this.props.avaUrl} /></Link>
+                                <Link to={`/profile/${this.props.author}`}>
+                                    <img src={this.props.avaUrl} />
+                                </Link>
                                 <div className="info">
-                                <Link to="" className="author">{this.props.author}</Link>
-                                <span className="date">{PostContainer.displayTime(this.props.time)}</span>
+                                    <Link to={`/profile/${this.props.author}`} className="author">
+                                        {this.props.author}
+                                    </Link>
+                                    <span className="date">{PostContainer.displayTime(this.props.time)}</span>
                                 </div>
                                 <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                                <i className="ion-heart"></i> {this.props.love}
+                                    <i className="ion-heart"></i> {this.props.love}
                                 </button>
                             </div>
-                            <Link to="" className="preview-link">
+                            <Link to={`/article/${this.props._id}`} className="preview-link">
                                 <h1>{this.props.title}</h1>
                                 <p style={{overflow: "hidden", height: "1.5rem"}}>
                                     {this.props.content}

@@ -14560,7 +14560,7 @@ const routePath = props => {
     path: "/editor",
     component: _components_CreateEditArticle__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "/article",
+    path: "/article/:id",
     component: _components_Article__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/profile/:username",
@@ -14739,6 +14739,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     });
 
     _defineProperty(this, "getUserPosts", author => {
+      console.log('getUserPosts', author);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/profile/${author}`).then(res => {
         let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
@@ -14758,12 +14759,18 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         });
       });
     });
+
+    _defineProperty(this, "getPost", path => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(path).then(res => {
+        console.log('one post', res.data);
+        this.setState({
+          data: res.data.article
+        });
+      }).catch(error => console.log(error));
+    });
   } // editPost
   // deletePost
   // likePost
-  // comment
-  // getComments
-  // deleteComment
   // getTags
   // getPostsByTag
 
@@ -15158,7 +15165,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, console.log('postContainer state', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15241,13 +15248,13 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-meta"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: ""
+      to: `/profile/${this.props.author}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       src: this.props.avaUrl
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
+      to: `/profile/${this.props.author}`,
       className: "author"
     }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
@@ -15256,7 +15263,7 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-heart"
     }), " ", this.props.love)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
+      to: `/article/${this.props._id}`,
       className: "preview-link"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
       style: {
@@ -15284,141 +15291,160 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
+/* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-const Article = () => {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "article-page"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "banner"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "How to build webapps that scale"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "article-meta"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: `/profile/${localStorage.getItem("author")}`
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: localStorage.getItem("picUrl")
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "",
-    className: "author"
-  }, "Eric Simons"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "date"
-  }, "January 20th")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-sm btn-outline-secondary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "ion-plus-round"
-  }), "\xA0 Follow Eric Simons ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "counter"
-  }, "(10)")), "\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-sm btn-outline-primary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "ion-heart"
-  }), "\xA0 Favorite Post ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "counter"
-  }, "(29)"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container page"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row article-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-12"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Web development technologies have evolved at an incredible clip over the past few years."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    id: "introducing-ionic"
-  }, "Introducing RealWorld."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It's a great solution for learning how other frameworks work."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "article-actions"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "article-meta"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: `/profile/${localStorage.getItem("author")}`
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: localStorage.getItem("picUrl")
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: `/profile/${localStorage.getItem("author")}`,
-    className: "author"
-  }, "Eric Simons"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "date"
-  }, "January 20th")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-sm btn-outline-secondary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "ion-plus-round"
-  }), "\xA0 Follow Eric Simons ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "counter"
-  }, "(10)")), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-sm btn-outline-primary"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "ion-heart"
-  }), "\xA0 Favorite Post ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "counter"
-  }, "(29)")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-xs-12 col-md-8 offset-md-2"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    className: "card comment-form"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-block"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-    className: "form-control",
-    placeholder: "Write a comment...",
-    rows: "3"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-footer"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "http://i.imgur.com/Qr71crq.jpg",
-    className: "comment-author-img"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-sm btn-primary"
-  }, "Post Comment"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-block"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "card-text"
-  }, "With supporting text below as a natural lead-in to additional content.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-footer"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "",
-    className: "comment-author"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "http://i.imgur.com/Qr71crq.jpg",
-    className: "comment-author-img"
-  })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "",
-    className: "comment-author"
-  }, "Jacob Schmidt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "date-posted"
-  }, "Dec 29th"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-block"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "card-text"
-  }, "With supporting text below as a natural lead-in to additional content.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-footer"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "",
-    className: "comment-author"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "http://i.imgur.com/Qr71crq.jpg",
-    className: "comment-author-img"
-  })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "",
-    className: "comment-author"
-  }, "Jacob Schmidt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "date-posted"
-  }, "Dec 29th"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "mod-options"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "ion-edit"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "ion-trash-a"
-  }))))))));
-};
+
+
+
+class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "componentDidMount", () => {
+      _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].getPost(this.props.history.location.pathname);
+    });
+  }
+
+  render() {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_2__["Subscribe"], {
+      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
+    }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-page"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "banner"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "container"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "How to build webapps that scale"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-meta"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: `/profile/${localStorage.getItem("author")}`
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: localStorage.getItem("picUrl")
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "info"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "author"
+    }, "Eric Simons"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "date"
+    }, "January 20th")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-outline-secondary"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-plus-round"
+    }), "\xA0 Follow Eric Simons ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "counter"
+    }, "(10)")), "\xA0\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-outline-primary"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-heart"
+    }), "\xA0 Favorite Post ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "counter"
+    }, "(29)"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "container page"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "row article-content"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-md-12"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Web development technologies have evolved at an incredible clip over the past few years."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+      id: "introducing-ionic"
+    }, "Introducing RealWorld."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It's a great solution for learning how other frameworks work."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-actions"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "article-meta"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: `/profile/${localStorage.getItem("author")}`
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: localStorage.getItem("picUrl")
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "info"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: `/profile/${localStorage.getItem("author")}`,
+      className: "author"
+    }, "Eric Simons"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "date"
+    }, "January 20th")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-outline-secondary"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-plus-round"
+    }), "\xA0 Follow Eric Simons ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "counter"
+    }, "(10)")), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-outline-primary"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-heart"
+    }), "\xA0 Favorite Post ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "counter"
+    }, "(29)")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "row"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-xs-12 col-md-8 offset-md-2"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      className: "card comment-form"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-block"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      className: "form-control",
+      placeholder: "Write a comment...",
+      rows: "3"
+    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-footer"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: "http://i.imgur.com/Qr71crq.jpg",
+      className: "comment-author-img"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-primary"
+    }, "Post Comment"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-block"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text"
+    }, "With supporting text below as a natural lead-in to additional content.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-footer"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "comment-author"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: "http://i.imgur.com/Qr71crq.jpg",
+      className: "comment-author-img"
+    })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "comment-author"
+    }, "Jacob Schmidt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "date-posted"
+    }, "Dec 29th"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-block"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text"
+    }, "With supporting text below as a natural lead-in to additional content.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-footer"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "comment-author"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: "http://i.imgur.com/Qr71crq.jpg",
+      className: "comment-author-img"
+    })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "",
+      className: "comment-author"
+    }, "Jacob Schmidt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "date-posted"
+    }, "Dec 29th"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "mod-options"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-edit"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-trash-a"
+    })))))))));
+  }
+
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (Article);
 

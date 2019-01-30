@@ -13,8 +13,8 @@ class Profile extends React.Component {
     }
 
     componentDidMount = () => {
-            let lastWord = this.takeLastWord();
-            PostContainer.getUserPosts( lastWord )
+        let lastWord = this.takeLastWord();
+        PostContainer.getUserPosts( lastWord )
     }
 
     componentDidUpdate = (prevProps) => {
@@ -34,6 +34,7 @@ class Profile extends React.Component {
                 {
                     (userThings, postThings) => (
                         <div className="profile-page">
+                        {console.log('postContainer state', postThings.state)}
                         <div className="user-info">
                             <div className="container">
                                 <div className="row">

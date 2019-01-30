@@ -6,13 +6,13 @@ const middleware = require('../middleware');
 
 router.get('/:username', (req, res) => {
   let data = {};
-  let userName = req.session.username;
-  if (req.session.username) {
-    userName = req.session.username
-  }
-  else {
-    userName = req.params.username
-  }
+  let userName = req.params.username;
+  // if (req.session.username) {
+  //   userName = req.session.username
+  // }
+  // else {
+  //   userName = req.params.username
+  // }
 
   async function getUserInfo() {
     try {

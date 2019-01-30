@@ -44,6 +44,7 @@ class PostContainer extends Container {
     }
 
     getUserPosts = (author) => {
+        console.log('getUserPosts', author)
         axios.get(`/profile/${author}`)
             .then( res => {
                 let pageNums = this.pagination(res.data, this.state.pageNums);
@@ -61,12 +62,18 @@ class PostContainer extends Container {
                 this.setState({ data: res.data });
             })
     }
+
+    getPost = (path) => {
+        axios.get(path)
+            .then( res => {
+                console.log('one post', res.data)
+                this.setState({ data: res.data.article });
+            })
+            .catch (error => console.log(error))
+    }
     // editPost
     // deletePost
     // likePost
-    // comment
-    // getComments
-    // deleteComment
     // getTags
     // getPostsByTag
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import Register from '../components/Register';
@@ -16,7 +16,7 @@ const routePath = (props) => {
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Setting} />
             <Route path="/editor" component={CreateEditArticle} />
-            <Route path="/article" component={Article} />
+            <Route path="/article/:id" component={Article} />
 
             <Route path="/profile/:username" component={Profile} />
         </div>
