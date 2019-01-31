@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Subscribe } from 'unstated';
 import PostContainer from '../containers/PostContainer';
+import CommentCard from './CommentCard';
 
 class Article extends React.Component {
+    commentRef = React.createRef();
+
     componentDidMount = () => {
         PostContainer.getPost(this.props.history.location.pathname);
     }
@@ -11,7 +14,12 @@ class Article extends React.Component {
     handleDelete = (e, deletePost, id) => {
         e.preventDefault();
         deletePost(id, this.props.history);
-        
+    }
+
+    handleComment = (e, postComment, title) => {
+        e.preventDefault();
+        let text = this.commentRef.current.value;
+        postComment(text, title, this.props.location.pathname);
     }
 
     render() {
@@ -20,6 +28,7 @@ class Article extends React.Component {
                 {
                     (postThings) => (
                         <div className="article-page">
+                            {console.log('article component', postThings)}
                             <div className="banner">
                                 <div className="container">
                     
@@ -71,8 +80,6 @@ class Article extends React.Component {
                                             </button>
                                     }
 
-                                    
-
                                 </div>
                     
                                 </div>
@@ -119,52 +126,32 @@ class Article extends React.Component {
                     
                                 <div className="row">
                     
-                                <div className="col-xs-12 col-md-8 offset-md-2">
-                    
-                                    <form className="card comment-form">
-                                    <div className="card-block">
-                                        <textarea className="form-control" placeholder="Write a comment..." rows="3"></textarea>
+                                    <div className="col-xs-12 col-md-8 offset-md-2">
+                        
+                                        <form className="card comment-form" 
+                                            onSubmit={(e) => this.handleComment(e, postThings.comment, postThings.state.data.title)}>
+                                        <div className="card-block">
+                                            <textarea className="form-control" 
+                                                ref={this.commentRef}
+                                                placeholder="Write a comment..." 
+                                                rows="3"></textarea>
+                                        </div>
+                                        <div className="card-footer">
+                                            <img src={localStorage.getItem("picUrl")} className="comment-author-img" />
+                                            <button className="btn btn-sm btn-primary">
+                                                Post Comment
+                                            </button>
+                                        </div>
+                                        </form>
+                                        
+                                        {
+                                            postThings.state.comments[0] ? 
+                                                postThings.state.comments.map( c => 
+                                                    <CommentCard key={c._id} {...c} />)
+                                                : <div>Loading comments...</div>
+                                        }
+                                        
                                     </div>
-                                    <div className="card-footer">
-                                        <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                                        <button className="btn btn-sm btn-primary">
-                                        Post Comment
-                                        </button>
-                                    </div>
-                                    </form>
-                                    
-                                    <div className="card">
-                                    <div className="card-block">
-                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    </div>
-                                    <div className="card-footer">
-                                        <Link to="" className="comment-author">
-                                        <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                                        </Link>
-                                        &nbsp;
-                                        <Link to="" className="comment-author">Jacob Schmidt</Link>
-                                        <span className="date-posted">Dec 29th</span>
-                                    </div>
-                                    </div>
-                    
-                                    <div className="card">
-                                    <div className="card-block">
-                                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    </div>
-                                    <div className="card-footer">
-                                        <Link to="" className="comment-author">
-                                        <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                                        </Link>
-                                        &nbsp;
-                                        <Link to="" className="comment-author">Jacob Schmidt</Link>
-                                        <span className="date-posted">Dec 29th</span>
-                                        <span className="mod-options">
-                                        <i className="ion-edit"></i>
-                                        <i className="ion-trash-a"></i>
-                                        </span>
-                                    </div>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>        

@@ -13,7 +13,8 @@ class Profile extends React.Component {
     componentDidUpdate = (prevProps) => {
         if( this.props.location.pathname !== prevProps.location.pathname ) {
             let path = this.props.location.pathname.trim();
-            if (path === `/profile/${localStorage.getItem('author')}/favourites`) {
+            let lastWord = PostContainer.takeLastWord(this.props.location.pathname);
+            if (lastWord === 'favourites') {
                 PostContainer.getFavouritePosts( this.props.location.pathname );
             } else {
                 PostContainer.getUserPosts( this.props.location.pathname )

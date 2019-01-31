@@ -83,7 +83,7 @@ router.put('/:id', middleware.checkToken, (req, res) => {
 })
 
 //add a new comment
-router.post('/:id', middleware.checkToken, (req, res) => {
+router.post('/:id', (req, res) => {
     const { author, comment, articleTitle, avaUrl } = req.body.data;
 
     async function createComment() {

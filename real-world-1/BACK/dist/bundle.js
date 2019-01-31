@@ -14716,7 +14716,8 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       tags: [],
       pageNums: [],
       author: [],
-      tagName: ''
+      tagName: '',
+      comments: []
     });
 
     _defineProperty(this, "takeLastWord", pathname => {
@@ -14731,7 +14732,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       let day = dateObj.getUTCDate();
       let year = dateObj.getUTCFullYear();
-      return monthNames[month] + " " + day + "," + year;
+      return monthNames[month] + " " + day + ", " + year;
     });
 
     _defineProperty(this, "pagination", (data, pageNumState) => {
@@ -14781,9 +14782,9 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getPost", path => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(path).then(res => {
-        console.log('one post', res.data);
         this.setState({
-          data: res.data.article
+          data: res.data.article,
+          comments: res.data.comments
         });
       }).catch(error => console.log(error));
     });
@@ -14847,7 +14848,27 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         });
       }).catch(err => console.log(err.message));
     });
-  }
+
+    _defineProperty(this, "comment", (text, title, path) => {
+      const data = {
+        author: localStorage.getItem("author"),
+        avaUrl: localStorage.getItem("picUrl"),
+        articleTitle: title,
+        comment: text
+      };
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(path, {
+        data
+      }).then(res => {
+        let comments = [...this.state.comments];
+        comments.unshift(res.data);
+        this.setState({
+          comments
+        });
+      }).catch(error => console.log(error));
+    });
+  } // getComments
+  // deleteComment
+
 
 }
 
@@ -15338,8 +15359,9 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     _defineProperty(this, "componentDidUpdate", prevProps => {
       if (this.props.location.pathname !== prevProps.location.pathname) {
         let path = this.props.location.pathname.trim();
+        let lastWord = _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].takeLastWord(this.props.location.pathname);
 
-        if (path === `/profile/${localStorage.getItem('author')}/favourites`) {
+        if (lastWord === 'favourites') {
           _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getFavouritePosts(this.props.location.pathname);
         } else {
           _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(this.props.location.pathname);
@@ -15421,7 +15443,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99);
+/* harmony import */ var _CommentCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(108);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -15432,6 +15458,8 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(...args) {
     super(...args);
 
+    _defineProperty(this, "commentRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
     _defineProperty(this, "componentDidMount", () => {
       _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].getPost(this.props.history.location.pathname);
     });
@@ -15440,6 +15468,12 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       e.preventDefault();
       deletePost(id, this.props.history);
     });
+
+    _defineProperty(this, "handleComment", (e, postComment, title) => {
+      e.preventDefault();
+      let text = this.commentRef.current.value;
+      postComment(text, title, this.props.location.pathname);
+    });
   }
 
   render() {
@@ -15447,7 +15481,7 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
     }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-page"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, console.log('article component', postThings), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15524,70 +15558,77 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-xs-12 col-md-8 offset-md-2"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      className: "card comment-form"
+      className: "card comment-form",
+      onSubmit: e => this.handleComment(e, postThings.comment, postThings.state.data.title)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "card-block"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       className: "form-control",
+      ref: this.commentRef,
       placeholder: "Write a comment...",
       rows: "3"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "card-footer"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: "http://i.imgur.com/Qr71crq.jpg",
+      src: localStorage.getItem("picUrl"),
       className: "comment-author-img"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-primary"
-    }, "Post Comment"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "card"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "card-block"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: "card-text"
-    }, "With supporting text below as a natural lead-in to additional content.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "card-footer"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
-      className: "comment-author"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: "http://i.imgur.com/Qr71crq.jpg",
-      className: "comment-author-img"
-    })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
-      className: "comment-author"
-    }, "Jacob Schmidt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "date-posted"
-    }, "Dec 29th"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "card"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "card-block"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-      className: "card-text"
-    }, "With supporting text below as a natural lead-in to additional content.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "card-footer"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
-      className: "comment-author"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: "http://i.imgur.com/Qr71crq.jpg",
-      className: "comment-author-img"
-    })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
-      className: "comment-author"
-    }, "Jacob Schmidt"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "date-posted"
-    }, "Dec 29th"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "mod-options"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "ion-edit"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-      className: "ion-trash-a"
-    })))))))));
+    }, "Post Comment"))), postThings.state.comments[0] ? postThings.state.comments.map(c => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CommentCard__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+      key: c._id
+    }, c))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading comments..."))))));
   }
 
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Article);
+
+/***/ }),
+/* 107 */,
+/* 108 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
+/* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99);
+
+
+
+
+
+class CommentCard extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  render() {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_1__["Subscribe"], {
+      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
+    }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-block"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text"
+    }, this.props.comment)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-footer"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      to: `/profile/${this.props.author}`,
+      className: "comment-author"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: this.props.avaUrl,
+      className: "comment-author-img"
+    })), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      to: `/profile/${this.props.author}`,
+      className: "comment-author"
+    }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "date-posted"
+    }, postThings.displayTime(this.props.time)))));
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (CommentCard);
 
 /***/ })
 /******/ ]);

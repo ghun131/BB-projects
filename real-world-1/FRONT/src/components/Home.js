@@ -78,16 +78,16 @@ class Home extends React.Component {
                                             <Switch>
                                                 <Route exact path="/" render={() =>
                                                     postThings.state.data[0] ? 
-                                                    postThings.state.data.map (p => 
-                                                        <ArticlePreview key={p._id} {...p} />
-                                                            ): <div>Loading articles...</div>
+                                                        postThings.state.data.map (p => 
+                                                            <ArticlePreview key={p._id} {...p} />)
+                                                        : <div>Loading articles...</div>
                                                 }/>
 
                                                 <Route path="/tag/:tagName" render={() => 
                                                     postThings.state.data[0] ? 
-                                                    postThings.state.data.map (p => 
-                                                        <ArticlePreview key={p._id} {...p} />
-                                                            ): <div>Loading articles...</div>
+                                                        postThings.state.data.map (p => 
+                                                            <ArticlePreview key={p._id} {...p} />)
+                                                        : <div>Loading articles...</div>
                                                 }/>
                                             </Switch>
                             

@@ -9,10 +9,10 @@ Routing Guidelines
 [x] Settings page (URL: /#/settings )
 [] Editor page to create/edit articles (URL: /#/editor, /#/editor/article-slug-here )
 [] Article page (URL: /#/article/article-slug-here )
- [] - Delete article button (only shown to article's author)
+ [x] - Delete article button (only shown to article's author)
  [] - Render markdown from server client side
- [] - Comments section at bottom of page
+ [x] - Comments section at bottom of page
  [] - Delete comment button (only shown to comment's author)
 [] Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
- [] - Show basic user info
- [] - List of articles populated from author's created articles or author's favorited articles
+ [x] - Show basic user info
+ [x] - List of articles populated from author's created articles or author's favorited articles

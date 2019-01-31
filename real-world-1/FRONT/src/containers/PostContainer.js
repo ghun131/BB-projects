@@ -8,7 +8,8 @@ class PostContainer extends Container {
         tags: [],
         pageNums: [],
         author: [],
-        tagName: ''
+        tagName: '',
+        comments: []
     }
 
     takeLastWord = (pathname) => {
@@ -26,7 +27,7 @@ class PostContainer extends Container {
         let day = dateObj.getUTCDate();
         let year = dateObj.getUTCFullYear();
 
-        return monthNames[month] + " " + day + "," + year;
+        return monthNames[month] + " " + day + ", " + year;
     }
 
     pagination = (data, pageNumState) => {
@@ -74,13 +75,14 @@ class PostContainer extends Container {
     getPost = (path) => {
         axios.get(path)
             .then( res => {
-                console.log('one post', res.data)
                 this.setState({ 
-                    data: res.data.article
+                    data: res.data.article,
+                    comments: res.data.comments
                 });
             })
             .catch (error => console.log(error))
     }
+
     editPost = (id, items, history) => {
         let { title, content, tags } = items;
         tags = tags.replace(/\s/g, "");
@@ -136,6 +138,26 @@ class PostContainer extends Container {
                 this.setState({ data: res.data, tagName: tag })
             }).catch(err => console.log(err.message));
     }
+
+    comment = (text, title, path) => {
+        const data = {
+            author: localStorage.getItem("author"),
+            avaUrl: localStorage.getItem("picUrl"),
+            articleTitle: title,
+            comment: text
+        }
+
+        axios.post(path, {data})
+            .then (res => {
+                let comments = [...this.state.comments];
+                comments.unshift(res.data);
+                this.setState({ comments })
+            })
+            .catch (error => console.log(error))
+    }
+
+    // getComments
+    // deleteComment
 }
 
 let container = new PostContainer();
