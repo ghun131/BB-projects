@@ -16,7 +16,7 @@ class CreateEditArticle extends React.Component {
             tags: this.tagsRef.current.value.trim(),
         }
 
-        editPost(id, data, this.props.history);
+        editPost(id, data, this.props.location.pathname, this.props.history);
     }
 
     render() {

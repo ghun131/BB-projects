@@ -3,7 +3,9 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.put('/:id', middleware.checkToken, (req, res) => {
+router.put('/:id', (req, res) => {
+
+  console.log('hit editor backend')
     async function updatePost() {
       try {
         const post = await Post.findById(req.params.id);

@@ -47,8 +47,10 @@ class Article extends React.Component {
 
                                     {
                                         postThings.state.data.author === localStorage.getItem("author") ?
-                                            <button onClick={() => this.props.history.push('/editor')}
-                                                className="btn btn-sm btn-outline-secondary">
+                                            <button className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => 
+                                                    this.props.history.push(`/editor/${postThings.state.data._id}`)
+                                                }>
                                                     <i className="ion-edit"></i>
                                                     &nbsp;
                                                     Edit Article

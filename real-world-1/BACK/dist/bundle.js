@@ -14562,7 +14562,11 @@ const routePath = props => {
     path: "/settings",
     component: _components_Setting__WEBPACK_IMPORTED_MODULE_5__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
     path: "/editor",
+    component: _components_CreateEditArticle__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/editor/:id",
     component: _components_CreateEditArticle__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/article/:id",
@@ -14789,7 +14793,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(error => console.log(error));
     });
 
-    _defineProperty(this, "editPost", (id, items, history) => {
+    _defineProperty(this, "editPost", (id, items, path, history) => {
       let {
         title,
         content,
@@ -14797,18 +14801,37 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       } = items;
       tags = tags.replace(/\s/g, "");
       const tagsArr = tags.split(",");
-      const data = {
+      let token = localStorage.getItem("token");
+      let lastLetter = this.takeLastWord(path).trim();
+      let data = {
         title: title,
         content: content,
         avaUrl: localStorage.getItem("picUrl"),
         tags: tagsArr
       };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/editor/${id}`, {
-        data
-      }).then(res => {
-        console.log(res.data);
-        history.push('/');
-      }).catch(err => console.log(err.message));
+      console.log('hit edit post', lastLetter);
+
+      if (lastLetter === "editor") {
+        console.log('new post');
+        data.author = localStorage.getItem("author"), data.email = localStorage.getItem("email"), axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/newpost', {
+          data
+        }).then(res => {
+          console.log(res.data.message);
+          this.setState({
+            message: res.data.message
+          });
+          history.push('/');
+        }).catch(error => console.log(error));
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/editor/${id}`, {
+          data
+        }).then(res => {
+          console.log(res.data);
+          history.push('/');
+        }).catch(err => console.log(err.message));
+      }
     });
 
     _defineProperty(this, "deletePost", (id, history) => {
@@ -15277,7 +15300,7 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
         content: this.contentRef.current.value.trim(),
         tags: this.tagsRef.current.value.trim()
       };
-      editPost(id, data, this.props.history);
+      editPost(id, data, this.props.location.pathname, this.props.history);
     });
   }
 
@@ -15510,8 +15533,8 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, postThings.state.data.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
     }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data.time))), postThings.state.data.author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: () => this.props.history.push('/editor'),
-      className: "btn btn-sm btn-outline-secondary"
+      className: "btn btn-sm btn-outline-secondary",
+      onClick: () => this.props.history.push(`/editor/${postThings.state.data._id}`)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-edit"
     }), "\xA0 Edit Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

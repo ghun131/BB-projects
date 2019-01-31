@@ -84,23 +84,40 @@ class PostContainer extends Container {
             .catch (error => console.log(error))
     }
 
-    editPost = (id, items, history) => {
+    editPost = (id, items, path, history) => {
         let { title, content, tags } = items;
         tags = tags.replace(/\s/g, "");
         const tagsArr = tags.split(",");
-        const data = {
+
+        let token = localStorage.getItem("token");
+        let lastLetter = this.takeLastWord(path).trim();
+        let data = {
             title: title,
             content: content,
             avaUrl: localStorage.getItem("picUrl"),
             tags: tagsArr
         };
-
-        axios.put(`/editor/${id}`, {data})
+        console.log('hit edit post', lastLetter)
+        if (lastLetter === "editor") {
+            console.log('new post')
+            data.author = localStorage.getItem("author"),
+            data.email = localStorage.getItem("email"),
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            axios.post('/api/newpost', {data})
+                .then(res => {
+                    console.log(res.data.message);
+                    this.setState({ message: res.data.message });
+                    history.push('/');
+                }).catch(error => console.log(error));
+        } else {
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            axios.put(`/editor/${id}`, {data})
             .then(res => {
                 console.log(res.data)
                 history.push('/');
             })
             .catch(err => console.log(err.message));
+        }
     }
 
     deletePost = (id, history) => {

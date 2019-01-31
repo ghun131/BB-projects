@@ -43,7 +43,7 @@ app.use('/article', article)
 app.use('/editor', editor)
 
 //POST method for new post
-app.use('/api/new-post', newPost);
+app.use('/api/newpost', newPost);
 
 // GET articles for a tag
 app.use('/tag', tags);

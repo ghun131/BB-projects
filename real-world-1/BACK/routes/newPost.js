@@ -3,8 +3,10 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.post('/', middleware.checkToken, (req, res) => {
-  const { author, title, content, email, tags, avaUrl } = req.body.post;
+router.post('/', (req, res) => {
+  const { author, title, content, email, tags, avaUrl } = req.body.data;
+
+  console.log('NEW POST HIT')
 
   async function createPost() {
     let today = new Date();
