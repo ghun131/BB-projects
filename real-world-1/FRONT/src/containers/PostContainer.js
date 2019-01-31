@@ -109,7 +109,9 @@ class PostContainer extends Container {
     getPost = (path) => {
         axios.get(path)
             .then( res => {
+                console.log(res.data);
                 this.setState({ 
+                    author: res.data.user,
                     data: res.data.article,
                     comments: res.data.comments
                 });
@@ -171,6 +173,7 @@ class PostContainer extends Container {
         axios.put(`/article/${id}`, {payload})
             .then( res => {
                 //update state so UI will update
+                console.log('like post', res.data)
                 let data = [...this.state.data];
                 let likedPost = data.filter( i => i._id === res.data.post._id )
                 let index = data.indexOf(likedPost[0]);

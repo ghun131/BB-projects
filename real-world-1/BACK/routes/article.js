@@ -12,17 +12,31 @@ router.get('/:id', (req, res) => {
     async function getOneArticle() {
         try {
             const article = await Post.findById(req.params.id);
-            data.article = article;
+            data.article = [article];
         }
         catch (err) {
             console.log(err.message);
         }
-        getComments();
+        getUserInfo();
     };
 
     // This send one single article along with its comments
     // Comment for each article will save the article's id
     // so we can find all comments that have that ID
+    // We also need to find user info before sending data back to client
+
+    async function getUserInfo() {
+        try {
+          const user = await User
+          .find({ username: data.article.author })
+    
+          data.user = user;
+        }
+        catch(err) {
+          console.log(err.message);
+        }
+        getComments();
+      }
 
     async function getComments() {
         try {

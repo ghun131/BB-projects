@@ -14819,7 +14819,9 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getPost", path => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(path).then(res => {
+        console.log(res.data);
         this.setState({
+          author: res.data.user,
           data: res.data.article,
           comments: res.data.comments
         });
@@ -14883,6 +14885,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         payload
       }).then(res => {
         //update state so UI will update
+        console.log('like post', res.data);
         let data = [...this.state.data];
         let likedPost = data.filter(i => i._id === res.data.post._id);
         let index = data.indexOf(likedPost[0]);
@@ -15547,9 +15550,31 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       let text = this.commentRef.current.value;
       postComment(text, title, this.props.location.pathname);
     });
+
+    _defineProperty(this, "handleLike", (e, likePost, id, title) => {
+      e.preventDefault();
+      likePost(id, title);
+    });
+
+    _defineProperty(this, "checkLikeButton", title => {
+      let loveArt = [];
+      let loveArticles = localStorage.getItem("loveArticles");
+
+      if (loveArticles != 'undefined' && loveArticles != undefined) {
+        loveArt = loveArticles.split(",").filter(art => art === title);
+      }
+
+      if (loveArt[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 
   render() {
+    let liked = 'btn btn-sm btn-primary';
+    let disliked = 'btn btn-sm btn-outline-primary';
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_2__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
     }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -15558,81 +15583,93 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "banner"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, postThings.state.data.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, postThings.state.data[0].title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-meta"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${postThings.state.data.author}`
+      to: `/profile/${postThings.state.data[0].author}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: postThings.state.data.avaUrl
+      src: postThings.state.data[0].avaUrl
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "",
       className: "author"
-    }, postThings.state.data.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, postThings.state.data[0].author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
-    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data.time))), postThings.state.data.author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data[0].time))), postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary",
-      onClick: () => this.props.history.push(`/editor/${postThings.state.data._id}`)
+      onClick: () => this.props.history.push(`/editor/${postThings.state.data[0]._id}`)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-edit"
     }), "\xA0 Edit Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow ", postThings.state.data.author, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }), "\xA0 Follow ", postThings.state.data[0].author, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
-    }, "(10)")), "\xA0\xA0", postThings.state.data.author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, "(", postThings.state.author[0] ? postThings.state.author[0].followers.length : "", ")")), "\xA0\xA0", postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-danger",
-      onClick: e => this.handleDelete(e, postThings.deletePost, postThings.state.data._id)
+      onClick: e => this.handleDelete(e, postThings.deletePost, postThings.state.data[0]._id)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-trash-a"
     }), "\xA0 Delete Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-outline-primary"
+      className: this.checkLikeButton(postThings.state.data[0].title) ? liked : disliked,
+      onClick: e => this.handleLike(e, postThings.likePost, postThings.state.data[0]._id, postThings.state.data[0].title)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-heart"
-    }), "\xA0 Favorite Post ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }), "\xA0", this.checkLikeButton(postThings.state.data[0].title) ? "Unfavourite" : "Favourite", " Post", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
-    }, "(29)"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, " (", postThings.state.data[0].love, ")"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row article-content"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-12"
-    }, postThings.state.data.content)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, postThings.state.data[0].content)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-actions"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-meta"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${postThings.state.data.author}`
+      to: `/profile/${postThings.state.data[0].author}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-      src: postThings.state.data.avaUrl
+      src: postThings.state.data[0].avaUrl
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: `/profile/${postThings.state.data.author}`,
+      to: `/profile/${postThings.state.data[0].author}`,
       className: "author"
-    }, postThings.state.data.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }, postThings.state.data[0].title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
-    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"].displayTime(postThings.state.data[0].time))), postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-outline-secondary",
+      onClick: () => this.props.history.push(`/editor/${postThings.state.data[0]._id}`)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-edit"
+    }), "\xA0 Edit Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow ", postThings.state.data.author, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }), "\xA0 Follow ", postThings.state.data[0].author, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
-    }, "(10)")), "\xA0", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-outline-primary"
+    }, "(", postThings.state.author[0] ? postThings.state.author[0].followers.length : "", ")")), "\xA0\xA0", postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-sm btn-outline-danger",
+      onClick: e => this.handleDelete(e, postThings.deletePost, postThings.state.data[0]._id)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-trash-a"
+    }), "\xA0 Delete Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: this.checkLikeButton(postThings.state.data[0].title) ? liked : disliked,
+      onClick: e => this.handleLike(e, postThings.likePost, postThings.state.data[0]._id, postThings.state.title)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-heart"
-    }), "\xA0 Favorite Post ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    }), "\xA0", this.checkLikeButton(postThings.state.data[0].title) ? "Unfavourite" : "Favourite", " Post", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "counter"
-    }, "(29)")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "(", postThings.state.data[0].love, ")")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-xs-12 col-md-8 offset-md-2"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
       className: "card comment-form",
-      onSubmit: e => this.handleComment(e, postThings.comment, postThings.state.data.title)
+      onSubmit: e => this.handleComment(e, postThings.comment, postThings.state.data[0].title)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "card-block"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
