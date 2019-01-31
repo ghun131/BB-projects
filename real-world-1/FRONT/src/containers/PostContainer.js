@@ -72,6 +72,7 @@ class PostContainer extends Container {
             })
     }
 
+    // get a single post and its comments
     getPost = (path) => {
         axios.get(path)
             .then( res => {
@@ -156,8 +157,18 @@ class PostContainer extends Container {
             .catch (error => console.log(error))
     }
 
-    // getComments
-    // deleteComment
+    deleteComment = (id) => {
+        let comments = [...this.state.comments];
+        let comment = comments.filter(p => p._id === id);
+        let index = comments.indexOf(comment[0]);
+        comments.splice(index, 1);
+        this.setState({ comments });
+        axios.delete(`/article/comment/delete/${id}`, comment[0])
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err.message))
+    }
 }
 
 let container = new PostContainer();

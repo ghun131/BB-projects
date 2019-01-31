@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import PostContainer from '../containers/PostContainer';
 
 class CommentCard extends React.Component {
+    handleDeleteComment = (e, deleteComment, id) => {
+        e.preventDefault();
+        deleteComment(id)
+    }
+
     render() {
         return (
             <Subscribe to={[PostContainer]}>
@@ -24,6 +29,16 @@ class CommentCard extends React.Component {
                                 <span className="date-posted">
                                     {postThings.displayTime(this.props.time)}
                                 </span>
+                                {
+                                    localStorage.getItem("author") === this.props.author ?
+                                    <span className="mod-options"
+                                        onClick={(e) => 
+                                            this.handleDeleteComment(e, postThings.deleteComment, this.props._id)}
+                                    >
+                                        <i className="ion-trash-a"></i>
+                                    </span>
+                                    : ""
+                                }
                             </div>
                         </div>
                     )

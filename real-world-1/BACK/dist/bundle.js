@@ -14866,9 +14866,20 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         });
       }).catch(error => console.log(error));
     });
-  } // getComments
-  // deleteComment
 
+    _defineProperty(this, "deleteComment", id => {
+      let comments = [...this.state.comments];
+      let comment = comments.filter(p => p._id === id);
+      let index = comments.indexOf(comment[0]);
+      comments.splice(index, 1);
+      this.setState({
+        comments
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/article/comment/delete/${id}`, comment[0]).then(res => {
+        console.log(res.data);
+      }).catch(err => console.log(err.message));
+    });
+  }
 
 }
 
@@ -15595,12 +15606,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 
 
 class CommentCard extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "handleDeleteComment", (e, deleteComment, id) => {
+      e.preventDefault();
+      deleteComment(id);
+    });
+  }
+
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_1__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
@@ -15623,7 +15645,12 @@ class CommentCard extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component
       className: "comment-author"
     }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date-posted"
-    }, postThings.displayTime(this.props.time)))));
+    }, postThings.displayTime(this.props.time)), localStorage.getItem("author") === this.props.author ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      className: "mod-options",
+      onClick: e => this.handleDeleteComment(e, postThings.deleteComment, this.props._id)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-trash-a"
+    })) : "")));
   }
 
 }
