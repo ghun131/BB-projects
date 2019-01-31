@@ -41,7 +41,7 @@ router.get('/:id', (req, res) => {
 })
 
 //update love for a particular article
-router.put('/:id', middleware.checkToken, (req, res) => {
+router.put('/:id', (req, res) => {
     const { author, title } = req.body.payload;
     let data = {};
     async function updateLove(num) {

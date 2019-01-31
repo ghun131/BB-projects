@@ -14721,7 +14721,8 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       pageNums: [],
       author: [],
       tagName: '',
-      comments: []
+      comments: [],
+      following: false
     });
 
     _defineProperty(this, "takeLastWord", pathname => {
@@ -14771,6 +14772,38 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
           pageNums
         });
       }).catch(error => console.log(error));
+    });
+
+    _defineProperty(this, "followUser", pathname => {
+      let user = this.takeLastWord(pathname);
+      let author = [...this.state.author];
+
+      if (!author[0].followers) {
+        author[0].followers = [];
+      }
+
+      let payload = {
+        followers: author[0].followers
+      };
+      let isFollowed = payload.followers.filter(f => f === localStorage.getItem("author"));
+
+      if (!payload.followers[0] || !isFollowed[0]) {
+        payload.followers.push(localStorage.getItem("author"));
+        console.log(payload.followers);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+          this.setState({
+            following: true
+          });
+        });
+      } else {
+        let index = payload.followers.indexOf(localStorage.getItem("author"));
+        payload.followers.splice(index, 1);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+          this.setState({
+            following: false
+          });
+        });
+      }
     });
 
     _defineProperty(this, "getFavouritePosts", pathname => {
@@ -15402,6 +15435,11 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         }
       }
     });
+
+    _defineProperty(this, "handleFollow", (e, followUser) => {
+      e.preventDefault();
+      followUser(this.props.location.pathname);
+    });
   }
 
   render() {
@@ -15409,7 +15447,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, console.log(postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15421,10 +15459,11 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       src: postThings.state.author[0].avaUrl,
       className: "user-img"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, postThings.state.author[0].username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, postThings.state.author[0].biography), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-outline-secondary action-btn"
+      className: "btn btn-sm btn-outline-secondary action-btn",
+      onClick: e => this.handleFollow(e, postThings.followUser)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow \xA0 ", postThings.state.author[0].username)) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }), "\xA0", postThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Unfollow \xA0 ", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Follow \xA0 ", postThings.state.author[0].username))) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"
@@ -15477,7 +15516,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99);
-/* harmony import */ var _CommentCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(108);
+/* harmony import */ var _CommentCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(107);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -15618,8 +15657,7 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 /* harmony default export */ __webpack_exports__["default"] = (Article);
 
 /***/ }),
-/* 107 */,
-/* 108 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -58,7 +58,32 @@ router.get('/:username', (req, res) => {
   totalUserPosts();
 });
 
-router.get('/:username/posts/:page', middleware.checkToken, (req, res) => {
+// update followers
+router.post('/:username', (req, res) => {
+  let followers = req.body.followers;
+  let username = req.params.username;
+
+  console.log(username, followers);
+
+  async function getUserInfoAndUpdate() {
+    try {
+      const result = await User.findOneAndUpdate(
+        { username: username }, { 
+          $set: {
+            followers: followers
+          }  
+        });
+
+        res.send(result);
+        console.log(result);
+    }
+    catch(err) {console.log(err.message)}
+  }
+
+  getUserInfoAndUpdate();
+})
+
+router.get('/:username/posts/:page', (req, res) => {
   let data = {};
   const userName = req.params.username;
   const getDocs = req.params.page - 1;
@@ -116,7 +141,7 @@ router.post('/:username/favourites', (req, res) => {
 
 
 
-router.delete('/delete/:id', middleware.checkToken, (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   async function deletePost() {
     try {
       const post = await Post.findByIdAndDelete(req.params.id);

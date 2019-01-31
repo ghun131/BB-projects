@@ -9,7 +9,8 @@ class PostContainer extends Container {
         pageNums: [],
         author: [],
         tagName: '',
-        comments: []
+        comments: [],
+        following: false
     }
 
     takeLastWord = (pathname) => {
@@ -51,6 +52,7 @@ class PostContainer extends Container {
         }).catch(error => console.log(error));
     }
 
+    // Check follow user here
     getUserPosts = (pathname) => {
         let author = this.takeLastWord(pathname);
         axios.get(`/profile/${author}`)
@@ -62,6 +64,37 @@ class PostContainer extends Container {
                     pageNums
                 });
             }).catch(error => console.log(error));
+    }
+
+    followUser = (pathname) => {
+        let user = this.takeLastWord(pathname);
+        let author = [...this.state.author];
+
+        if (!author[0].followers) {
+            author[0].followers = [];
+        }
+
+        let payload = {
+            followers: author[0].followers
+        }
+
+        let isFollowed = payload.followers.filter( f => f === localStorage.getItem("author"));
+
+        if (!payload.followers[0] || !isFollowed[0]) {
+            payload.followers.push(localStorage.getItem("author"));
+            console.log(payload.followers);
+            axios.post(`/profile/${user}`, payload)
+                .then( res => {
+                    this.setState({ following: true })
+                })
+        } else {
+            let index = payload.followers.indexOf(localStorage.getItem("author"));
+            payload.followers.splice(index, 1)
+            axios.post(`/profile/${user}`, payload)
+                .then( res => {
+                    this.setState({ following: false })
+                })
+        }
     }
 
     getFavouritePosts = (pathname) => {

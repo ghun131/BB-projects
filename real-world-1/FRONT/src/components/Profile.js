@@ -22,12 +22,18 @@ class Profile extends React.Component {
         }
     }
 
+    handleFollow = (e, followUser) => {
+        e.preventDefault();
+        followUser(this.props.location.pathname);
+    }
+
     render() {
         return (
             <Subscribe to={[UserContainer, PostContainer]}>
                 {
                     (userThings, postThings) => (
                         <div className="profile-page">
+                        {console.log(postThings.state)}
                         <div className="user-info">
                             <div className="container">
                                 <div className="row">
@@ -39,10 +45,16 @@ class Profile extends React.Component {
                                             <p>
                                                 {postThings.state.author[0].biography}
                                             </p>
-                                            <button className="btn btn-sm btn-outline-secondary action-btn">
+                                            <button className="btn btn-sm btn-outline-secondary action-btn"
+                                                onClick={(e) => this.handleFollow(e, postThings.followUser)}>
                                                 <i className="ion-plus-round"></i>
                                                 &nbsp;
-                                                Follow &nbsp; {postThings.state.author[0].username}
+                                                {
+                                                    postThings.state.following ? 
+                                                        <span>Unfollow &nbsp; {postThings.state.author[0].username}</span>
+                                                        : 
+                                                        <span>Follow &nbsp; {postThings.state.author[0].username}</span>
+                                                }    
                                             </button>
                                         </div> :
                                         ""
