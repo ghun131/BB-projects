@@ -15471,6 +15471,10 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       e.preventDefault();
       followUser(this.props.location.pathname);
     });
+
+    _defineProperty(this, "checkProfile", pathname => {
+      return pathname.includes(localStorage.getItem("author"));
+    });
   }
 
   render() {
@@ -15492,9 +15496,13 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, postThings.state.author[0].username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, postThings.state.author[0].biography), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary action-btn",
       onClick: e => this.handleFollow(e, userThings.followUser)
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    }, this.checkProfile(this.props.location.pathname) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-gear-a"
+    }), "\xA0 Edit Profile Settings") : [userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0", userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Unfollow \xA0 ", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Follow \xA0 ", postThings.state.author[0].username))) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }), "\xA0 Unfollow \xA0", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-plus-round"
+    }), "\xA0 Follow \xA0", postThings.state.author[0].username)])) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"

@@ -28,6 +28,10 @@ class Profile extends React.Component {
         followUser( this.props.location.pathname );
     }
 
+    checkProfile = (pathname) => {
+        return pathname.includes(localStorage.getItem("author"));
+    }
+
     render() {
         return (
             <Subscribe to={[UserContainer, PostContainer]}>
@@ -48,13 +52,32 @@ class Profile extends React.Component {
                                             </p>
                                             <button className="btn btn-sm btn-outline-secondary action-btn"
                                                 onClick={(e) => this.handleFollow(e, userThings.followUser)}>
-                                                <i className="ion-plus-round"></i>
-                                                &nbsp;
+                                                
                                                 {
-                                                    userThings.state.following ? 
-                                                        <span>Unfollow &nbsp; {postThings.state.author[0].username}</span>
-                                                        : 
-                                                        <span>Follow &nbsp; {postThings.state.author[0].username}</span>
+                                                    this.checkProfile(this.props.location.pathname) ?
+                                                        <span>
+                                                            <i className="ion-gear-a"></i>
+                                                            &nbsp; Edit Profile Settings
+                                                        </span> 
+                                                        : [
+                                                            userThings.state.following ? 
+                                                                <span>
+                                                                    <i className="ion-plus-round"></i>
+                                                                    &nbsp;
+                                                                    Unfollow 
+                                                                    &nbsp; 
+                                                                    {postThings.state.author[0].username}
+                                                                </span>
+                                                                : 
+                                                                <span>
+                                                                    <i className="ion-plus-round"></i>
+                                                                    &nbsp;
+                                                                    Follow
+                                                                    &nbsp; 
+                                                                    {postThings.state.author[0].username}
+                                                                </span>
+                                                        ]
+                                                        
                                                 }    
                                             </button>
                                         </div> :
