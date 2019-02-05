@@ -101,7 +101,6 @@ class PostContainer extends Container {
             avaUrl: localStorage.getItem("picUrl"),
             tags: tagsArr
         };
-        console.log('hit edit post', lastLetter)
         if (lastLetter === "editor") {
             console.log('new post')
             data.author = localStorage.getItem("author"),

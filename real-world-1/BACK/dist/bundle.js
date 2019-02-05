@@ -14872,7 +14872,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         avaUrl: localStorage.getItem("picUrl"),
         tags: tagsArr
       };
-      console.log('hit edit post', lastLetter);
 
       if (lastLetter === "editor") {
         console.log('new post');
@@ -15380,14 +15379,14 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-10 offset-md-1 col-xs-12"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-      onSubmit: e => this.handleSubmit(e, postThings.editPost, postThings.state.data._id)
+      onSubmit: e => this.handleSubmit(e, postThings.editPost, postThings.state.data[0]._id)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "text",
       className: "form-control form-control-lg",
       ref: this.titleRef,
-      defaultValue: postThings.state.data.title,
+      defaultValue: postThings.state.data[0].title,
       placeholder: "Article Title"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
@@ -15401,7 +15400,7 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
       className: "form-control",
       ref: this.contentRef,
       rows: "8",
-      defaultValue: postThings.state.data.content,
+      defaultValue: postThings.state.data[0].content,
       placeholder: "Write your article (in markdown)"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"
@@ -15409,7 +15408,7 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
       type: "text",
       className: "form-control",
       ref: this.tagsRef,
-      defaultValue: postThings.state.data.tags ? postThings.state.data.tags.join(",") : "",
+      defaultValue: postThings.state.data[0].tags ? postThings.state.data[0].tags.join(",") : "",
       placeholder: "Enter tags"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "tag-list"

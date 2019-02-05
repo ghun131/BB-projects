@@ -7,6 +7,12 @@ class CreateEditArticle extends React.Component {
     contentRef = React.createRef()
     tagsRef = React.createRef()
 
+    // componentDidMount = () => {
+    //     if ( this.props.location.pathname !== "/editor" ) {
+    //         PostContainer.getPost( this.props.location.pathname );
+    //     }
+    // }
+
     handleSubmit = (e, editPost, id) => {
         e.preventDefault();
 
@@ -29,13 +35,13 @@ class CreateEditArticle extends React.Component {
                             <div className="row">
             
                                 <div className="col-md-10 offset-md-1 col-xs-12">
-                                    <form onSubmit={(e) => this.handleSubmit(e, postThings.editPost, postThings.state.data._id)}>
+                                    <form onSubmit={(e) => this.handleSubmit(e, postThings.editPost, postThings.state.data[0]._id)}>
                                         <fieldset>
                                             <fieldset className="form-group">
                                                 <input type="text" 
                                                     className="form-control form-control-lg" 
                                                     ref={this.titleRef}
-                                                    defaultValue={postThings.state.data.title}
+                                                    defaultValue={postThings.state.data[0].title}
                                                     placeholder="Article Title" />
                                             </fieldset>
                                             <fieldset className="form-group">
@@ -47,7 +53,7 @@ class CreateEditArticle extends React.Component {
                                                 <textarea className="form-control" 
                                                     ref={this.contentRef}
                                                     rows="8"
-                                                    defaultValue={postThings.state.data.content}
+                                                    defaultValue={postThings.state.data[0].content}
                                                     placeholder="Write your article (in markdown)">
                                                     
                                                 </textarea>
@@ -58,8 +64,8 @@ class CreateEditArticle extends React.Component {
                                                     ref={this.tagsRef}
                                                     defaultValue=
                                                         {
-                                                            postThings.state.data.tags? 
-                                                                postThings.state.data.tags.join(",") : ""
+                                                            postThings.state.data[0].tags? 
+                                                                postThings.state.data[0].tags.join(",") : ""
                                                         }
                                                     placeholder="Enter tags" />
                                                 <div className="tag-list"></div>
