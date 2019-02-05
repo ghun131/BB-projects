@@ -11,6 +11,7 @@ var UserSchema = new mongoose.Schema({
   salt: { type: String },
   passwordConf: { type: String, required: true },
   followers: [String],
+  following: [String],
 });
 
 

@@ -63,7 +63,10 @@ class Article extends React.Component {
                                         <img src={postThings.state.data[0].avaUrl} />
                                     </Link>
                                     <div className="info">
-                                        <Link to="" className="author">{postThings.state.data[0].author}</Link>
+                                        <Link to={`/profile/${postThings.state.data[0].author}`} 
+                                            className="author">
+                                                {postThings.state.data[0].author}
+                                        </Link>
                                         <span className="date">
                                             {PostContainer.displayTime(postThings.state.data[0].time)}
                                         </span>

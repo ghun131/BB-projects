@@ -60,27 +60,25 @@ router.get('/:username', (req, res) => {
 
 // update followers
 router.post('/:username', (req, res) => {
-  let followers = req.body.followers;
-  let username = req.params.username;
+  let following = req.body.following;
+  let author = req.body.author;
+  console.log(author, following);
 
-  console.log(username, followers);
-
-  async function getUserInfoAndUpdate() {
+  async function getAuthorAndUpdateFollowing() {
     try {
       const result = await User.findOneAndUpdate(
-        { username: username }, { 
+        { username: author }, { 
           $set: {
-            followers: followers
+            following: following
           }  
         });
 
         res.send(result);
-        console.log(result);
     }
-    catch(err) {console.log(err.message)}
+    catch(err) { console.log( err.message )}
   }
 
-  getUserInfoAndUpdate();
+  getAuthorAndUpdateFollowing();
 })
 
 router.get('/:username/posts/:page', (req, res) => {

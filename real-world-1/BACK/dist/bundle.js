@@ -12138,7 +12138,14 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "state", {
       isLogin: false,
-      message: ''
+      message: '',
+      following: false
+    });
+
+    _defineProperty(this, "takeLastWord", pathname => {
+      let arr = pathname.split("/");
+      let lastWord = arr[arr.length - 1].trim();
+      return lastWord;
     });
 
     _defineProperty(this, "saveLocalStorage", data => {
@@ -12150,6 +12157,7 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         localStorage.setItem('loveArticles', data.loveArticles);
         localStorage.setItem('email', data.email);
         localStorage.setItem('password', data.password);
+        localStorage.setItem('following', data.following);
       }
     });
 
@@ -12250,8 +12258,60 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         history.push("/");
       }).catch(error => console.log(error));
     });
-  } // followOthers
 
+    _defineProperty(this, "checkFollowingUser", pathname => {
+      let user = this.takeLastWord(pathname).trim();
+
+      if (localStorage.getItem("following").includes(user)) {
+        this.setState({
+          following: true
+        });
+      } else {
+        this.setState({
+          following: false
+        });
+      }
+    });
+
+    _defineProperty(this, "followUser", pathname => {
+      let user = this.takeLastWord(pathname).trim();
+      let following = [];
+
+      if (localStorage.getItem("following")) {
+        following = localStorage.getItem("following").split(",");
+        console.log('following array', following);
+      }
+
+      let payload = {
+        author: localStorage.getItem("author"),
+        following: following
+      };
+      let isFollowed = payload.following.filter(f => f === user);
+      console.log('isFollowed', isFollowed);
+
+      if (!isFollowed[0]) {
+        payload.following.push(user);
+        console.log('following', payload.following);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+          this.setState({
+            following: true
+          });
+          console.log(payload.following);
+          localStorage.setItem("following", payload.following);
+        });
+      } else {
+        let index = payload.following.indexOf(user);
+        payload.following.splice(index, 1);
+        console.log('unfollowing', payload.following);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+          this.setState({
+            following: false
+          });
+          localStorage.setItem("following", payload.following);
+        });
+      }
+    });
+  }
 
 }
 
@@ -14774,38 +14834,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(error => console.log(error));
     });
 
-    _defineProperty(this, "followUser", pathname => {
-      let user = this.takeLastWord(pathname);
-      let author = [...this.state.author];
-
-      if (!author[0].followers) {
-        author[0].followers = [];
-      }
-
-      let payload = {
-        followers: author[0].followers
-      };
-      let isFollowed = payload.followers.filter(f => f === localStorage.getItem("author"));
-
-      if (!payload.followers[0] || !isFollowed[0]) {
-        payload.followers.push(localStorage.getItem("author"));
-        console.log(payload.followers);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
-          this.setState({
-            following: true
-          });
-        });
-      } else {
-        let index = payload.followers.indexOf(localStorage.getItem("author"));
-        payload.followers.splice(index, 1);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
-          this.setState({
-            following: false
-          });
-        });
-      }
-    });
-
     _defineProperty(this, "getFavouritePosts", pathname => {
       let username = this.takeLastWord(pathname);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${username}/favourites`, {
@@ -15424,12 +15452,13 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "componentDidMount", () => {
       _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getUserPosts(this.props.location.pathname);
+      _containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"].checkFollowingUser(this.props.location.pathname);
     });
 
     _defineProperty(this, "componentDidUpdate", prevProps => {
       if (this.props.location.pathname !== prevProps.location.pathname) {
         let path = this.props.location.pathname.trim();
-        let lastWord = _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].takeLastWord(this.props.location.pathname);
+        let lastWord = _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].takeLastWord(path);
 
         if (lastWord === 'favourites') {
           _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"].getFavouritePosts(this.props.location.pathname);
@@ -15450,7 +15479,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, console.log(postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, console.log('profile', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15463,10 +15492,10 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "user-img"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, postThings.state.author[0].username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, postThings.state.author[0].biography), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary action-btn",
-      onClick: e => this.handleFollow(e, postThings.followUser)
+      onClick: e => this.handleFollow(e, userThings.followUser)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0", postThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Unfollow \xA0 ", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Follow \xA0 ", postThings.state.author[0].username))) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }), "\xA0", userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Unfollow \xA0 ", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Follow \xA0 ", postThings.state.author[0].username))) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"
@@ -15592,7 +15621,7 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "",
+      to: `/profile/${postThings.state.data[0].author}`,
       className: "author"
     }, postThings.state.data[0].author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"

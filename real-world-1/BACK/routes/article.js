@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
     async function getUserInfo() {
         try {
           const user = await User
-          .find({ username: data.article.author })
+          .find({ username: data.article[0].author })
     
           data.user = user;
         }

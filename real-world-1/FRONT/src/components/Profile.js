@@ -7,24 +7,25 @@ import PostContainer from '../containers/PostContainer';
 
 class Profile extends React.Component {
     componentDidMount = () => {
-        PostContainer.getUserPosts( this.props.location.pathname )
+        PostContainer.getUserPosts( this.props.location.pathname );
+        UserContainer.checkFollowingUser( this.props.location.pathname );
     }
 
     componentDidUpdate = (prevProps) => {
         if( this.props.location.pathname !== prevProps.location.pathname ) {
             let path = this.props.location.pathname.trim();
-            let lastWord = PostContainer.takeLastWord(this.props.location.pathname);
+            let lastWord = PostContainer.takeLastWord( path );
             if (lastWord === 'favourites') {
                 PostContainer.getFavouritePosts( this.props.location.pathname );
             } else {
-                PostContainer.getUserPosts( this.props.location.pathname )
+                PostContainer.getUserPosts( this.props.location.pathname );
             }
         }
     }
 
     handleFollow = (e, followUser) => {
         e.preventDefault();
-        followUser(this.props.location.pathname);
+        followUser( this.props.location.pathname );
     }
 
     render() {
@@ -33,7 +34,7 @@ class Profile extends React.Component {
                 {
                     (userThings, postThings) => (
                         <div className="profile-page">
-                        {console.log(postThings.state)}
+                        {console.log('profile', postThings.state)}
                         <div className="user-info">
                             <div className="container">
                                 <div className="row">
@@ -46,11 +47,11 @@ class Profile extends React.Component {
                                                 {postThings.state.author[0].biography}
                                             </p>
                                             <button className="btn btn-sm btn-outline-secondary action-btn"
-                                                onClick={(e) => this.handleFollow(e, postThings.followUser)}>
+                                                onClick={(e) => this.handleFollow(e, userThings.followUser)}>
                                                 <i className="ion-plus-round"></i>
                                                 &nbsp;
                                                 {
-                                                    postThings.state.following ? 
+                                                    userThings.state.following ? 
                                                         <span>Unfollow &nbsp; {postThings.state.author[0].username}</span>
                                                         : 
                                                         <span>Follow &nbsp; {postThings.state.author[0].username}</span>

@@ -60,6 +60,7 @@ router.post('/', (req, res) => {
           package.bio = result[0].biography;
           package.avaUrl = result[0].avaUrl;
           package.loveArticles = result[0].loveArticles;
+          package.following = result[0].following;
           findUserPosts(email, package, res)      
         }
       })

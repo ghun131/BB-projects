@@ -5,8 +5,15 @@ import axios from 'axios';
 class UserContainer extends Container {
     state={
         isLogin: false,
-        message: ''
+        message: '',
+        following: false
     };
+
+    takeLastWord = (pathname) => {
+        let arr = pathname.split("/");
+        let lastWord = arr[arr.length - 1].trim();
+        return lastWord;
+    }
 
     saveLocalStorage = (data) => {
         if(data.token) {
@@ -17,6 +24,7 @@ class UserContainer extends Container {
             localStorage.setItem('loveArticles', data.loveArticles);
             localStorage.setItem('email', data.email);
             localStorage.setItem('password', data.password);
+            localStorage.setItem('following', data.following);
         }
     }
 
@@ -97,7 +105,53 @@ class UserContainer extends Container {
             .catch(error => console.log(error));
     }
 
-    // followOthers
+    checkFollowingUser = (pathname) => {
+        let user = this.takeLastWord(pathname).trim();
+
+        if (localStorage.getItem("following").includes(user)) {
+            this.setState({ following: true });
+        } else {
+            this.setState({ following: false });
+        }
+    }
+
+    followUser = (pathname) => {
+        let user = this.takeLastWord(pathname).trim();
+
+        let following = []
+        if (localStorage.getItem("following")) {
+            following = localStorage.getItem("following").split(",");
+            console.log('following array', following);
+        }
+
+        let payload = {
+            author: localStorage.getItem("author"),
+            following: following
+        }
+
+        let isFollowed = payload.following.filter( f => f === user);
+        console.log('isFollowed', isFollowed);
+
+        if (!isFollowed[0]) {
+            payload.following.push(user);
+            console.log('following', payload.following);
+            axios.post(`/profile/${user}`, payload)
+                .then( res => {
+                    this.setState({ following: true });
+                    console.log(payload.following)
+                    localStorage.setItem("following", payload.following);
+                })
+        } else {
+            let index = payload.following.indexOf(user);
+            payload.following.splice(index, 1)
+            console.log('unfollowing', payload.following);
+            axios.post(`/profile/${user}`, payload)
+                .then( res => {
+                    this.setState({ following: false })
+                    localStorage.setItem("following", payload.following);
+                })
+        }
+    }
 }
 
 let container = new UserContainer();
