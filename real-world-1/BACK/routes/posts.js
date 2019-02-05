@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../modal/Post');
+const User = require('../modal/User');
 
 router.get('/', (req, res) => {
   let data = {};
@@ -100,6 +101,26 @@ router.get("/:pageNum", (req, res) => {
     totalNumberOfDocuments();
   }
   getMostPopularTags()
+})
+
+// user feed
+router.post("/feed", (req, res) => {
+  const following = req.body.payload;
+  console.log('HIT FEED', following);
+
+  async function getPostsFromAuthorUserFollow() {
+    try {
+      const posts = await Post.find({
+        author: following
+      })
+
+      res.send(posts);
+    } catch(err) {
+      console.log(err.message);
+    }
+  }
+
+  getPostsFromAuthorUserFollow();
 })
 ;
 

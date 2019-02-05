@@ -52,6 +52,18 @@ class PostContainer extends Container {
         }).catch(error => console.log(error));
     }
 
+    getFeed = () => {
+        const payload = {
+            payload: localStorage.getItem("following").split(",")
+        }
+
+        axios.post("/api/posts/feed", payload)
+            .then( res => {
+                console.log("feed", res.data);
+            }).catch(error => console.log(error));
+
+    }
+
     // Check follow user here
     getUserPosts = (pathname) => {
         let author = this.takeLastWord(pathname);

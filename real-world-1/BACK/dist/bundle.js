@@ -14610,6 +14610,9 @@ const routePath = props => {
     path: "/",
     component: _components_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/feed",
+    component: _components_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "/tag/:tagName",
     component: _components_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -14819,6 +14822,15 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
           tags: res.data.tags,
           pageNums
         });
+      }).catch(error => console.log(error));
+    });
+
+    _defineProperty(this, "getFeed", () => {
+      const payload = {
+        payload: localStorage.getItem("following").split(",")
+      };
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/posts/feed", payload).then(res => {
+        console.log("feed", res.data);
       }).catch(error => console.log(error));
     });
 
