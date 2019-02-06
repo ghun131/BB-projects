@@ -17,17 +17,26 @@ class Home extends React.Component {
     }
 
     callFunctionWithRightRoute = () => {
+        let lastWord = PostContainer.takeLastWord(this.props.location.pathname);
         if (this.props.location.pathname === '/') {
             PostContainer.getGlobalPosts();
         } 
         else if (this.props.location.pathname === '/feed') {
+            console.log('feed');
             PostContainer.getFeed();
         } else {
             PostContainer.getPostsByTag(this.props.location.pathname)
         }
     }
 
+    handleClickPageNum(getPostsPagination, num) {
+        getPostsPagination(num);
+    }
+
     render() {
+        let notClick = "page-item";
+        let clicked = "page-item active";
+
         return (
             <Subscribe to={[PostContainer, UserContainer]}>
                 {
@@ -87,7 +96,9 @@ class Home extends React.Component {
                                                     postThings.state.data[0] ? 
                                                         postThings.state.data.map (p => 
                                                             <ArticlePreview key={p._id} {...p} />)
-                                                        : <div>Loading articles...</div>
+                                                        : [ localStorage.getItem("following") ?
+                                                            <div key="loading">Loading articles...</div>
+                                                            : <div key="no-articles">No articles are here...yet</div>]
                                                 }/>
 
                                                 <Route exact path="/" render={() =>
@@ -104,9 +115,6 @@ class Home extends React.Component {
                                                         : <div>Loading articles...</div>
                                                 }/>
                                             </Switch>
-                            
-                                            
-                                            
                                                     
                                         </div>
                         
@@ -129,6 +137,24 @@ class Home extends React.Component {
                                             </div>
                                         </div>
                         
+                                        <nav>
+                                            <ul className="pagination">
+                                                {
+                                                    postThings.state.pageNums[0] ?
+                                                        postThings.state.pageNums.map (n => 
+                                                            <li className={n == postThings.state.currentPageNum ? clicked : notClick}
+                                                                onClick={() => this.handleClickPageNum(postThings.getPostsPagination, n)}
+                                                                key={n}>
+                                                                    <span style={{cursor: "pointer"}} 
+                                                                        className="page-link">
+                                                                        {n}
+                                                                    </span>
+                                                            </li>
+                                                            
+                                                        ) : ""
+                                                }
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>

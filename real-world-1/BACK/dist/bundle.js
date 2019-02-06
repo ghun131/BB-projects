@@ -14684,9 +14684,12 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "callFunctionWithRightRoute", () => {
+      let lastWord = _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].takeLastWord(this.props.location.pathname);
+
       if (this.props.location.pathname === '/') {
         _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
       } else if (this.props.location.pathname === '/feed') {
+        console.log('feed');
         _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getFeed();
       } else {
         _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getPostsByTag(this.props.location.pathname);
@@ -14694,7 +14697,13 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
   }
 
+  handleClickPageNum(getPostsPagination, num) {
+    getPostsPagination(num);
+  }
+
   render() {
+    let notClick = "page-item";
+    let clicked = "page-item active";
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_5__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
     }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log('Home', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -14741,7 +14750,11 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       path: "/feed",
       render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
         key: p._id
-      }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
+      }, p))) : [localStorage.getItem("following") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: "loading"
+      }, "Loading articles...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: "no-articles"
+      }, "No articles are here...yet")]
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
       exact: true,
       path: "/",
@@ -14764,7 +14777,18 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       key: t._id,
       to: `/tag/${t._id}`,
       className: "tag-pill tag-default"
-    }, t._id)) : ""))))))));
+    }, t._id)) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "pagination"
+    }, postThings.state.pageNums[0] ? postThings.state.pageNums.map(n => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      className: n == postThings.state.currentPageNum ? clicked : notClick,
+      onClick: () => this.handleClickPageNum(postThings.getPostsPagination, n),
+      key: n
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      style: {
+        cursor: "pointer"
+      },
+      className: "page-link"
+    }, n))) : "")))))));
   }
 
 }
@@ -14796,6 +14820,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       data: [],
       tags: [],
       pageNums: [],
+      currentPageNum: 1,
       author: [],
       tagName: '',
       comments: [],
@@ -14817,9 +14842,9 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       return monthNames[month] + " " + day + ", " + year;
     });
 
-    _defineProperty(this, "pagination", (data, pageNumState) => {
+    _defineProperty(this, "pagination", data => {
       let totalDocs = data.totalDocuments[0].posts;
-      let pageNums = [...pageNumState];
+      let pageNums = [];
 
       for (let i = 1; i < totalDocs / 13 + 1; i++) {
         pageNums.push(i);
@@ -14830,11 +14855,22 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getGlobalPosts", () => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/posts").then(res => {
-        let pageNums = this.pagination(res.data, this.state.pageNums);
+        let pageNums = this.pagination(res.data);
         this.setState({
           data: res.data.posts,
           tags: res.data.tags,
           pageNums
+        });
+      }).catch(error => console.log(error));
+    });
+
+    _defineProperty(this, "getPostsPagination", num => {
+      let path = `/api/posts/${num}`;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(path).then(res => {
+        this.setState({
+          data: res.data.posts,
+          tags: res.data.tags,
+          currentPageNum: num
         });
       }).catch(error => console.log(error));
     });

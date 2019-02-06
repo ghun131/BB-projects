@@ -7,6 +7,7 @@ class PostContainer extends Container {
         data: [],
         tags: [],
         pageNums: [],
+        currentPageNum: 1,
         author: [],
         tagName: '',
         comments: [],
@@ -31,9 +32,9 @@ class PostContainer extends Container {
         return monthNames[month] + " " + day + ", " + year;
     }
 
-    pagination = (data, pageNumState) => {
+    pagination = (data) => {
         let totalDocs = data.totalDocuments[0].posts;
-        let pageNums = [...pageNumState];
+        let pageNums = [];
         for (let i = 1; i < totalDocs / 13 + 1; i++) {
             pageNums.push(i);
         }
@@ -43,13 +44,25 @@ class PostContainer extends Container {
     getGlobalPosts = () => {
         axios.get("/api/posts")
             .then( res => {
-                let pageNums = this.pagination(res.data, this.state.pageNums);
+                let pageNums = this.pagination(res.data);
                 this.setState({ 
                     data: res.data.posts, 
                     tags: res.data.tags,
                     pageNums
                 });
         }).catch(error => console.log(error));
+    }
+
+    getPostsPagination = (num) => {
+        let path = `/api/posts/${num}`;
+        axios.get(path)
+            .then( res => {
+                this.setState({ 
+                    data: res.data.posts, 
+                    tags: res.data.tags,
+                    currentPageNum: num
+                });
+            }).catch(error => console.log(error));
     }
 
     getFeed = () => {
