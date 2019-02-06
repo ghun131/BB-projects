@@ -14671,20 +14671,22 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     super(...args);
 
     _defineProperty(this, "componentDidMount", () => {
-      if (this.props.location.pathname !== '/') {
-        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getPostsByTag(this.props.location.pathname);
-      } else {
-        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
-      }
+      this.callFunctionWithRightRoute();
     });
 
     _defineProperty(this, "componentDidUpdate", prevProps => {
       if (this.props.location.pathname !== prevProps.location.pathname) {
-        if (this.props.location.pathname !== '/') {
-          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getPostsByTag(this.props.location.pathname);
-        } else {
-          _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
-        }
+        this.callFunctionWithRightRoute();
+      }
+    });
+
+    _defineProperty(this, "callFunctionWithRightRoute", () => {
+      if (this.props.location.pathname === '/') {
+        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getGlobalPosts();
+      } else if (this.props.location.pathname === '/feed') {
+        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getFeed();
+      } else {
+        _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].getPostsByTag(this.props.location.pathname);
       }
     });
   }
@@ -14692,7 +14694,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_5__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
-    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log('Home', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "home-page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
@@ -14713,16 +14715,18 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
-      className: "nav-link disabled",
-      to: ""
+      exact: true,
+      className: "nav-link",
+      to: "/feed",
+      activeClassName: "active"
     }, "Your Feed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       exact: true,
+      to: "/",
       className: "nav-link",
-      activeClassName: "active",
-      to: "/"
-    }, "Global Feed")), this.props.location.pathname !== "/" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      activeClassName: "active"
+    }, "Global Feed")), this.props.location.pathname !== "/" && this.props.location.pathname !== "/feed" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       exact: true,
@@ -14731,11 +14735,18 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: `/tag/${postThings.state.tagName}`
     }, "#", postThings.state.tagName)) : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
       exact: true,
+      path: "/feed",
+      render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+        key: p._id
+      }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      exact: true,
       path: "/",
       render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
         key: p._id
       }, p))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading articles...")
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+      exact: true,
       path: "/tag/:tagName",
       render: () => postThings.state.data[0] ? postThings.state.data.map(p => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ArticlePreview__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
         key: p._id
@@ -14830,7 +14841,9 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         payload: localStorage.getItem("following").split(",")
       };
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/posts/feed", payload).then(res => {
-        console.log("feed", res.data);
+        this.setState({
+          data: res.data
+        });
       }).catch(error => console.log(error));
     });
 

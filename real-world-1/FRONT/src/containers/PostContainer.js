@@ -59,7 +59,9 @@ class PostContainer extends Container {
 
         axios.post("/api/posts/feed", payload)
             .then( res => {
-                console.log("feed", res.data);
+                this.setState({
+                    data: res.data,
+                })                
             }).catch(error => console.log(error));
 
     }

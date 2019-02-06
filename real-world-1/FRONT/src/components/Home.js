@@ -7,20 +7,23 @@ import { Subscribe } from 'unstated';
 
 class Home extends React.Component {
     componentDidMount = () => {
-        if (this.props.location.pathname !== '/') {
-            PostContainer.getPostsByTag(this.props.location.pathname)
-        } else {
-            PostContainer.getGlobalPosts();
-        }
+        this.callFunctionWithRightRoute();
     }
 
     componentDidUpdate = (prevProps) => {
-        if (this.props.location.pathname !== prevProps.location.pathname) {
-            if (this.props.location.pathname !== '/') {
-                PostContainer.getPostsByTag(this.props.location.pathname)
-            } else {
-                PostContainer.getGlobalPosts();
-            }
+        if (this.props.location.pathname !== prevProps.location.pathname) {      
+            this.callFunctionWithRightRoute();
+        }
+    }
+
+    callFunctionWithRightRoute = () => {
+        if (this.props.location.pathname === '/') {
+            PostContainer.getGlobalPosts();
+        } 
+        else if (this.props.location.pathname === '/feed') {
+            PostContainer.getFeed();
+        } else {
+            PostContainer.getPostsByTag(this.props.location.pathname)
         }
     }
 
@@ -30,6 +33,7 @@ class Home extends React.Component {
                 {
                     (postThings, userThings) => (
                         <div>
+                            {console.log('Home',postThings.state)}
                             <div className="home-page">
                 
                                 <div className="banner">
@@ -46,22 +50,25 @@ class Home extends React.Component {
                                             <div className="feed-toggle">
                                                 <ul className="nav nav-pills outline-active">
                                                 <li className="nav-item">
-                                                    <NavLink 
-                                                        className="nav-link disabled" 
-                                                        to="">
+                                                    <NavLink
+                                                        exact
+                                                        className="nav-link" 
+                                                        to="/feed"
+                                                        activeClassName="active">
                                                         Your Feed
                                                     </NavLink>
                                                 </li>
                                                 <li className="nav-item">
                                                     <NavLink 
                                                         exact
+                                                        to="/"
                                                         className="nav-link" 
-                                                        activeClassName="active" to="/">
+                                                        activeClassName="active" >
                                                         Global Feed
                                                     </NavLink>
                                                 </li>
                                                 {
-                                                    this.props.location.pathname !== "/" ?
+                                                    this.props.location.pathname !== "/" && this.props.location.pathname !== "/feed"?
                                                         <li className="nav-item">
                                                             <NavLink 
                                                                 exact
@@ -76,14 +83,21 @@ class Home extends React.Component {
                                             </div>
 
                                             <Switch>
-                                                <Route exact path="/" render={() =>
+                                                <Route exact path="/feed" render={() =>
                                                     postThings.state.data[0] ? 
                                                         postThings.state.data.map (p => 
                                                             <ArticlePreview key={p._id} {...p} />)
                                                         : <div>Loading articles...</div>
                                                 }/>
 
-                                                <Route path="/tag/:tagName" render={() => 
+                                                <Route exact path="/" render={() =>
+                                                    postThings.state.data[0] ? 
+                                                        postThings.state.data.map (p => 
+                                                            <ArticlePreview key={p._id} {...p} />)
+                                                        : <div>Loading articles...</div>
+                                                }/>
+                                                
+                                                <Route exact path="/tag/:tagName" render={() => 
                                                     postThings.state.data[0] ? 
                                                         postThings.state.data.map (p => 
                                                             <ArticlePreview key={p._id} {...p} />)

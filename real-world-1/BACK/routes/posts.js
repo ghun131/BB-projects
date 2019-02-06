@@ -106,7 +106,6 @@ router.get("/:pageNum", (req, res) => {
 // user feed
 router.post("/feed", (req, res) => {
   const following = req.body.payload;
-  console.log('HIT FEED', following);
 
   async function getPostsFromAuthorUserFollow() {
     try {

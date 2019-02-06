@@ -1,7 +1,7 @@
 Routing Guidelines
 [] Home page (URL: /#/ )
  [x] - List of tags
- [] - List of articles pulled from either Feed, Global, or by Tag
+ [x] - List of articles pulled from either Feed, Global, or by Tag
  [] - Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )
  [x] - Uses JWT (store the token in localStorage)
