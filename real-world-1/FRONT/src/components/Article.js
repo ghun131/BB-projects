@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Subscribe } from 'unstated';
 import PostContainer from '../containers/PostContainer';
+import UserContainer from '../containers/UserContainer';
 import CommentCard from './CommentCard';
 
 class Article extends React.Component {
@@ -41,16 +42,23 @@ class Article extends React.Component {
         }
     }
 
-    render() {
-        
+    handleFollow = (e, followUser, username) => {
+        e.preventDefault();
+        followUser( username );
+    }
 
+    checkProfile = (username) => {
+        return localStorage.getItem("following").includes(username);
+    }
+
+    render() {
         let liked = 'btn btn-sm btn-primary';
         let disliked = 'btn btn-sm btn-outline-primary';
 
         return (
-            <Subscribe to={[PostContainer]}>
+            <Subscribe to={[PostContainer, UserContainer]}>
                 {
-                    (postThings) => (
+                    (postThings, userThings) => (
                         <div className="article-page">
                             {console.log('article component', postThings)}
                             <div className="banner">
@@ -83,17 +91,31 @@ class Article extends React.Component {
                                                     Edit Article
                                             </button>
                                             :
-                                            <button className="btn btn-sm btn-outline-secondary">
-                                                <i className="ion-plus-round"></i>
-                                                &nbsp;
-                                                Follow {postThings.state.data[0].author} 
-                                                <span className="counter">
-                                                    ({
-                                                        postThings.state.author[0] ?
-                                                            postThings.state.author[0].followers.length
-                                                            : ""
-                                                    })
-                                                </span>
+                                            <button className="btn btn-sm btn-outline-secondary"
+                                                onClick={(e) => this.handleFollow(e, userThings.followUser, postThings.state.author[0].username)}>
+                                                    {
+                                                        postThings.state.author[0]  ?
+                                                            [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? 
+                                                                <span key="unfollow">
+                                                                    <i className="ion-plus-round"></i>
+                                                                    &nbsp;
+                                                                    Unfollow 
+                                                                    &nbsp; 
+                                                                    {postThings.state.author[0].username}
+                                                                    ({postThings.state.author[0].followers.length})
+                                                                </span>
+                                                                : 
+                                                                <span key="follow">
+                                                                    <i className="ion-plus-round"></i>
+                                                                    &nbsp;
+                                                                    Follow
+                                                                    &nbsp; 
+                                                                    {postThings.state.author[0].username}
+                                                                    ({postThings.state.author[0].followers.length})
+                                                                </span>
+                                                            ]
+                                                            : ""                                                        
+                                                    }
                                             </button>
                                     }
                                     

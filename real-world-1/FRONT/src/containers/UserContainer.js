@@ -108,10 +108,14 @@ class UserContainer extends Container {
     checkFollowingUser = (pathname) => {
         let user = this.takeLastWord(pathname).trim();
 
+        console.log('check follow user')
+
         if (localStorage.getItem("following").includes(user)) {
             this.setState({ following: true });
+            return true;
         } else {
             this.setState({ following: false });
+            return false;
         }
     }
 

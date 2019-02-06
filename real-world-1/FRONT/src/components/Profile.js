@@ -38,7 +38,6 @@ class Profile extends React.Component {
                 {
                     (userThings, postThings) => (
                         <div className="profile-page">
-                        {console.log('profile', postThings.state)}
                         <div className="user-info">
                             <div className="container">
                                 <div className="row">

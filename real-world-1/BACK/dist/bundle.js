@@ -12261,15 +12261,18 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "checkFollowingUser", pathname => {
       let user = this.takeLastWord(pathname).trim();
+      console.log('check follow user');
 
       if (localStorage.getItem("following").includes(user)) {
         this.setState({
           following: true
         });
+        return true;
       } else {
         this.setState({
           following: false
         });
+        return false;
       }
     });
 
@@ -15507,7 +15510,7 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       to: [_containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"], _containers_PostContainer__WEBPACK_IMPORTED_MODULE_5__["default"]]
     }, (userThings, postThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "profile-page"
-    }, console.log('profile', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "user-info"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15580,10 +15583,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99);
-/* harmony import */ var _CommentCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(107);
+/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(60);
+/* harmony import */ var _CommentCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(107);
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -15631,14 +15636,23 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         return false;
       }
     });
+
+    _defineProperty(this, "handleFollow", (e, followUser, username) => {
+      e.preventDefault();
+      followUser(username);
+    });
+
+    _defineProperty(this, "checkProfile", username => {
+      return localStorage.getItem("following").includes(username);
+    });
   }
 
   render() {
     let liked = 'btn btn-sm btn-primary';
     let disliked = 'btn btn-sm btn-outline-primary';
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_2__["Subscribe"], {
-      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
-    }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_3__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_4__["default"]]
+    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-page"
     }, console.log('article component', postThings), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
@@ -15663,12 +15677,17 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-edit"
     }), "\xA0 Edit Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-outline-secondary"
+      className: "btn btn-sm btn-outline-secondary",
+      onClick: e => this.handleFollow(e, userThings.followUser, postThings.state.author[0].username)
+    }, postThings.state.author[0] ? [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: "unfollow"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow ", postThings.state.data[0].author, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "counter"
-    }, "(", postThings.state.author[0] ? postThings.state.author[0].followers.length : "", ")")), "\xA0\xA0", postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }), "\xA0 Unfollow \xA0", postThings.state.author[0].username, "(", postThings.state.author[0].followers.length, ")") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: "follow"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-plus-round"
+    }), "\xA0 Follow \xA0", postThings.state.author[0].username, "(", postThings.state.author[0].followers.length, ")")] : ""), "\xA0\xA0", postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-danger",
       onClick: e => this.handleDelete(e, postThings.deletePost, postThings.state.data[0]._id)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -15745,7 +15764,7 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "comment-author-img"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-primary"
-    }, "Post Comment"))), postThings.state.comments[0] ? postThings.state.comments.map(c => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CommentCard__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+    }, "Post Comment"))), postThings.state.comments[0] ? postThings.state.comments.map(c => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CommentCard__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
       key: c._id
     }, c))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading comments..."))))));
   }

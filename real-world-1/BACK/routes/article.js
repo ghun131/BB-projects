@@ -124,7 +124,7 @@ router.post('/:id', (req, res) => {
 })
 
 // delete a comment
-router.delete('/comment/delete/:id', middleware.checkToken, (req, res) => {
+router.delete('/comment/delete/:id', (req, res) => {
     async function deleteComment() {
         try {
           const comment = await Comment.findByIdAndDelete(req.params.id);
