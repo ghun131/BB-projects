@@ -92,7 +92,7 @@ class Article extends React.Component {
                                             </button>
                                             :
                                             <button className="btn btn-sm btn-outline-secondary"
-                                                onClick={(e) => this.handleFollow(e, userThings.followUser, postThings.state.author[0].username)}>
+                                                onClick={(e) => this.handleFollow(e, postThings.followUser, postThings.state.author[0].username)}>
                                                     {
                                                         postThings.state.author[0]  ?
                                                             [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? 
@@ -183,17 +183,31 @@ class Article extends React.Component {
                                                     Edit Article
                                             </button>
                                             :
-                                            <button className="btn btn-sm btn-outline-secondary">
-                                                <i className="ion-plus-round"></i>
-                                                &nbsp;
-                                                Follow {postThings.state.data[0].author} 
-                                                <span className="counter">
-                                                    ({
-                                                        postThings.state.author[0] ?
-                                                            postThings.state.author[0].followers.length
-                                                            : ""
-                                                    })
-                                                </span>
+                                            <button className="btn btn-sm btn-outline-secondary"
+                                                onClick={(e) => this.handleFollow(e, userThings.followUser, postThings.state.author[0].username)}>
+                                                    {
+                                                        postThings.state.author[0]  ?
+                                                            [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? 
+                                                                <span key="unfollow">
+                                                                    <i className="ion-plus-round"></i>
+                                                                    &nbsp;
+                                                                    Unfollow 
+                                                                    &nbsp; 
+                                                                    {postThings.state.author[0].username}
+                                                                    ({postThings.state.author[0].followers.length})
+                                                                </span>
+                                                                : 
+                                                                <span key="follow">
+                                                                    <i className="ion-plus-round"></i>
+                                                                    &nbsp;
+                                                                    Follow
+                                                                    &nbsp; 
+                                                                    {postThings.state.author[0].username}
+                                                                    ({postThings.state.author[0].followers.length})
+                                                                </span>
+                                                            ]
+                                                            : ""                                                        
+                                                    }
                                             </button>
                                     }
                                     

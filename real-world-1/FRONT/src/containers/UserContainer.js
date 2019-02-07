@@ -95,6 +95,7 @@ class UserContainer extends Container {
             email: items.email
         }
 
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
         axios.put(`/profile/setting/${localStorage.getItem("author")}`, {data})
             .then (res => {
                 console.log(res.data);
@@ -116,44 +117,6 @@ class UserContainer extends Container {
         } else {
             this.setState({ following: false });
             return false;
-        }
-    }
-
-    followUser = (pathname) => {
-        let user = this.takeLastWord(pathname).trim();
-
-        let following = []
-        if (localStorage.getItem("following")) {
-            following = localStorage.getItem("following").split(",");
-            console.log('following array', following);
-        }
-
-        let payload = {
-            author: localStorage.getItem("author"),
-            following: following
-        }
-
-        let isFollowed = payload.following.filter( f => f === user);
-        console.log('isFollowed', isFollowed);
-
-        if (!isFollowed[0]) {
-            payload.following.push(user);
-            console.log('following', payload.following);
-            axios.post(`/profile/${user}`, payload)
-                .then( res => {
-                    this.setState({ following: true });
-                    console.log(payload.following)
-                    localStorage.setItem("following", payload.following);
-                })
-        } else {
-            let index = payload.following.indexOf(user);
-            payload.following.splice(index, 1)
-            console.log('unfollowing', payload.following);
-            axios.post(`/profile/${user}`, payload)
-                .then( res => {
-                    this.setState({ following: false })
-                    localStorage.setItem("following", payload.following);
-                })
         }
     }
 }

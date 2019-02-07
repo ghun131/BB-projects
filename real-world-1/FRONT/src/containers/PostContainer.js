@@ -179,6 +179,44 @@ class PostContainer extends Container {
             .catch(err => console.log(err))
     }
 
+    followUser = (pathname) => {
+        let user = this.takeLastWord(pathname).trim();
+
+        let following = []
+        if (localStorage.getItem("following")) {
+            following = localStorage.getItem("following").split(",");
+            console.log('following array', following);
+        }
+
+        let payload = {
+            theFollowing: localStorage.getItem("author"),
+            theFollowed: this.state.author[0].username,
+            following: following
+        }
+
+        let isFollowed = payload.following.filter( f => f === user);
+        console.log('isFollowed', isFollowed);
+
+        if (!isFollowed[0]) {
+            payload.following.push(user);
+            axios.post(`/profile/${user}`, payload)
+                .then( res => {
+                    console.log('following', res.data)
+                    this.setState({ following: true, author: [res.data] });
+                    localStorage.setItem("following", payload.following);
+                })
+        } else {
+            let index = payload.following.indexOf(user);
+            payload.following.splice(index, 1)
+            axios.post(`/profile/${user}`, payload)
+                .then( res => {
+                    console.log('unfollowing', res.data);
+                    this.setState({ following: false, author: [res.data] })
+                    localStorage.setItem("following", payload.following);
+                })
+        }
+    }
+
     getPostsByTag = (pathname) => {
         let tag = this.takeLastWord(pathname);
         axios.get(`/tag/${tag}`)

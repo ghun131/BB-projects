@@ -61,24 +61,58 @@ router.get('/:username', (req, res) => {
 // update followers
 router.post('/:username', (req, res) => {
   let following = req.body.following;
-  let author = req.body.author;
-  console.log(author, following);
+  let theFollowing = req.body.theFollowing.trim(); 
+  let theFollowed = req.body.theFollowed.trim(); 
+  console.log('THE FOLLOWING', theFollowing);
 
-  async function getAuthorAndUpdateFollowing() {
+  async function getTheFollowingAndUpdate() {
     try {
       const result = await User.findOneAndUpdate(
-        { username: author }, { 
+        { username: theFollowing }, { 
           $set: {
             following: following
           }  
         });
-
-        res.send(result);
     }
-    catch(err) { console.log( err.message )}
+    catch(err) { console.log( err.message ) }
   }
 
-  getAuthorAndUpdateFollowing();
+  async function changeFollowers() {
+    try {
+      const user = await User.findOne({username: theFollowed })
+
+      if (user.followers.includes(theFollowing)) {
+        // remove follower
+        const result = await User.findOneAndUpdate(
+          { username: theFollowed }, {
+            $pop: {
+              followers: 1
+            }
+          }, { new: true }
+        )
+        
+        console.log('REMOVE FOLLOWER', result)
+        res.send(result);
+
+      } else {
+        // add follower
+        const result = await User.findOneAndUpdate(
+          { username: theFollowed }, {
+            $push: {
+              followers: theFollowing
+            }
+          }, { new: true }
+        )
+
+        console.log('ADD FOLLOWER', result)
+        res.send(result);
+      }
+      getTheFollowingAndUpdate();
+    }
+    catch(err) { console.log( err.message ) }
+  }
+
+  changeFollowers();
 })
 
 router.get('/:username/posts/:page', (req, res) => {

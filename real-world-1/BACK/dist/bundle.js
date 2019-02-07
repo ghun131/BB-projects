@@ -12249,6 +12249,7 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         biography: items.biography,
         email: items.email
       };
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem("token");
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/profile/setting/${localStorage.getItem("author")}`, {
         data
       }).then(res => {
@@ -12273,45 +12274,6 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
           following: false
         });
         return false;
-      }
-    });
-
-    _defineProperty(this, "followUser", pathname => {
-      let user = this.takeLastWord(pathname).trim();
-      let following = [];
-
-      if (localStorage.getItem("following")) {
-        following = localStorage.getItem("following").split(",");
-        console.log('following array', following);
-      }
-
-      let payload = {
-        author: localStorage.getItem("author"),
-        following: following
-      };
-      let isFollowed = payload.following.filter(f => f === user);
-      console.log('isFollowed', isFollowed);
-
-      if (!isFollowed[0]) {
-        payload.following.push(user);
-        console.log('following', payload.following);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
-          this.setState({
-            following: true
-          });
-          console.log(payload.following);
-          localStorage.setItem("following", payload.following);
-        });
-      } else {
-        let index = payload.following.indexOf(user);
-        payload.following.splice(index, 1);
-        console.log('unfollowing', payload.following);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
-          this.setState({
-            following: false
-          });
-          localStorage.setItem("following", payload.following);
-        });
       }
     });
   }
@@ -14988,6 +14950,47 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       }).catch(err => console.log(err));
     });
 
+    _defineProperty(this, "followUser", pathname => {
+      let user = this.takeLastWord(pathname).trim();
+      let following = [];
+
+      if (localStorage.getItem("following")) {
+        following = localStorage.getItem("following").split(",");
+        console.log('following array', following);
+      }
+
+      let payload = {
+        theFollowing: localStorage.getItem("author"),
+        theFollowed: this.state.author[0].username,
+        following: following
+      };
+      let isFollowed = payload.following.filter(f => f === user);
+      console.log('isFollowed', isFollowed);
+
+      if (!isFollowed[0]) {
+        payload.following.push(user);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+          console.log('following', res.data);
+          this.setState({
+            following: true,
+            author: [res.data]
+          });
+          localStorage.setItem("following", payload.following);
+        });
+      } else {
+        let index = payload.following.indexOf(user);
+        payload.following.splice(index, 1);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+          console.log('unfollowing', res.data);
+          this.setState({
+            following: false,
+            author: [res.data]
+          });
+          localStorage.setItem("following", payload.following);
+        });
+      }
+    });
+
     _defineProperty(this, "getPostsByTag", pathname => {
       let tag = this.takeLastWord(pathname);
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/tag/${tag}`).then(res => {
@@ -15714,7 +15717,7 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "ion-edit"
     }), "\xA0 Edit Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary",
-      onClick: e => this.handleFollow(e, userThings.followUser, postThings.state.author[0].username)
+      onClick: e => this.handleFollow(e, postThings.followUser, postThings.state.author[0].username)
     }, postThings.state.author[0] ? [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       key: "unfollow"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -15762,12 +15765,17 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-edit"
     }), "\xA0 Edit Article") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "btn btn-sm btn-outline-secondary"
+      className: "btn btn-sm btn-outline-secondary",
+      onClick: e => this.handleFollow(e, userThings.followUser, postThings.state.author[0].username)
+    }, postThings.state.author[0] ? [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: "unfollow"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Follow ", postThings.state.data[0].author, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: "counter"
-    }, "(", postThings.state.author[0] ? postThings.state.author[0].followers.length : "", ")")), "\xA0\xA0", postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }), "\xA0 Unfollow \xA0", postThings.state.author[0].username, "(", postThings.state.author[0].followers.length, ")") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: "follow"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-plus-round"
+    }), "\xA0 Follow \xA0", postThings.state.author[0].username, "(", postThings.state.author[0].followers.length, ")")] : ""), "\xA0\xA0", postThings.state.data[0].author === localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-danger",
       onClick: e => this.handleDelete(e, postThings.deletePost, postThings.state.data[0]._id)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
