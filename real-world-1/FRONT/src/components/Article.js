@@ -48,7 +48,11 @@ class Article extends React.Component {
     }
 
     checkProfile = (username) => {
-        return localStorage.getItem("following").includes(username);
+        if (localStorage.getItem("following")) {
+            return localStorage.getItem("following").includes(username);
+        } else {
+            return false;
+        }
     }
 
     render() {

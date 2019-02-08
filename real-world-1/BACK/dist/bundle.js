@@ -12264,7 +12264,7 @@ class UserContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       let user = this.takeLastWord(pathname).trim();
       console.log('check follow user');
 
-      if (localStorage.getItem("following").includes(user)) {
+      if (localStorage.getItem("following") && localStorage.getItem("following").includes(user)) {
         this.setState({
           following: true
         });
@@ -14668,7 +14668,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     let clicked = "page-item active";
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_5__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
-    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log('Home', postThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log('Home user things', userThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "home-page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
@@ -14686,14 +14686,14 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "feed-toggle"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "nav nav-pills outline-active"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    }, userThings.state.isLogin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       exact: true,
       className: "nav-link",
       to: "/feed",
       activeClassName: "active"
-    }, "Your Feed")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    }, "Your Feed")) : "", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       exact: true,
@@ -14766,9 +14766,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(61);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -14822,7 +14824,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     });
 
     _defineProperty(this, "getGlobalPosts", () => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/posts").then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/posts").then(res => {
         let pageNums = this.pagination(res.data);
         this.setState({
           data: res.data.posts,
@@ -14834,7 +14836,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getPostsPagination", num => {
       let path = `/api/posts/${num}`;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(path).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(path).then(res => {
         this.setState({
           data: res.data.posts,
           tags: res.data.tags,
@@ -14847,7 +14849,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       const payload = {
         payload: localStorage.getItem("following").split(",")
       };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/posts/feed", payload).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/api/posts/feed", payload).then(res => {
         this.setState({
           data: res.data
         });
@@ -14856,7 +14858,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getUserPosts", pathname => {
       let author = this.takeLastWord(pathname);
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/profile/${author}`).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(`/profile/${author}`).then(res => {
         let pageNums = this.pagination(res.data, this.state.pageNums);
         this.setState({
           data: res.data.posts,
@@ -14868,7 +14870,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getFavouritePosts", pathname => {
       let username = this.takeLastWord(pathname);
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${username}/favourites`, {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(`/profile/${username}/favourites`, {
         loveArticles: this.state.author[0].loveArticles
       }).then(res => {
         this.setState({
@@ -14878,7 +14880,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     });
 
     _defineProperty(this, "getPost", path => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(path).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(path).then(res => {
         console.log(res.data);
         this.setState({
           author: res.data.user,
@@ -14906,14 +14908,14 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
       if (lastLetter === "editor") {
         console.log('new post');
-        data.author = localStorage.getItem("author"), data.email = localStorage.getItem("email"), axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/newpost', {
+        data.author = localStorage.getItem("author"), data.email = localStorage.getItem("email"), axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/newpost', {
           data
         }, this.config).then(res => {
           console.log(res.data.message);
           history.push('/');
         }).catch(error => console.log(error));
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/editor/${id}`, {
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.put(`/editor/${id}`, {
           data
         }, this.config).then(res => {
           console.log(res.data);
@@ -14923,31 +14925,39 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     });
 
     _defineProperty(this, "deletePost", (id, history) => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/profile/delete/${id}`).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.delete(`/profile/delete/${id}`).then(res => {
         console.log('deleted post', res.data);
         history.push('/');
       }).catch(err => console.log(err.message));
     });
 
     _defineProperty(this, "likePost", (id, title) => {
-      let payload = {
-        author: localStorage.getItem("author"),
-        title: title
-      };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/article/${id}`, {
-        payload
-      }).then(res => {
-        //update state so UI will update
-        console.log('like post', res.data);
-        let data = [...this.state.data];
-        let likedPost = data.filter(i => i._id === res.data.post._id);
-        let index = data.indexOf(likedPost[0]);
-        data[index] = res.data.post;
-        this.setState({
-          data
+      console.log(history);
+
+      if (this.state.isLogin) {
+        let payload = {
+          author: localStorage.getItem("author"),
+          title: title
+        };
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.put(`/article/${id}`, {
+          payload
+        }).then(res => {
+          //update state so UI will update
+          console.log('like post', res.data);
+          let data = [...this.state.data];
+          let likedPost = data.filter(i => i._id === res.data.post._id);
+          let index = data.indexOf(likedPost[0]);
+          data[index] = res.data.post;
+          this.setState({
+            data
+          });
+          localStorage.setItem("loveArticles", res.data.user.loveArticles);
+        }).catch(err => console.log(err));
+      } else {
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/login"
         });
-        localStorage.setItem("loveArticles", res.data.user.loveArticles);
-      }).catch(err => console.log(err));
+      }
     });
 
     _defineProperty(this, "followUser", pathname => {
@@ -14969,7 +14979,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
       if (!isFollowed[0]) {
         payload.following.push(user);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(`/profile/${user}`, payload).then(res => {
           console.log('following', res.data);
           this.setState({
             following: true,
@@ -14980,7 +14990,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       } else {
         let index = payload.following.indexOf(user);
         payload.following.splice(index, 1);
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(`/profile/${user}`, payload).then(res => {
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(`/profile/${user}`, payload).then(res => {
           console.log('unfollowing', res.data);
           this.setState({
             following: false,
@@ -14993,7 +15003,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getPostsByTag", pathname => {
       let tag = this.takeLastWord(pathname);
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/tag/${tag}`).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(`/tag/${tag}`).then(res => {
         console.log(res.data);
         this.setState({
           data: res.data,
@@ -15009,7 +15019,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         articleTitle: title,
         comment: text
       };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(path, {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(path, {
         data
       }).then(res => {
         let comments = [...this.state.comments];
@@ -15028,7 +15038,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       this.setState({
         comments
       });
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/article/comment/delete/${id}`, comment[0]).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.delete(`/article/comment/delete/${id}`, comment[0]).then(res => {
         console.log(res.data);
       }).catch(err => console.log(err.message));
     });
@@ -15049,8 +15059,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /* harmony import */ var _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(99);
-/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
+/* harmony import */ var _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(60);
+/* harmony import */ var unstated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -15061,7 +15073,7 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
   constructor(...args) {
     super(...args);
 
-    _defineProperty(this, "handleLike", (e, likePost, id, title) => {
+    _defineProperty(this, "handleLike", (e, likePost, id, title, history) => {
       e.preventDefault();
       likePost(id, title);
     });
@@ -15078,9 +15090,9 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
 
     let liked = 'btn btn-primary btn-sm pull-xs-right';
     let disliked = 'btn btn-outline-primary btn-sm pull-xs-right';
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_3__["Subscribe"], {
-      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"]]
-    }, postThings => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_4__["Subscribe"], {
+      to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
+    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "article-preview",
       key: this.props._id
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -15096,9 +15108,14 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       className: "author"
     }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
-    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].displayTime(this.props.time))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].displayTime(this.props.time))), userThings.state.isLogin ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: loveArt[0] ? liked : disliked,
       onClick: e => this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "ion-heart"
+    }), " ", this.props.love) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/login",
+      className: loveArt[0] ? liked : disliked
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-heart"
     }), " ", this.props.love)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -15565,9 +15582,13 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       onClick: e => this.handleFollow(e, userThings.followUser)
     }, this.checkProfile(this.props.location.pathname) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-gear-a"
-    }), "\xA0 Edit Profile Settings") : [userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    }), "\xA0 Edit Profile Settings") : [userThings.state.following ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: "unfollow"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
-    }), "\xA0 Unfollow \xA0", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    }), "\xA0 Unfollow \xA0", postThings.state.author[0].username) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      key: "follow"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-plus-round"
     }), "\xA0 Follow \xA0", postThings.state.author[0].username)])) : ""))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container"
@@ -15682,7 +15703,11 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "checkProfile", username => {
-      return localStorage.getItem("following").includes(username);
+      if (localStorage.getItem("following")) {
+        return localStorage.getItem("following").includes(username);
+      } else {
+        return false;
+      }
     });
   }
 

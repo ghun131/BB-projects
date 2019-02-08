@@ -42,7 +42,7 @@ class Home extends React.Component {
                 {
                     (postThings, userThings) => (
                         <div>
-                            {console.log('Home',postThings.state)}
+                            {console.log('Home user things',userThings.state)}
                             <div className="home-page">
                 
                                 <div className="banner">
@@ -58,15 +58,19 @@ class Home extends React.Component {
                                         <div className="col-md-9">
                                             <div className="feed-toggle">
                                                 <ul className="nav nav-pills outline-active">
-                                                <li className="nav-item">
-                                                    <NavLink
-                                                        exact
-                                                        className="nav-link" 
-                                                        to="/feed"
-                                                        activeClassName="active">
-                                                        Your Feed
-                                                    </NavLink>
-                                                </li>
+                                                {
+                                                    userThings.state.isLogin ? 
+                                                        <li className="nav-item">
+                                                            <NavLink
+                                                                exact
+                                                                className="nav-link" 
+                                                                to="/feed"
+                                                                activeClassName="active">
+                                                                Your Feed
+                                                            </NavLink>
+                                                        </li> : ""
+                                                }
+                                                
                                                 <li className="nav-item">
                                                     <NavLink 
                                                         exact

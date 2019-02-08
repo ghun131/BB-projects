@@ -60,7 +60,7 @@ class Profile extends React.Component {
                                                         </span> 
                                                         : [
                                                             userThings.state.following ? 
-                                                                <span>
+                                                                <span key="unfollow">
                                                                     <i className="ion-plus-round"></i>
                                                                     &nbsp;
                                                                     Unfollow 
@@ -68,7 +68,7 @@ class Profile extends React.Component {
                                                                     {postThings.state.author[0].username}
                                                                 </span>
                                                                 : 
-                                                                <span>
+                                                                <span key="follow">
                                                                     <i className="ion-plus-round"></i>
                                                                     &nbsp;
                                                                     Follow

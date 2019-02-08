@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'unstated';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class PostContainer extends Container {
@@ -162,23 +163,28 @@ class PostContainer extends Container {
     }
 
     likePost = (id, title) => {
-        let payload = {
-            author: localStorage.getItem("author"),
-            title: title
+        console.log(history)
+        if (this.state.isLogin) {
+            let payload = {
+                author: localStorage.getItem("author"),
+                title: title
+            }
+    
+            axios.put(`/article/${id}`, {payload})
+                .then( res => {
+                    //update state so UI will update
+                    console.log('like post', res.data)
+                    let data = [...this.state.data];
+                    let likedPost = data.filter( i => i._id === res.data.post._id )
+                    let index = data.indexOf(likedPost[0]);
+                    data[index] = res.data.post;
+                    this.setState({ data });
+                    localStorage.setItem("loveArticles", res.data.user.loveArticles);
+                })
+                .catch(err => console.log(err))
+        } else {
+            <Link to="/login"></Link>
         }
-
-        axios.put(`/article/${id}`, {payload})
-            .then( res => {
-                //update state so UI will update
-                console.log('like post', res.data)
-                let data = [...this.state.data];
-                let likedPost = data.filter( i => i._id === res.data.post._id )
-                let index = data.indexOf(likedPost[0]);
-                data[index] = res.data.post;
-                this.setState({ data });
-                localStorage.setItem("loveArticles", res.data.user.loveArticles);
-            })
-            .catch(err => console.log(err))
     }
 
     followUser = (pathname) => {

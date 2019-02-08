@@ -111,7 +111,7 @@ class UserContainer extends Container {
 
         console.log('check follow user')
 
-        if (localStorage.getItem("following").includes(user)) {
+        if (localStorage.getItem("following") && localStorage.getItem("following").includes(user)) {
             this.setState({ following: true });
             return true;
         } else {

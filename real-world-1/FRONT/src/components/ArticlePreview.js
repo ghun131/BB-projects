@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PostContainer from '../containers/PostContainer';
+import UserContainer from '../containers/UserContainer';
 import { Subscribe } from 'unstated';
 
 class ArticlePreview extends React.Component {
     
-    handleLike = (e, likePost, id, title) => {
+    handleLike = (e, likePost, id, title, history) => {
         e.preventDefault();
 
         likePost(id, title)
@@ -23,9 +24,9 @@ class ArticlePreview extends React.Component {
         let disliked = 'btn btn-outline-primary btn-sm pull-xs-right';
 
         return (
-            <Subscribe to={[PostContainer]}>
+            <Subscribe to={[PostContainer, UserContainer]}>
                 {
-                    postThings => (
+                    (postThings, userThings) => (
                         <div className="article-preview" key={this.props._id}>
                             <div className="article-meta">
                                 <Link to={`/profile/${this.props.author}`}>
@@ -37,13 +38,22 @@ class ArticlePreview extends React.Component {
                                     </Link>
                                     <span className="date">{PostContainer.displayTime(this.props.time)}</span>
                                 </div>
-                                <button className={ loveArt[0] ? liked : disliked }
-                                    onClick={(e) => 
-                                        this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
-                                    }
-                                >
-                                    <i className="ion-heart"></i> {this.props.love}
-                                </button>
+
+                                {
+                                    userThings.state.isLogin ? 
+                                        <button className={ loveArt[0] ? liked : disliked }
+                                            onClick={(e) => 
+                                                this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
+                                            }
+                                        >
+                                            <i className="ion-heart"></i> {this.props.love}
+                                        </button>
+                                    :
+                                        <Link to="/login" className={ loveArt[0] ? liked : disliked }>
+                                            <i className="ion-heart"></i> {this.props.love}
+                                        </Link>
+                                }
+                                
                             </div>
                             <Link to={`/article/${this.props._id}`} className="preview-link">
                                 <h1>{this.props.title}</h1>
