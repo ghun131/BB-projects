@@ -35,6 +35,7 @@ router.post('/', (req, res, next) => {
                 avaUrl: '',
                 biography: '',
                 loveArticles: [],
+                followers: [],
                 following: [],
                 salt: '',
                 password: password,

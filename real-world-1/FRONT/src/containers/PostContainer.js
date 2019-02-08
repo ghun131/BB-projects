@@ -14,6 +14,12 @@ class PostContainer extends Container {
         following: false
     }
 
+    config={
+        headers: {
+            authorization: 'Bearer ' + localStorage.getItem("token")
+        }
+    }
+
     takeLastWord = (pathname) => {
         let arr = pathname.split("/");
         let lastWord = arr[arr.length - 1].trim();
@@ -120,7 +126,6 @@ class PostContainer extends Container {
         tags = tags.replace(/\s/g, "");
         const tagsArr = tags.split(",");
 
-        let token = localStorage.getItem("token");
         let lastLetter = this.takeLastWord(path).trim();
         let data = {
             title: title,
@@ -132,16 +137,13 @@ class PostContainer extends Container {
             console.log('new post')
             data.author = localStorage.getItem("author"),
             data.email = localStorage.getItem("email"),
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-            axios.post('/api/newpost', {data})
+            axios.post('/api/newpost', {data}, this.config)
                 .then(res => {
                     console.log(res.data.message);
-                    this.setState({ message: res.data.message });
                     history.push('/');
                 }).catch(error => console.log(error));
         } else {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-            axios.put(`/editor/${id}`, {data})
+            axios.put(`/editor/${id}`, {data}, this.config)
             .then(res => {
                 console.log(res.data)
                 history.push('/');

@@ -3,10 +3,8 @@ const router = express.Router();
 const Post = require('../modal/Post');
 const middleware = require('../middleware');
 
-router.post('/',  middleware.checkToken, (req, res) => {
+router.post('/', middleware.checkToken, (req, res) => {
   const { author, title, content, email, tags, avaUrl } = req.body.data;
-
-  console.log('NEW POST HIT')
 
   async function createPost() {
     let today = new Date();
@@ -31,10 +29,11 @@ router.post('/',  middleware.checkToken, (req, res) => {
 
   async function checkPost(content) {
     const samePost = await Post.find({ content: content })
+    console.log('HIT THIS PART')
 
-    if(!samePost[0]) createPost()
-
-    else { 
+    if(!samePost[0]) {
+      createPost()
+    } else { 
       res.json({
         message: 'Don\' plagiarize! Write something \'s else'
       })

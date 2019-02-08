@@ -14789,6 +14789,12 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       following: false
     });
 
+    _defineProperty(this, "config", {
+      headers: {
+        authorization: 'Bearer ' + localStorage.getItem("token")
+      }
+    });
+
     _defineProperty(this, "takeLastWord", pathname => {
       let arr = pathname.split("/");
       let lastWord = arr[arr.length - 1].trim();
@@ -14890,7 +14896,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       } = items;
       tags = tags.replace(/\s/g, "");
       const tagsArr = tags.split(",");
-      let token = localStorage.getItem("token");
       let lastLetter = this.takeLastWord(path).trim();
       let data = {
         title: title,
@@ -14901,21 +14906,16 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
       if (lastLetter === "editor") {
         console.log('new post');
-        data.author = localStorage.getItem("author"), data.email = localStorage.getItem("email"), axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/newpost', {
+        data.author = localStorage.getItem("author"), data.email = localStorage.getItem("email"), axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/newpost', {
           data
-        }).then(res => {
+        }, this.config).then(res => {
           console.log(res.data.message);
-          this.setState({
-            message: res.data.message
-          });
           history.push('/');
         }).catch(error => console.log(error));
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/editor/${id}`, {
           data
-        }).then(res => {
+        }, this.config).then(res => {
           console.log(res.data);
           history.push('/');
         }).catch(err => console.log(err.message));
