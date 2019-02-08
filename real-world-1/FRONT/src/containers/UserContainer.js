@@ -122,4 +122,5 @@ class UserContainer extends Container {
 }
 
 let container = new UserContainer();
+
 export default container;

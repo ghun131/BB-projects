@@ -266,7 +266,7 @@ class Article extends React.Component {
                                             postThings.state.comments[0] ? 
                                                 postThings.state.comments.map( c => 
                                                     <CommentCard key={c._id} {...c} />)
-                                                : <div>Loading comments...</div>
+                                                : ""
                                         }
                                         
                                     </div>

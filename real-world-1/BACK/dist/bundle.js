@@ -14668,7 +14668,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     let clicked = "page-item active";
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(unstated__WEBPACK_IMPORTED_MODULE_5__["Subscribe"], {
       to: [_containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"], _containers_UserContainer__WEBPACK_IMPORTED_MODULE_3__["default"]]
-    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log('Home user things', userThings.state), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, (postThings, userThings) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "home-page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "banner"
@@ -15835,7 +15835,7 @@ class Article extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "btn btn-sm btn-primary"
     }, "Post Comment"))), postThings.state.comments[0] ? postThings.state.comments.map(c => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CommentCard__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
       key: c._id
-    }, c))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading comments..."))))));
+    }, c))) : "")))));
   }
 
 }

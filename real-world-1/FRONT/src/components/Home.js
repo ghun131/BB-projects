@@ -42,7 +42,6 @@ class Home extends React.Component {
                 {
                     (postThings, userThings) => (
                         <div>
-                            {console.log('Home user things',userThings.state)}
                             <div className="home-page">
                 
                                 <div className="banner">
