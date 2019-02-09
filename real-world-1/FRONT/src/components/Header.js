@@ -11,7 +11,7 @@ const Header = () => {
                     <div>
                         <nav className="navbar navbar-light">
                             <div className="container">
-                                <Link className="navbar-brand" to="/">conduit</Link>
+                                <Link className="navbar-brand" to="/">BB BLOG</Link>
                                 <ul className="nav navbar-nav pull-xs-right">
                                 <li className="nav-item">
                                     {/* Add "active" class when you're on that page"  */}

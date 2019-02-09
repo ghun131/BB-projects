@@ -6,9 +6,9 @@ const Footer = () => {
         <div>
             <footer>
                 <div className="container">
-                    <Link to="/" className="logo-font">conduit</Link>
+                    <Link to="/" className="logo-font">BB BLOG</Link>
                     <span className="attribution">
-                    An interactive learning project from <Link to="https://thinkster.io">Thinkster</Link>. Code &amp; design licensed under MIT.
+                    An interactive learning project from <Link to="https://www.bravebits.co/">Brave Bits</Link>. Co &amp; design licensed under MIT.
                     </span>
                 </div>
             </footer>

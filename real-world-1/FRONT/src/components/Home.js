@@ -46,8 +46,8 @@ class Home extends React.Component {
                 
                                 <div className="banner">
                                     <div className="container">
-                                        <h1 className="logo-font">conduit</h1>
-                                        <p>A place to share your knowledge.</p>
+                                        <h1 className="logo-font">BB BLOG</h1>
+                                        <p>Music makes you brave.</p>
                                     </div>
                                 </div>
                     

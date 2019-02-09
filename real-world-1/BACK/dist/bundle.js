@@ -12070,7 +12070,7 @@ const Header = () => {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "navbar-brand",
     to: "/"
-  }, "conduit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+  }, "BB BLOG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "nav navbar-nav pull-xs-right"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
@@ -14025,11 +14025,11 @@ const Footer = () => {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/",
     className: "logo-font"
-  }, "conduit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+  }, "BB BLOG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "attribution"
   }, "An interactive learning project from ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "https://thinkster.io"
-  }, "Thinkster"), ". Code & design licensed under MIT."))));
+    to: "https://www.bravebits.co/"
+  }, "Brave Bits"), ". Co & design licensed under MIT."))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Footer);
@@ -14676,7 +14676,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "container"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "logo-font"
-    }, "conduit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "A place to share your knowledge."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    }, "BB BLOG"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Music makes you brave."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "container page"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "row"
