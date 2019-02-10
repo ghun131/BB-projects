@@ -58,7 +58,7 @@ class Home extends React.Component {
                                             <div className="feed-toggle">
                                                 <ul className="nav nav-pills outline-active">
                                                 {
-                                                    userThings.state.isLogin || localStorage.getItem("author") ? 
+                                                    localStorage.getItem("author") ? 
                                                         <li className="nav-item">
                                                             <NavLink
                                                                 exact

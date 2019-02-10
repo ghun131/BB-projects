@@ -14686,7 +14686,7 @@ class Home extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: "feed-toggle"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "nav nav-pills outline-active"
-    }, userThings.state.isLogin || localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    }, localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       className: "nav-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
       exact: true,
@@ -15106,7 +15106,7 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
       className: "author"
     }, this.props.author), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       className: "date"
-    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].displayTime(this.props.time))), userThings.state.isLogin || localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    }, _containers_PostContainer__WEBPACK_IMPORTED_MODULE_2__["default"].displayTime(this.props.time))), localStorage.getItem("author") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: loveArt[0] ? liked : disliked,
       onClick: e => this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {

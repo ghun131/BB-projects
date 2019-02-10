@@ -40,7 +40,7 @@ class ArticlePreview extends React.Component {
                                 </div>
 
                                 {   
-                                    userThings.state.isLogin || localStorage.getItem("author") ? 
+                                    localStorage.getItem("author") ? 
                                         <button className={ loveArt[0] ? liked : disliked }
                                             onClick={(e) => 
                                                 this.handleLike(e, postThings.likePost, this.props._id, this.props.title)
