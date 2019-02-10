@@ -62,10 +62,11 @@ class Profile extends React.Component {
                                                 
                                                 {
                                                     this.checkProfile(this.props.location.pathname) ?
-                                                        <span>
+                                                        <Link to={`/settings/${localStorage.getItem("author")}`}>
                                                             <i className="ion-gear-a"></i>
                                                             &nbsp; Edit Profile Settings
-                                                        </span> 
+                                                        </Link>
+                                                            
                                                         : [
                                                             this.checkFollowing(postThings.state.author[0].username) ? 
                                                                 <span key="unfollow">

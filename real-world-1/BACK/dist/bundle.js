@@ -15586,7 +15586,9 @@ class Profile extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, postThings.state.author[0].username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, postThings.state.author[0].biography), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: "btn btn-sm btn-outline-secondary action-btn",
       onClick: e => this.handleFollow(e, postThings.followUser)
-    }, this.checkProfile(this.props.location.pathname) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    }, this.checkProfile(this.props.location.pathname) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: `/settings/${localStorage.getItem("author")}`
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "ion-gear-a"
     }), "\xA0 Edit Profile Settings") : [this.checkFollowing(postThings.state.author[0].username) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
       key: "unfollow"
