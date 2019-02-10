@@ -38,8 +38,8 @@ class UserContainer extends Container {
             console.log('send to server', user)
             axios.post('api/login', {user})
                 .then(res => {
-                    console.log('Log in', res.data);
-                    this.setState({ isLogin: res.data.success , message: res.data.message});
+                    console.log('Log in', res.data.success);
+                    this.setState({ isLogin: true, message: res.data.message});
                     if (res.data.success) {
                         this.saveLocalStorage(res.data.package)
                         history.push('/');

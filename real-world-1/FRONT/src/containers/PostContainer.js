@@ -49,6 +49,7 @@ class PostContainer extends Container {
     }
 
     getGlobalPosts = () => {
+
         axios.get("/api/posts")
             .then( res => {
                 let pageNums = this.pagination(res.data);
@@ -163,8 +164,7 @@ class PostContainer extends Container {
     }
 
     likePost = (id, title) => {
-        console.log(history)
-        if (this.state.isLogin) {
+        if (this.state.isLogin || localStorage.getItem("author")) {
             let payload = {
                 author: localStorage.getItem("author"),
                 title: title

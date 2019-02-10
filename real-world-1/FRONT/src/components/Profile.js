@@ -50,7 +50,7 @@ class Profile extends React.Component {
                                                 {postThings.state.author[0].biography}
                                             </p>
                                             <button className="btn btn-sm btn-outline-secondary action-btn"
-                                                onClick={(e) => this.handleFollow(e, userThings.followUser)}>
+                                                onClick={(e) => this.handleFollow(e, postThings.followUser)}>
                                                 
                                                 {
                                                     this.checkProfile(this.props.location.pathname) ?
@@ -59,7 +59,7 @@ class Profile extends React.Component {
                                                             &nbsp; Edit Profile Settings
                                                         </span> 
                                                         : [
-                                                            userThings.state.following ? 
+                                                            postThings.state.following ? 
                                                                 <span key="unfollow">
                                                                     <i className="ion-plus-round"></i>
                                                                     &nbsp;
