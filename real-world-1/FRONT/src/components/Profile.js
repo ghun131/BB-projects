@@ -32,6 +32,14 @@ class Profile extends React.Component {
         return pathname.includes(localStorage.getItem("author"));
     }
 
+    checkFollowing = (username) => {
+        if (localStorage.getItem("following")) {
+            return localStorage.getItem("following").includes(username);
+        } else {
+            return false;
+        }
+    }
+
     render() {
         return (
             <Subscribe to={[UserContainer, PostContainer]}>
@@ -59,7 +67,7 @@ class Profile extends React.Component {
                                                             &nbsp; Edit Profile Settings
                                                         </span> 
                                                         : [
-                                                            postThings.state.following ? 
+                                                            this.checkFollowing(postThings.state.author[0].username) ? 
                                                                 <span key="unfollow">
                                                                     <i className="ion-plus-round"></i>
                                                                     &nbsp;
