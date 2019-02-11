@@ -227,7 +227,7 @@ class PostContainer extends Container {
         let tag = this.takeLastWord(pathname);
         axios.get(`/tag/${tag}`)
             .then(res => {
-                this.setState({ data: res.data, tagName: tag })
+                this.setState({ data: res.data, tagName: tag, pageNums: [] })
             }).catch(err => console.log(err.message));
     }
 
