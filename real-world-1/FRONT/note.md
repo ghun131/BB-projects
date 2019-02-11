@@ -1,0 +1,2 @@
+- Sources in Browser is the bundle file which is hard to stick breakpoints to it.
+- New functionality tends to break the code for old functionalities.

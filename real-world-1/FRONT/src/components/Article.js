@@ -64,7 +64,7 @@ class Article extends React.Component {
                 {
                     (postThings, userThings) => (
                         <div className="article-page">
-                            {console.log('article component', postThings)}
+                            {console.log('article component', postThings.state)}
                             <div className="banner">
                                 <div className="container">
                     
@@ -99,7 +99,7 @@ class Article extends React.Component {
                                                 onClick={(e) => this.handleFollow(e, postThings.followUser, postThings.state.author[0].username)}>
                                                     {
                                                         postThings.state.author[0]  ?
-                                                            [this.checkProfile(postThings.state.data[0].author) || userThings.state.following ? 
+                                                            [this.checkProfile(postThings.state.data[0].author) ? 
                                                                 <span key="unfollow">
                                                                     <i className="ion-plus-round"></i>
                                                                     &nbsp;

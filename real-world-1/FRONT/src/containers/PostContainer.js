@@ -49,13 +49,13 @@ class PostContainer extends Container {
     }
 
     getGlobalPosts = () => {
-
         axios.get("/api/posts")
             .then( res => {
                 let pageNums = this.pagination(res.data);
                 this.setState({ 
                     data: res.data.posts, 
                     tags: res.data.tags,
+                    currentPageNum: 1,
                     pageNums
                 });
         }).catch(error => console.log(error));
@@ -74,14 +74,19 @@ class PostContainer extends Container {
     }
 
     getFeed = () => {
-        const payload = {
-            payload: localStorage.getItem("following").split(",")
+        let payload = {
+            payload: []
         }
+
+        if (localStorage.getItem("following")) {
+            payload.payload = localStorage.getItem("following").split(",")
+        }        
 
         axios.post("/api/posts/feed", payload)
             .then( res => {
                 this.setState({
-                    data: res.data
+                    data: res.data,
+                    pageNums: []
                 })                
             }).catch(error => console.log(error));
 

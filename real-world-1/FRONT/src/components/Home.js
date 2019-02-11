@@ -100,22 +100,25 @@ class Home extends React.Component {
                                                         postThings.state.data.map (p => 
                                                             <ArticlePreview key={p._id} {...p} />)
                                                         : [ localStorage.getItem("following") ?
-                                                            <div key="loading">Loading articles...</div>
-                                                            : <div key="no-articles">No articles are here...yet</div>]
+                                                            <div key="loading" className="article-preview">Loading articles...</div>
+                                                            : 
+                                                            <div key="no-articles" className="article-preview">
+                                                                No articles are here...yet
+                                                            </div>]
                                                 }/>
 
                                                 <Route exact path="/" render={() =>
                                                     postThings.state.data[0] ? 
                                                         postThings.state.data.map (p => 
                                                             <ArticlePreview key={p._id} {...p} />)
-                                                        : <div>Loading articles...</div>
+                                                        : <div className="article-preview">Loading articles...</div>
                                                 }/>
                                                 
                                                 <Route exact path="/tag/:tagName" render={() => 
                                                     postThings.state.data[0] ? 
                                                         postThings.state.data.map (p => 
                                                             <ArticlePreview key={p._id} {...p} />)
-                                                        : <div>Loading articles...</div>
+                                                        : <div className="article-preview">Loading articles...</div>
                                                 }/>
                                             </Switch>
                                                     

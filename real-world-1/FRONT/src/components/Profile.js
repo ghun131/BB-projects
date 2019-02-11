@@ -128,14 +128,14 @@ class Profile extends React.Component {
                                             postThings.state.data[0] ?
                                                 postThings.state.data.map( p => 
                                                     <ArticlePreview key={p._id} {...p} />
-                                                ): <div>Loading articles...</div>}/>
+                                                ): <div className="article-preview">Loading articles...</div>}/>
 
                                         <Route  path="/profile/:username/favourites" key="favourites" 
                                             render={() =>
                                                 postThings.state.data[0] ?
                                                     postThings.state.data.map( p => 
                                                         <ArticlePreview key={p._id} {...p} />
-                                                    ): <div>Loading articles...</div>
+                                                    ): <div className="article-preview">Loading articles...</div>
                                         }/>
                                     </Switch>
                                 </div>
