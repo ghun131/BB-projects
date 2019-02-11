@@ -5,7 +5,7 @@ Routing Guidelines
  [x] - Pagination for list of articles
 [] Sign in/Sign up pages (URL: /#/login, /#/register )
  [x] - Uses JWT (store the token in localStorage)
- [] - Authentication can be easily switched to session/cookie based
+ [x] - Authentication can be easily switched to session/cookie based
 [x] Settings page (URL: /#/settings )
 [x] Editor page to create/edit articles (URL: /#/editor, /#/editor/article-slug-here )
 [] Article page (URL: /#/article/article-slug-here )

@@ -1,9 +1,14 @@
+const path = require('path');
 const express = require('express');
 const router = express.Router();
 const Post = require('../model/Post');
 const User = require('../model/User');
 const Comment = require('../model/Comment');
 const middleware = require('../middleware');
+
+router.use('article/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'))
+})
 
 router.get('/:id', (req, res) => {
     let data = {}

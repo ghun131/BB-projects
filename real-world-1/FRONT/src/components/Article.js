@@ -4,6 +4,7 @@ import { Subscribe } from 'unstated';
 import PostContainer from '../containers/PostContainer';
 import UserContainer from '../containers/UserContainer';
 import CommentCard from './CommentCard';
+import MarkDownDisplay from 'react-markdown';
 
 class Article extends React.Component {
     commentRef = React.createRef();
@@ -155,8 +156,8 @@ class Article extends React.Component {
                             <div className="container page">
                     
                                 <div className="row article-content">
-                                <div className="col-md-12">
-                                    {postThings.state.data[0].content}
+                                <div className="col-md-12" style={{ whiteSpace: "pre-line"}}>
+                                    <MarkDownDisplay source={postThings.state.data[0].content}/>
                                 </div>
                                 </div>
                     
