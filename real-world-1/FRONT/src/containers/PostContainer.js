@@ -51,6 +51,7 @@ class PostContainer extends Container {
     getGlobalPosts = () => {
         axios.get("/api/posts")
             .then( res => {
+                console.log('global posts', res.data)
                 let pageNums = this.pagination(res.data);
                 this.setState({ 
                     data: res.data.posts, 
@@ -118,7 +119,6 @@ class PostContainer extends Container {
     getPost = (path) => {
         axios.get(path)
             .then( res => {
-                console.log(res.data);
                 this.setState({ 
                     author: res.data.user,
                     data: res.data.article,
@@ -129,7 +129,8 @@ class PostContainer extends Container {
     }
 
     editPost = (id, items, path, history) => {
-        let { title, content, tags } = items;
+        let { title, content, tags, description } = items;
+        console.log(items);
         tags = tags.replace(/\s/g, "");
         const tagsArr = tags.split(",");
 
@@ -137,22 +138,20 @@ class PostContainer extends Container {
         let data = {
             title: title,
             content: content,
+            description: description,
             avaUrl: localStorage.getItem("picUrl"),
             tags: tagsArr
         };
         if (lastLetter === "editor") {
-            console.log('new post')
             data.author = localStorage.getItem("author"),
             data.email = localStorage.getItem("email"),
             axios.post('/api/newpost', {data}, this.config)
                 .then(res => {
-                    console.log(res.data.message);
                     history.push('/');
                 }).catch(error => console.log(error));
         } else {
             axios.put(`/editor/${id}`, {data}, this.config)
             .then(res => {
-                console.log(res.data)
                 history.push('/');
             })
             .catch(err => console.log(err.message));
@@ -162,7 +161,6 @@ class PostContainer extends Container {
     deletePost = (id, history) => {
         axios.delete(`/profile/delete/${id}`)
             .then(res => {
-                console.log('deleted post', res.data);
                 history.push('/');
             })
             .catch(err => console.log(err.message))
@@ -178,7 +176,6 @@ class PostContainer extends Container {
             axios.put(`/article/${id}`, {payload})
                 .then( res => {
                     //update state so UI will update
-                    console.log('like post', res.data)
                     let data = [...this.state.data];
                     let likedPost = data.filter( i => i._id === res.data.post._id )
                     let index = data.indexOf(likedPost[0]);
@@ -198,7 +195,6 @@ class PostContainer extends Container {
         let following = []
         if (localStorage.getItem("following")) {
             following = localStorage.getItem("following").split(",");
-            console.log('following array', following);
         }
 
         let payload = {
@@ -208,13 +204,11 @@ class PostContainer extends Container {
         }
 
         let isFollowed = payload.following.filter( f => f === user);
-        console.log('isFollowed', isFollowed);
 
         if (!isFollowed[0]) {
             payload.following.push(user);
             axios.post(`/profile/${user}`, payload)
                 .then( res => {
-                    console.log('following', res.data)
                     this.setState({ following: true, author: [res.data] });
                     localStorage.setItem("following", payload.following);
                 })
@@ -223,7 +217,6 @@ class PostContainer extends Container {
             payload.following.splice(index, 1)
             axios.post(`/profile/${user}`, payload)
                 .then( res => {
-                    console.log('unfollowing', res.data);
                     this.setState({ following: false, author: [res.data] })
                     localStorage.setItem("following", payload.following);
                 })
@@ -234,7 +227,6 @@ class PostContainer extends Container {
         let tag = this.takeLastWord(pathname);
         axios.get(`/tag/${tag}`)
             .then(res => {
-                console.log(res.data)
                 this.setState({ data: res.data, tagName: tag })
             }).catch(err => console.log(err.message));
     }
@@ -264,7 +256,7 @@ class PostContainer extends Container {
         this.setState({ comments });
         axios.delete(`/article/comment/delete/${id}`, comment[0])
             .then(res => {
-                console.log(res.data);
+                console.log('THE COMMENT IS GONE!');
             })
             .catch(err => console.log(err.message))
     }

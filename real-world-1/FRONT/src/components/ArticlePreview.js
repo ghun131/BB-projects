@@ -58,7 +58,7 @@ class ArticlePreview extends React.Component {
                             <Link to={`/article/${this.props._id}`} className="preview-link">
                                 <h1>{this.props.title}</h1>
                                 <p style={{overflow: "hidden", height: "1.5rem"}}>
-                                    {this.props.content}
+                                    {this.props.description}
                                 </p>
                                 <span>Read more...</span>
                                 <ul className="tag-list">

@@ -14831,6 +14831,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getGlobalPosts", () => {
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/posts").then(res => {
+        console.log('global posts', res.data);
         let pageNums = this.pagination(res.data);
         this.setState({
           data: res.data.posts,
@@ -14894,7 +14895,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "getPost", path => {
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(path).then(res => {
-        console.log(res.data);
         this.setState({
           author: res.data.user,
           data: res.data.article,
@@ -14907,31 +14907,31 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
       let {
         title,
         content,
-        tags
+        tags,
+        description
       } = items;
+      console.log(items);
       tags = tags.replace(/\s/g, "");
       const tagsArr = tags.split(",");
       let lastLetter = this.takeLastWord(path).trim();
       let data = {
         title: title,
         content: content,
+        description: description,
         avaUrl: localStorage.getItem("picUrl"),
         tags: tagsArr
       };
 
       if (lastLetter === "editor") {
-        console.log('new post');
         data.author = localStorage.getItem("author"), data.email = localStorage.getItem("email"), axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/newpost', {
           data
         }, this.config).then(res => {
-          console.log(res.data.message);
           history.push('/');
         }).catch(error => console.log(error));
       } else {
         axios__WEBPACK_IMPORTED_MODULE_3___default.a.put(`/editor/${id}`, {
           data
         }, this.config).then(res => {
-          console.log(res.data);
           history.push('/');
         }).catch(err => console.log(err.message));
       }
@@ -14939,7 +14939,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
     _defineProperty(this, "deletePost", (id, history) => {
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.delete(`/profile/delete/${id}`).then(res => {
-        console.log('deleted post', res.data);
         history.push('/');
       }).catch(err => console.log(err.message));
     });
@@ -14954,7 +14953,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
           payload
         }).then(res => {
           //update state so UI will update
-          console.log('like post', res.data);
           let data = [...this.state.data];
           let likedPost = data.filter(i => i._id === res.data.post._id);
           let index = data.indexOf(likedPost[0]);
@@ -14977,7 +14975,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
 
       if (localStorage.getItem("following")) {
         following = localStorage.getItem("following").split(",");
-        console.log('following array', following);
       }
 
       let payload = {
@@ -14986,12 +14983,10 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         following: following
       };
       let isFollowed = payload.following.filter(f => f === user);
-      console.log('isFollowed', isFollowed);
 
       if (!isFollowed[0]) {
         payload.following.push(user);
         axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(`/profile/${user}`, payload).then(res => {
-          console.log('following', res.data);
           this.setState({
             following: true,
             author: [res.data]
@@ -15002,7 +14997,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         let index = payload.following.indexOf(user);
         payload.following.splice(index, 1);
         axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(`/profile/${user}`, payload).then(res => {
-          console.log('unfollowing', res.data);
           this.setState({
             following: false,
             author: [res.data]
@@ -15015,7 +15009,6 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
     _defineProperty(this, "getPostsByTag", pathname => {
       let tag = this.takeLastWord(pathname);
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(`/tag/${tag}`).then(res => {
-        console.log(res.data);
         this.setState({
           data: res.data,
           tagName: tag
@@ -15050,7 +15043,7 @@ class PostContainer extends unstated__WEBPACK_IMPORTED_MODULE_1__["Container"] {
         comments
       });
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.delete(`/article/comment/delete/${id}`, comment[0]).then(res => {
-        console.log(res.data);
+        console.log('THE COMMENT IS GONE!');
       }).catch(err => console.log(err.message));
     });
   }
@@ -15137,7 +15130,7 @@ class ArticlePreview extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
         overflow: "hidden",
         height: "1.5rem"
       }
-    }, this.props.content), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Read more..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    }, this.props.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Read more..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "tag-list"
     }, this.props.tags ? this.props.tags.map(t => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: t,
@@ -15451,11 +15444,14 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
 
     _defineProperty(this, "tagsRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
+    _defineProperty(this, "descRef", react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
     _defineProperty(this, "handleSubmit", (e, editPost, id) => {
       e.preventDefault();
       const data = {
         title: this.titleRef.current.value.trim(),
         content: this.contentRef.current.value.trim(),
+        description: this.descRef.current.value.trim(),
         tags: this.tagsRef.current.value.trim()
       };
       editPost(id, data, this.props.location.pathname, this.props.history);
@@ -15488,6 +15484,7 @@ class CreateEditArticle extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Com
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
       type: "text",
       className: "form-control",
+      ref: this.descRef,
       placeholder: "What's this article about?"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("fieldset", {
       className: "form-group"

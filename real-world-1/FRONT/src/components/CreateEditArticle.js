@@ -6,6 +6,7 @@ class CreateEditArticle extends React.Component {
     titleRef = React.createRef()
     contentRef = React.createRef()
     tagsRef = React.createRef()
+    descRef = React.createRef()
 
     // componentDidMount = () => {
     //     if ( this.props.location.pathname !== "/editor" ) {
@@ -19,7 +20,8 @@ class CreateEditArticle extends React.Component {
         const data = {
             title: this.titleRef.current.value.trim(),
             content: this.contentRef.current.value.trim(),
-            tags: this.tagsRef.current.value.trim(),
+            description: this.descRef.current.value.trim(),
+            tags: this.tagsRef.current.value.trim()
         }
 
         editPost(id, data, this.props.location.pathname, this.props.history);
@@ -47,6 +49,7 @@ class CreateEditArticle extends React.Component {
                                             <fieldset className="form-group">
                                                 <input type="text" 
                                                     className="form-control"
+                                                    ref={this.descRef}
                                                     placeholder="What's this article about?" />
                                             </fieldset>
                                             <fieldset className="form-group">
