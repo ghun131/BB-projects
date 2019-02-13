@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'unstated';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { ReadStream } from 'tty';
 
 class PostContainer extends Container {
     state={
@@ -117,7 +118,7 @@ class PostContainer extends Container {
 
     // get a single post and its comments
     getPost = (path) => {
-        axios.get(path)
+        axios.get(`/api${path}`)
             .then( res => {
                 this.setState({ 
                     author: res.data.user,

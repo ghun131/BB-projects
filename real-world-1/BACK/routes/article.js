@@ -6,11 +6,12 @@ const User = require('../model/User');
 const Comment = require('../model/Comment');
 const middleware = require('../middleware');
 
-router.use('article/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'))
-})
+// router.use('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'dist/index.html'))
+// })
 
 router.get('/:id', (req, res) => {
+    console.log('single article!')
     let data = {}
     console.log(req.params.id);
 

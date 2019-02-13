@@ -37,7 +37,7 @@ app.use('/api/login', logIn);
 app.use('/api/logout', logOut);
 
 // Handle one article
-app.use('/article', article)
+app.use('/api/article', article)
 
 // Editor page
 app.use('/editor', editor)
@@ -51,7 +51,7 @@ app.use('/tag', tags);
 //POST method finds all posts of one author
 app.use('/profile', profile);
 
-app.use('*', (req, res) => {
+app.use('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'))
 })
 
