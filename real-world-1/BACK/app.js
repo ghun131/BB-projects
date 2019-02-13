@@ -13,7 +13,6 @@ const tags = require('./routes/tags');
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const fs = require('fs')
 mongoose.connect('mongodb://hung131:abc123@ds151383.mlab.com:51383/simple-blog-db');
 
 app.use(bodyParser.json());
@@ -46,7 +45,7 @@ app.use('/editor', editor)
 app.use('/api/newpost', newPost);
 
 // GET articles for a tag
-app.use('/tag', tags);
+app.use('/api/tag', tags);
 
 //POST method finds all posts of one author
 app.use('/profile', profile);
@@ -54,13 +53,5 @@ app.use('/profile', profile);
 app.use('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'))
 })
-
-// app.use('*', async function (req, res) {
-//     const indexFile = fs.readFileSync(path.join(__dirname, 'dist/index.html')).toString()
-//     res.writeHead(200, {
-//         'Content-Type': 'text/html; charset=utf-8'
-//     })
-//     res.end(indexFile)
-// });
 
 app.listen(3000 || process.env.PORT, () => console.log('Listening...'));

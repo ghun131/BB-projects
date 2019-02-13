@@ -17,7 +17,6 @@ class Home extends React.Component {
     }
 
     callFunctionWithRightRoute = () => {
-        let lastWord = PostContainer.takeLastWord(this.props.location.pathname);
         if (this.props.location.pathname === '/') {
             PostContainer.getGlobalPosts();
         } 

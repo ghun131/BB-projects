@@ -2,7 +2,6 @@ import React from 'react';
 import { Container } from 'unstated';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { ReadStream } from 'tty';
 
 class PostContainer extends Container {
     state={
@@ -174,7 +173,7 @@ class PostContainer extends Container {
                 title: title
             }
     
-            axios.put(`/article/${id}`, {payload})
+            axios.put(`/api/article/${id}`, {payload})
                 .then( res => {
                     //update state so UI will update
                     let data = [...this.state.data];
@@ -226,7 +225,7 @@ class PostContainer extends Container {
 
     getPostsByTag = (pathname) => {
         let tag = this.takeLastWord(pathname);
-        axios.get(`/tag/${tag}`)
+        axios.get(`/api/tag/${tag}`)
             .then(res => {
                 this.setState({ data: res.data, tagName: tag, pageNums: [] })
             }).catch(err => console.log(err.message));
@@ -240,7 +239,7 @@ class PostContainer extends Container {
             comment: text
         }
 
-        axios.post(path, {data})
+        axios.post(`/api${path}`, {data})
             .then (res => {
                 let comments = [...this.state.comments];
                 comments.unshift(res.data);
@@ -255,7 +254,7 @@ class PostContainer extends Container {
         let index = comments.indexOf(comment[0]);
         comments.splice(index, 1);
         this.setState({ comments });
-        axios.delete(`/article/comment/delete/${id}`, comment[0])
+        axios.delete(`/api/article/comment/delete/${id}`, comment[0])
             .then(res => {
                 console.log('THE COMMENT IS GONE!');
             })
